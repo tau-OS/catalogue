@@ -3,5 +3,6 @@
   <gresource prefix="/co/tauos/Catalogue">
     <file>window.ui</file>
     <file>gtk/help-overlay.ui</file>
+    <file alias="catalogue.css">styles/catalogue.css</file>
   </gresource>
 </gresources>

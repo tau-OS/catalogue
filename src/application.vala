@@ -21,6 +21,15 @@ namespace Catalogue {
             if (win == null) {
                 win = new Catalogue.Window (this);
             }
+
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (),
+                provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+
             win.present ();
         }
 
