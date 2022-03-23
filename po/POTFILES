@@ -1,0 +1,7 @@
+data/co.tauos.Catalogue.desktop.in
+data/co.tauos.Catalogue.appdata.xml.in
+data/co.tauos.Catalogue.gschema.xml
+data/window.ui
+src/main.vala
+src/window.vala
+src/application.vala
