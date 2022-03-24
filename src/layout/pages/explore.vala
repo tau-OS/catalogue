@@ -7,6 +7,8 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Stack stack;
 
+        private unowned Adw.ActionRow initial_row;
+
         public WindowExplore () {
             Object ();
 
@@ -19,14 +21,19 @@ namespace Catalogue {
                     name = page.get_name ()
                 };
 
+                if (i == 0) {
+                    initial_row = row;
+                }
+
                 stack_listbox.append (row);
-                
             }
 
             stack_listbox.row_selected.connect ((row) => {
                 var page = ((!) row) as Adw.ActionRow;
                 stack.set_visible_child_name (page.get_name ());
             });
+
+            stack_listbox.select_row (initial_row);
         }
     }
 }
