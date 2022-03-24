@@ -6,8 +6,11 @@ namespace Catalogue {
         private unowned Gtk.ListBox stack_listbox;
         [GtkChild]
         private unowned Gtk.Stack stack;
+        [GtkChild]
+        private unowned Gtk.Box featured_box;
 
         private unowned Adw.ActionRow initial_row;
+        private Catalogue.Carousel carousel;
 
         public WindowExplore () {
             Object ();
@@ -34,6 +37,9 @@ namespace Catalogue {
             });
 
             stack_listbox.select_row (initial_row);
+
+            carousel = new Catalogue.Carousel ();
+            featured_box.append (carousel);
         }
     }
 }
