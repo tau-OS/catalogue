@@ -16,4 +16,3 @@ tab_width = 4
 # Markup files
 [{*.html,*.xml,*.xml.in,*.yml}]
 tab_width = 2
-
