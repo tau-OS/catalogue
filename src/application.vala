@@ -1,4 +1,3 @@
-
 namespace Catalogue {
     public class Application : Adw.Application {
         public Application () {

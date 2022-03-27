@@ -1,4 +1,3 @@
-
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/explore.ui")]
     public class WindowExplore : Adw.Bin {

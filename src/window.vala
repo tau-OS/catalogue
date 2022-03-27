@@ -1,11 +1,8 @@
-
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/window.ui")]
     public class Window : Adw.ApplicationWindow {
         [GtkChild]
         private unowned Adw.ViewStack header_stack;
-        //  [GtkChild]
-        //  private unowned Gtk.Label label;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
