@@ -1,4 +1,3 @@
-
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/carousel.ui")]
     public class Carousel : Gtk.Box {
@@ -22,7 +21,6 @@ namespace Catalogue {
             /* Don’t animate if we’re wrapping from the last page back to the first
              * or from the first page to the last going backwards as it means rapidly
              * spooling through all the pages, which looks confusing. */
-
             if ((new_page == 0.0 && page_delta > 0) || (new_page == pages - 1 && page_delta < 0)) {
                 animate = false;
             }
