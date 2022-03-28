@@ -23,8 +23,6 @@ namespace Catalogue {
                 animate = false;
             }
 
-            // carousel.scroll_to (page_widget, animate);
-            // Either Vala or LibAdwaita is being dumb
             carousel.scroll_to (page_widget, animate);
         }
 
