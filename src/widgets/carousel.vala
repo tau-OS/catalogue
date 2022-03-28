@@ -1,8 +1,6 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/carousel.ui")]
     public class Carousel : Gtk.Box {
-        //  [GtkChild]
-        //  private unowned Gtk.Label label;
         [GtkChild]
         private unowned Adw.Carousel carousel;
         [GtkChild]
@@ -40,6 +38,8 @@ namespace Catalogue {
             previous_button.clicked.connect(() => {
                 move_relative_page(-1);
             });
+
+            carousel.prepend (new Catalogue.CarouselTile ());
         }
     }
 }
