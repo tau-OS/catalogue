@@ -56,7 +56,7 @@ namespace Catalogue {
                                    "program-name", "Catalogue",
                                    "authors", authors,
                                    "comments", "A nice way to manage the software on your system.",
-                                   "copyright", "Copyright © 2022 Innatical, LLC",
+                                   "copyright", "Copyright © 2022 Fyra Labs",
                                    "logo-icon-name", "system-software-install",
                                    "website", "https://tauos.co",
                                    "website-label", "tauOS Website",
