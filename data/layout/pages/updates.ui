@@ -4,12 +4,22 @@
     <!-- <property name="icon-name">emblem-synchronizing-symbolic</property> -->
     <template class="CatalogueWindowUpdates" parent="AdwBin">
         <child>
-            <object class="GtkLabel">
-                <property name="margin-top">24</property>
-                <property name="margin-bottom">24</property>
-                <property name="margin-start">24</property>
-                <property name="margin-end">24</property>
-                <property name="label" translatable="yes">Hello World</property>
+            <!-- 
+                FIXME: AdwStatusPage does not support images, it only supports GdkPaintables and icons.
+                We use a child element with a GtkImage for now
+             -->
+            <object class="AdwStatusPage">
+                <property name="title">Up to Date</property>
+                <property name="description">Last checked: 25:69</property>
+                <property name="child">
+                    <object class="GtkImage">
+                        <property name="pixel-size">300</property>
+                        <property name="resource">/co/tauos/Catalogue/up-to-date.svg</property>
+                        <style>
+                            <class name="icon" />
+                        </style>
+                    </object>
+                </property>
             </object>
         </child>
     </template>

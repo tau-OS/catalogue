@@ -14,5 +14,7 @@
     <file>gtk/help-overlay.ui</file>
     <file alias="catalogue.css">styles/catalogue.css</file>
     <file alias="test-icon.png">icons/128x128.png</file>
+
+    <file alias="up-to-date.svg">icons/up-to-date.svg</file>
   </gresource>
 </gresources>
