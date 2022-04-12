@@ -56,7 +56,8 @@ namespace Catalogue {
             stack_listbox.select_row (initial_row);
 
             carousel = new Catalogue.Carousel ();
-            featured_box.append (carousel);
+            // Carousel should always be the top element in the featured page
+            featured_box.prepend (carousel);
         }
     }
 }
