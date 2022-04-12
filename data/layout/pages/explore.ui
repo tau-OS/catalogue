@@ -97,16 +97,26 @@
                                 <property name="title" translatable="yes">Games</property>
                                 <property name="icon-name">applications-games-symbolic</property>
                                 <property name="child">
-                                    <object class="AdwPreferencesPage">
-                                        <child>
+                                    <object class="AdwClamp">
+                                        <property name="maximum-size">1000</property>
+                                        <property name="tightening-threshold">600</property>
+                                        <property name="child">
                                             <object class="AdwPreferencesGroup">
+                                                <property name="margin-top">24</property>
+                                                <property name="title" translatable="yes">Games</property>
                                                 <child>
-                                                    <object class="AdwActionRow">
-                                                        <property name="title" translatable="yes">Hello World</property>
+                                                    <object class="GtkBox" id="games_box">
+                                                        <property name="halign">center</property>
+                                                        <property name="hexpand">False</property>
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="margin-bottom">36</property>
+                                                        <property name="margin-start">12</property>
+                                                        <property name="margin-end">12</property>
+                                                        <property name="valign">start</property>
                                                     </object>
                                                 </child>
                                             </object>
-                                        </child>
+                                        </property>
                                     </object>
                                 </property>
                             </object>
@@ -117,16 +127,26 @@
                                 <property name="title" translatable="yes">Develop</property>
                                 <property name="icon-name">application-x-addon-symbolic</property>
                                 <property name="child">
-                                    <object class="AdwPreferencesPage">
-                                        <child>
+                                    <object class="AdwClamp">
+                                        <property name="maximum-size">1000</property>
+                                        <property name="tightening-threshold">600</property>
+                                        <property name="child">
                                             <object class="AdwPreferencesGroup">
+                                                <property name="margin-top">24</property>
+                                                <property name="title" translatable="yes">Develop</property>
                                                 <child>
-                                                    <object class="AdwActionRow">
-                                                        <property name="title" translatable="yes">Hello World</property>
+                                                    <object class="GtkBox" id="develop_box">
+                                                        <property name="halign">center</property>
+                                                        <property name="hexpand">False</property>
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="margin-bottom">36</property>
+                                                        <property name="margin-start">12</property>
+                                                        <property name="margin-end">12</property>
+                                                        <property name="valign">start</property>
                                                     </object>
                                                 </child>
                                             </object>
-                                        </child>
+                                        </property>
                                     </object>
                                 </property>
                             </object>
@@ -137,16 +157,26 @@
                                 <property name="title" translatable="yes">Create</property>
                                 <property name="icon-name">applications-graphics-symbolic</property>
                                 <property name="child">
-                                    <object class="AdwPreferencesPage">
-                                        <child>
+                                    <object class="AdwClamp">
+                                        <property name="maximum-size">1000</property>
+                                        <property name="tightening-threshold">600</property>
+                                        <property name="child">
                                             <object class="AdwPreferencesGroup">
+                                                <property name="margin-top">24</property>
+                                                <property name="title" translatable="yes">Create</property>
                                                 <child>
-                                                    <object class="AdwActionRow">
-                                                        <property name="title" translatable="yes">Hello World</property>
+                                                    <object class="GtkBox" id="create_box">
+                                                        <property name="halign">center</property>
+                                                        <property name="hexpand">False</property>
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="margin-bottom">36</property>
+                                                        <property name="margin-start">12</property>
+                                                        <property name="margin-end">12</property>
+                                                        <property name="valign">start</property>
                                                     </object>
                                                 </child>
                                             </object>
-                                        </child>
+                                        </property>
                                     </object>
                                 </property>
                             </object>
@@ -157,16 +187,26 @@
                                 <property name="title" translatable="yes">Work</property>
                                 <property name="icon-name">mail-send-symbolic</property>
                                 <property name="child">
-                                    <object class="AdwPreferencesPage">
-                                        <child>
+                                    <object class="AdwClamp">
+                                        <property name="maximum-size">1000</property>
+                                        <property name="tightening-threshold">600</property>
+                                        <property name="child">
                                             <object class="AdwPreferencesGroup">
+                                                <property name="margin-top">24</property>
+                                                <property name="title" translatable="yes">Work</property>
                                                 <child>
-                                                    <object class="AdwActionRow">
-                                                        <property name="title" translatable="yes">Hello World</property>
+                                                    <object class="GtkBox" id="work_box">
+                                                        <property name="halign">center</property>
+                                                        <property name="hexpand">False</property>
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="margin-bottom">36</property>
+                                                        <property name="margin-start">12</property>
+                                                        <property name="margin-end">12</property>
+                                                        <property name="valign">start</property>
                                                     </object>
                                                 </child>
                                             </object>
-                                        </child>
+                                        </property>
                                     </object>
                                 </property>
                             </object>
@@ -177,16 +217,26 @@
                                 <property name="title" translatable="yes">Apps</property>
                                 <property name="icon-name">view-grid-symbolic</property>
                                 <property name="child">
-                                    <object class="AdwPreferencesPage">
-                                        <child>
+                                    <object class="AdwClamp">
+                                        <property name="maximum-size">1000</property>
+                                        <property name="tightening-threshold">600</property>
+                                        <property name="child">
                                             <object class="AdwPreferencesGroup">
+                                                <property name="margin-top">24</property>
+                                                <property name="title" translatable="yes">Apps</property>
                                                 <child>
-                                                    <object class="AdwActionRow">
-                                                        <property name="title" translatable="yes">Hello World</property>
+                                                    <object class="GtkBox" id="apps_box">
+                                                        <property name="halign">center</property>
+                                                        <property name="hexpand">False</property>
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="margin-bottom">36</property>
+                                                        <property name="margin-start">12</property>
+                                                        <property name="margin-end">12</property>
+                                                        <property name="valign">start</property>
                                                     </object>
                                                 </child>
                                             </object>
-                                        </child>
+                                        </property>
                                     </object>
                                 </property>
                             </object>

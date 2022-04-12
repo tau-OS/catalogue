@@ -25,6 +25,16 @@ namespace Catalogue {
         private unowned Gtk.Stack stack;
         [GtkChild]
         private unowned Gtk.Box featured_box;
+        [GtkChild]
+        private unowned Gtk.Box games_box;
+        [GtkChild]
+        private unowned Gtk.Box develop_box;
+        [GtkChild]
+        private unowned Gtk.Box create_box;
+        [GtkChild]
+        private unowned Gtk.Box work_box;
+        [GtkChild]
+        private unowned Gtk.Box apps_box;
 
         private unowned Adw.ActionRow initial_row;
         private Catalogue.Carousel carousel;
@@ -64,6 +74,14 @@ namespace Catalogue {
 
             featured_row_test = new Catalogue.FeaturedRow ("Test Row");
             featured_box.append (featured_row_test);
+
+
+            // shit for other pages
+            games_box.append (new Catalogue.CategoryRow ());
+            develop_box.append (new Catalogue.CategoryRow ());
+            create_box.append (new Catalogue.CategoryRow ());
+            work_box.append (new Catalogue.CategoryRow ());
+            apps_box.append (new Catalogue.CategoryRow ());
         }
     }
 }
