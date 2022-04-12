@@ -6,7 +6,9 @@ sources = [
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
     'widgets/carousel.vala',
-    'widgets/carousel-tile.vala'
+    'widgets/carousel-tile.vala',
+    'widgets/app-tile.vala',
+    'widgets/featured-row.vala'
 ]
 
 deps = [

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAppTile" parent="GtkButton">
+        <property name="halign">fill</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <style>
+            <class name="featured-tile" />
+            <class name="card" />
+        </style>
+
+        <child>
+            <object class="GtkBox" id="box">
+                <property name="halign">center</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                <property name="margin-start">7</property>
+                <property name="margin-end">7</property>
+                <property name="hexpand">True</property>
+                <child>
+                    <object class="GtkImage" id="image">
+                        <property name="resource">/co/tauos/Catalogue/test-icon.png</property>
+                        <property name="pixel-size">64</property>
+                        <style>
+                            <class name="icon-dropshadow" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="orientation">vertical</property>
+                        <property name="margin-start">10</property>
+                        <child>
+                            <object class="GtkLabel" id="title_label">
+                                <property name="xalign">0.5</property>
+                                <property name="halign">center</property>
+                                <property name="vexpand">False</property>
+                                <property name="ellipsize">end</property>
+                                <property name="label">Test</property>
+                                <style>
+                                    <class name="title-1" />
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="description_label">
+                                <property name="ellipsize">end</property>
+                                <property name="xalign">0.1</property>
+                                <property name="halign">center</property>
+                                <property name="lines">1</property>
+                                <property name="justify">center</property>
+                                <property name="label">Test</property>
+                                <style>
+                                    <class name="caption" />
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="AdwBin">
+                                <property name="halign">center</property>
+                                <property name="margin-top">5</property>
+                                <child>
+                                    <object class="GtkLabel" id="price_label">
+                                        <property name="ellipsize">end</property>
+                                        <property name="xalign">0.1</property>
+                                        <property name="lines">1</property>
+                                        <property name="justify">center</property>
+                                        <property name="label">$1.99</property>
+                                        <property name="margin-top">3</property>
+                                        <property name="margin-bottom">3</property>
+                                        <property name="margin-start">15</property>
+                                        <property name="margin-end">15</property>
+                                        <style>
+                                            <class name="success" />
+                                        </style>
+                                    </object>
+                                </child>
+                                <style>
+                                    <class name="card" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

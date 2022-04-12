@@ -29,6 +29,8 @@ namespace Catalogue {
         private unowned Adw.ActionRow initial_row;
         private Catalogue.Carousel carousel;
 
+        private Catalogue.FeaturedRow featured_row_test;
+
         public WindowExplore () {
             Object ();
 
@@ -58,6 +60,10 @@ namespace Catalogue {
             carousel = new Catalogue.Carousel ();
             // Carousel should always be the top element in the featured page
             featured_box.prepend (carousel);
+
+
+            featured_row_test = new Catalogue.FeaturedRow ("Test Row");
+            featured_box.append (featured_row_test);
         }
     }
 }
