@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk" version="4.0"/>
-  <template class="CatalogueCarousel" parent="GtkBox">
-    <property name="halign">fill</property>
-    <property name="valign">fill</property>
-    <property name="orientation">vertical</property>
-    <property name="spacing">12</property>
-    <!-- <child>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueCarousel" parent="GtkBox">
+        <property name="halign">fill</property>
+        <property name="valign">fill</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <!-- <child>
       <object class="GtkEventControllerKey">
         <signal name="key-pressed" handler="key_pressed_cb"/>
       </object>
     </child> -->
-    <style>
-      <class name="featured-carousel"/>
-    </style>
-    <child>
-      <object class="GtkOverlay" id="overlay">
-        <property name="halign">fill</property>
-        <property name="valign">fill</property>
+        <style>
+            <class name="featured-carousel" />
+        </style>
         <child>
-          <object class="AdwCarousel" id="carousel">
-            <!-- <signal name="notify::position" handler="carousel_notify_position_cb" swapped="yes"/> -->
-            <child>
-              <object class="AdwActionRow">
-                <property name="width-request">500</property>
-                <property name="title" translatable="yes">Carousel</property>
-                <property name="vexpand">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="AdwActionRow">
-                <property name="width-request">500</property>
-                <property name="title" translatable="yes"> Page 2 lol</property>
-                <property name="vexpand">True</property>
-              </object>
-            </child>
-            <style>
-              <class name="card"/>
-            </style>
-          </object>
+            <object class="GtkOverlay" id="overlay">
+                <property name="halign">fill</property>
+                <property name="valign">fill</property>
+                <child>
+                    <object class="AdwCarousel" id="carousel">
+                        <!-- <signal name="notify::position" handler="carousel_notify_position_cb" swapped="yes"/> -->
+                        <child>
+                            <object class="AdwActionRow">
+                                <property name="width-request">500</property>
+                                <property name="title" translatable="yes">Carousel</property>
+                                <property name="vexpand">True</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="AdwActionRow">
+                                <property name="width-request">500</property>
+                                <property name="title" translatable="yes"> Page 2 lol</property>
+                                <property name="vexpand">True</property>
+                            </object>
+                        </child>
+                        <style>
+                            <class name="card" />
+                        </style>
+                    </object>
+                </child>
+                <child type="overlay">
+                    <object class="GtkButton" id="previous_button">
+                        <property name="use-underline">True</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="width-request">64</property>
+                        <property name="height-request">64</property>
+                        <property name="margin-top">9</property>
+                        <property name="margin-bottom">9</property>
+                        <property name="margin-start">9</property>
+                        <property name="margin-end">9</property>
+                        <property name="icon-name">go-previous-symbolic</property>
+                        <style>
+                            <class name="circular" />
+                            <class name="flat" />
+                            <class name="image-button" />
+                        </style>
+                    </object>
+                </child>
+                <child type="overlay">
+                    <object class="GtkButton" id="next_button">
+                        <property name="use-underline">True</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="width-request">64</property>
+                        <property name="height-request">64</property>
+                        <property name="margin-top">9</property>
+                        <property name="margin-bottom">9</property>
+                        <property name="margin-start">9</property>
+                        <property name="margin-end">9</property>
+                        <property name="icon_name">go-next-symbolic</property>
+                        <style>
+                            <class name="circular" />
+                            <class name="flat" />
+                            <class name="image-button" />
+                        </style>
+                    </object>
+                </child>
+            </object>
         </child>
-        <child type="overlay">
-          <object class="GtkButton" id="previous_button">
-            <property name="use-underline">True</property>
-            <property name="halign">start</property>
-            <property name="valign">center</property>
-            <property name="width-request">64</property>
-            <property name="height-request">64</property>
-            <property name="margin-top">9</property>
-            <property name="margin-bottom">9</property>
-            <property name="margin-start">9</property>
-            <property name="margin-end">9</property>
-            <property name="icon-name">go-previous-symbolic</property>
-            <style>
-              <class name="circular"/>
-              <class name="flat"/>
-              <class name="image-button"/>
-            </style>
-          </object>
+        <child>
+            <object class="AdwCarouselIndicatorLines" id="lines">
+                <property name="carousel">carousel</property>
+            </object>
         </child>
-        <child type="overlay">
-          <object class="GtkButton" id="next_button">
-            <property name="use-underline">True</property>
-            <property name="halign">end</property>
-            <property name="valign">center</property>
-            <property name="width-request">64</property>
-            <property name="height-request">64</property>
-            <property name="margin-top">9</property>
-            <property name="margin-bottom">9</property>
-            <property name="margin-start">9</property>
-            <property name="margin-end">9</property>
-            <property name="icon_name">go-next-symbolic</property>
-            <style>
-              <class name="circular"/>
-              <class name="flat"/>
-              <class name="image-button"/>
-            </style>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="AdwCarouselIndicatorLines" id="lines">
-        <property name="carousel">carousel</property>
-      </object>
-    </child>
-  </template>
+    </template>
 </interface>
