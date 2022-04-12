@@ -1,6 +1,7 @@
 sources = [
 	'main.vala',
   	'window.vala',
+    'preferences.vala',
   	'application.vala',
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',

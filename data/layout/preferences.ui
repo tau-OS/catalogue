@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <requires lib="libadwaita" version="1.0" />
+    <template class="CataloguePreferences" parent="AdwPreferencesWindow">
+        <property name="can-navigate-back">True</property>
+
+        <child>
+            <object class="AdwPreferencesPage">
+                <property name="icon_name">preferences-system-symbolic</property>
+                <property name="title">_Preferences</property>
+                <property name="use-underline">True</property>
+                <child>
+                    <object class="AdwPreferencesGroup">
+                        <property name="title">This is a group</property>
+                        <child>
+                            <object class="AdwActionRow">
+                                <property name="title" translatable="yes">This is a row</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+
+    </template>
+</interface>

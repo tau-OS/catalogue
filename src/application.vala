@@ -65,7 +65,14 @@ namespace Catalogue {
         }
 
         private void on_preferences_action () {
-            message ("app.preferences action activated");
+            var win = this.active_window;
+            if (win == null) {
+                error ("Cannot find main window");
+            }
+
+            var preferences = new Catalogue.Preferences ();
+            preferences.set_transient_for (win);
+            preferences.present ();
         }
     }
 }
