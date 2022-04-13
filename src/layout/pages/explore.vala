@@ -20,6 +20,8 @@ namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/explore.ui")]
     public class WindowExplore : Adw.Bin {
         [GtkChild]
+        private unowned Adw.Leaflet leaflet;
+        [GtkChild]
         private unowned Gtk.ListBox stack_listbox;
         [GtkChild]
         private unowned Gtk.Stack stack;
@@ -73,15 +75,38 @@ namespace Catalogue {
 
 
             featured_row_test = new Catalogue.FeaturedRow ("Test Row");
+            featured_row_test.explore_leaflet_open.connect (() => {
+                leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            });
             featured_box.append (featured_row_test);
 
+            var games_row = new Catalogue.CategoryRow ();
+            games_row.explore_leaflet_open.connect (() => {
+                leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            });
+            var develop_row = new Catalogue.CategoryRow ();
+            develop_row.explore_leaflet_open.connect (() => {
+                leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            });
+            var create_row = new Catalogue.CategoryRow ();
+            create_row.explore_leaflet_open.connect (() => {
+                leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            });
+            var work_row = new Catalogue.CategoryRow ();
+            work_row.explore_leaflet_open.connect (() => {
+                leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            });
+            var apps_row = new Catalogue.CategoryRow ();
+            apps_row.explore_leaflet_open.connect (() => {
+                leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            });
 
             // shit for other pages
-            games_box.append (new Catalogue.CategoryRow ());
-            develop_box.append (new Catalogue.CategoryRow ());
-            create_box.append (new Catalogue.CategoryRow ());
-            work_box.append (new Catalogue.CategoryRow ());
-            apps_box.append (new Catalogue.CategoryRow ());
+            games_box.append (games_row);
+            develop_box.append (develop_row);
+            create_box.append (create_row);
+            work_box.append (work_row);
+            apps_box.append (apps_row);
         }
     }
 }

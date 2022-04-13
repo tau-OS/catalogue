@@ -25,6 +25,8 @@
         private unowned Gtk.Label description_label;
         [GtkChild]
         private unowned Gtk.Label price_label;
+
+        public signal void explore_leaflet_open ();
         
         public AppTile (string title, string description, string price) {
             Object ();
@@ -32,6 +34,10 @@
             title_label.set_label (title);
             description_label.set_label (description);
             price_label.set_label (price);
+
+            this.clicked.connect (() => {
+                explore_leaflet_open ();
+            });
         }
     }
 }
