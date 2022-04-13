@@ -43,4 +43,4 @@ if compile_schemas.found()
   	)
 endif
 
-subdir('icons')
+subdir('images')
