@@ -19,9 +19,22 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/installed.ui")]
     public class WindowInstalled : Adw.Bin {
+        [GtkChild]
+        private unowned Adw.PreferencesGroup in_progress;
+        [GtkChild]
+        private unowned Adw.PreferencesGroup apps;
 
         public WindowInstalled () {
             Object ();
+
+            in_progress.add (new Catalogue.InstalledRow ("UwU App", "Stop"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
         }
     }
 }
