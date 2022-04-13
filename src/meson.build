@@ -10,7 +10,8 @@ sources = [
     'widgets/carousel-tile.vala',
     'widgets/app-tile.vala',
     'widgets/featured-row.vala',
-    'widgets/category-row.vala'
+    'widgets/category-row.vala',
+    'widgets/installed-row.vala'
 ]
 
 deps = [

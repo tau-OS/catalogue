@@ -11,6 +11,7 @@
     <file alias="app-tile.ui">layout/widgets/app-tile.ui</file>
     <file alias="featured-row.ui">layout/widgets/featured-row.ui</file>
     <file alias="category-row.ui">layout/widgets/category-row.ui</file>
+    <file alias="installed-row.ui">layout/widgets/installed-row.ui</file>
     <file>gtk/help-overlay.ui</file>
     <file alias="catalogue.css">styles/catalogue.css</file>
     <file alias="test-icon.png">icons/128x128.png</file>

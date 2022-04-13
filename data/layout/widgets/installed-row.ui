@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueInstalledRow" parent="AdwActionRow">
+        <style>
+            <class name="title-3" />
+        </style>
+
+        <child type="prefix">
+            <object class="GtkImage" id="image">
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                <property name="pixel-size">64</property>
+                <style>
+                    <class name="icon-dropshadow" />
+                </style>
+            </object>
+        </child>
+        <child>
+            <object class="GtkButton" id="suffix_button">
+                <property name="valign">center</property>
+                <style>
+                    <class name="title-4" />
+                    <class name="pill" />
+                    <class name="destructive-action" />
+                </style>
+            </object>
+        </child>
+    </template>
+</interface>
