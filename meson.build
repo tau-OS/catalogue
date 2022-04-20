@@ -7,6 +7,19 @@ project(
 
 application_id = 'co.tauos.Catalogue'
 
+if get_option('development')
+  app_id = 'co.tauos.Catalogue.Devel'
+  name_suffix = ' (Development)'
+else
+  app_id = 'co.tauos.Catalogue'
+  name_suffix = ''
+endif
+
+conf = configuration_data()
+conf.set_quoted('APP_ID', app_id)
+conf.set_quoted('NAME_SUFFIX', name_suffix)
+conf.set_quoted('VERSION', meson.project_version())
+
 gnome = import('gnome')
 i18n = import('i18n')
 

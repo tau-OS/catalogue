@@ -19,7 +19,7 @@
 namespace Catalogue {
     public class Application : Adw.Application {
         public Application () {
-            Object (application_id: "co.tauos.Catalogue", flags: ApplicationFlags.FLAGS_NONE);
+            Object (application_id: Config.APP_ID, flags: ApplicationFlags.FLAGS_NONE);
         }
 
         construct {
@@ -54,16 +54,16 @@ namespace Catalogue {
             string[] authors = { "Jamie Murphy" };
             string[] artists = { "Jamie Murphy", "Lains https://github.com/lainsce" };
             Gtk.show_about_dialog (this.active_window,
-                                   "program-name", "Catalogue",
+                                   "program-name", "Catalogue" + Config.NAME_SUFFIX,
                                    "authors", authors,
                                    "artists", artists,
                                    "comments", "A nice way to manage the software on your system.",
                                    "copyright", "Copyright © 2022 Fyra Labs",
-                                   "logo-icon-name", "system-software-install",
+                                   "logo-icon-name", Config.APP_ID,
                                    "website", "https://tauos.co",
                                    "website-label", "tauOS Website",
                                    "license-type", Gtk.License.GPL_3_0,
-                                   "version", "1.0.0");
+                                   "version", Config.VERSION);
         }
 
         private void on_preferences_action () {
