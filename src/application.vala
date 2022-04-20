@@ -52,9 +52,11 @@ namespace Catalogue {
 
         private void on_about_action () {
             string[] authors = { "Jamie Murphy" };
+            string[] artists = { "Jamie Murphy", "Lains https://github.com/lainsce" };
             Gtk.show_about_dialog (this.active_window,
                                    "program-name", "Catalogue",
                                    "authors", authors,
+                                   "artists", artists,
                                    "comments", "A nice way to manage the software on your system.",
                                    "copyright", "Copyright © 2022 Fyra Labs",
                                    "logo-icon-name", "system-software-install",
