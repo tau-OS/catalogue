@@ -20,21 +20,6 @@
                 <property name="valign">fill</property>
                 <child>
                     <object class="AdwCarousel" id="carousel">
-                        <!-- <signal name="notify::position" handler="carousel_notify_position_cb" swapped="yes"/> -->
-                        <child>
-                            <object class="AdwActionRow">
-                                <property name="width-request">500</property>
-                                <property name="title" translatable="yes">Carousel</property>
-                                <property name="vexpand">True</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="AdwActionRow">
-                                <property name="width-request">500</property>
-                                <property name="title" translatable="yes"> Page 2 lol</property>
-                                <property name="vexpand">True</property>
-                            </object>
-                        </child>
                         <style>
                             <class name="card" />
                         </style>
