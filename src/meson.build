@@ -18,6 +18,7 @@ sources = [
 deps = [
 	dependency('gtk4'),
   	dependency('libadwaita-1'),
+    dependency('gee-0.8')
 ]
 
 gnome = import('gnome')

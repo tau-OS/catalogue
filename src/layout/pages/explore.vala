@@ -22,8 +22,6 @@ namespace Catalogue {
         [GtkChild]
         private unowned Adw.Leaflet leaflet;
         [GtkChild]
-        private unowned Gtk.ListBox stack_listbox;
-        [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
         private unowned Gtk.Box featured_box;
@@ -40,7 +38,6 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Box apps_box;
 
-        private unowned Adw.ActionRow initial_row;
         private Catalogue.Carousel carousel;
 
         private Catalogue.FeaturedRow featured_row_test;
@@ -48,41 +45,34 @@ namespace Catalogue {
         public WindowExplore () {
             Object ();
 
-            for (var i = 0; i < stack.get_pages ().get_n_items (); i++) {
-                var page = ((!) stack.get_pages ().get_object (i)) as Gtk.StackPage;
-                
-                var row = new Adw.ActionRow () {
-                    title = page.get_title (),
-                    icon_name = page.get_icon_name (),
-                    name = page.get_name ()
-                };
-
-                if (i == 0) {
-                    initial_row = row;
-                }
-
-                stack_listbox.append (row);
-            }
-
-            stack_listbox.row_selected.connect ((row) => {
-                var page = ((!) row) as Adw.ActionRow;
-                stack.set_visible_child_name (page.get_name ());
-            });
-
-            stack_listbox.select_row (initial_row);
-
             carousel = new Catalogue.Carousel ();
             // Carousel should always be the top element in the featured page
             featured_box.prepend (carousel);
 
-            featured_flowbox.append (new Catalogue.CategoryTile ("Featured", "starred-symbolic"));
-            featured_flowbox.append (new Catalogue.CategoryTile ("Games", "applications-games-symbolic"));
-            featured_flowbox.append (new Catalogue.CategoryTile ("Develop", "application-x-addon-symbolic"));
-            featured_flowbox.append (new Catalogue.CategoryTile ("Create", "applications-graphics-symbolic"));
-            featured_flowbox.append (new Catalogue.CategoryTile ("Work", "mail-send-symbolic"));
-            featured_flowbox.append (new Catalogue.CategoryTile ("Apps", "view-grid-symbolic"));
+            // Handle Categories
+            var categories = new Gee.HashMap<string, string> ();
+            // Key: Category Name
+            // Value: Category Icon
+            categories.set ("Featured", "starred-symbolic");
+            categories.set ("Games", "applications-games-symbolic");
+            categories.set ("Develop", "application-x-addon-symbolic");
+            categories.set ("Create", "applications-graphics-symbolic");
+            categories.set ("Work", "mail-send-symbolic");
+            categories.set ("Apps", "view-grid-symbolic");
 
+            foreach (var entry in categories.entries) {
+                var tile = new Catalogue.CategoryTile (entry.key, entry.value);
 
+                var name = entry.key;
+
+                tile.clicked.connect (() => {
+                    stack.set_visible_child_name (name.down ());
+                });
+                
+                featured_flowbox.append (tile);
+            }
+
+            // Handle Rows
             featured_row_test = new Catalogue.FeaturedRow ("Test Row");
             featured_row_test.explore_leaflet_open.connect (() => {
                 leaflet.navigate (Adw.NavigationDirection.FORWARD);

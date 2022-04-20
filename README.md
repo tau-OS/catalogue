@@ -12,6 +12,7 @@ You'll need the following dependencies:
 - `valac`
 - `gtk4`
 - `libadwaita-1`
+- `gee-0.8`
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja test` to build and run automated tests.
 
