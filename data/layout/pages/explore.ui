@@ -81,6 +81,11 @@
                                                         <property name="margin-start">12</property>
                                                         <property name="margin-end">12</property>
                                                         <property name="valign">start</property>
+                                                        <child>
+                                                            <object class="GtkFlowBox" id="featured_flowbox">
+                                                                <property name="max-children-per-line">3</property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </property>
                                             </object>
@@ -242,7 +247,6 @@
                     </object>
                 </child>
 
-                <!-- This is the "app details" UI -->
                 <child>
                     <object class="GtkBox" id="leaflet_expanded">
                         <child>

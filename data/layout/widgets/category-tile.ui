@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueCategoryTile" parent="GtkButton">
+        <property name="halign">fill</property>
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <style>
+            <class name="featured-tile" />
+            <class name="card" />
+        </style>
+        <child>
+            <object class="GtkBox" id="box">
+                <property name="halign">center</property>
+                <property name="orientation">horizontal</property>
+                <property name="margin-top">30</property>
+                <property name="margin-bottom">30</property>
+                <property name="margin-start">7</property>
+                <property name="margin-end">7</property>
+                <property name="hexpand">True</property>
+                <child>
+                    <object class="GtkBox">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">10</property>
+                        <child>
+                            <object class="GtkImage" id="category_icon">
+                                <property name="pixel_size">20</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="category_label">
+                                <property name="ellipsize">end</property>
+                                <property name="xalign">0.1</property>
+                                <property name="halign">center</property>
+                                <property name="lines">1</property>
+                                <property name="justify">center</property>
+                                <property name="label">Placeholder</property>
+                                <style>
+                                    <class name="title-2" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

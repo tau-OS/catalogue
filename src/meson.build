@@ -9,6 +9,7 @@ sources = [
     'widgets/carousel.vala',
     'widgets/carousel-tile.vala',
     'widgets/app-tile.vala',
+    'widgets/category-tile.vala',
     'widgets/featured-row.vala',
     'widgets/category-row.vala',
     'widgets/installed-row.vala'

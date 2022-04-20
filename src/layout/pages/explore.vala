@@ -28,6 +28,8 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Box featured_box;
         [GtkChild]
+        private unowned Gtk.FlowBox featured_flowbox;
+        [GtkChild]
         private unowned Gtk.Box games_box;
         [GtkChild]
         private unowned Gtk.Box develop_box;
@@ -72,6 +74,13 @@ namespace Catalogue {
             carousel = new Catalogue.Carousel ();
             // Carousel should always be the top element in the featured page
             featured_box.prepend (carousel);
+
+            featured_flowbox.append (new Catalogue.CategoryTile ("Featured", "starred-symbolic"));
+            featured_flowbox.append (new Catalogue.CategoryTile ("Games", "applications-games-symbolic"));
+            featured_flowbox.append (new Catalogue.CategoryTile ("Develop", "application-x-addon-symbolic"));
+            featured_flowbox.append (new Catalogue.CategoryTile ("Create", "applications-graphics-symbolic"));
+            featured_flowbox.append (new Catalogue.CategoryTile ("Work", "mail-send-symbolic"));
+            featured_flowbox.append (new Catalogue.CategoryTile ("Apps", "view-grid-symbolic"));
 
 
             featured_row_test = new Catalogue.FeaturedRow ("Test Row");
