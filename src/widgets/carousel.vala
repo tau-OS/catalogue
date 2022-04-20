@@ -34,14 +34,7 @@ namespace Catalogue {
 
             var page_widget = carousel.get_nth_page (new_page);
 
-            /* Don’t animate if we’re wrapping from the last page back to the first
-             * or from the first page to the last going backwards as it means rapidly
-             * spooling through all the pages, which looks confusing. */
-            if ((new_page == 0.0 && page_delta > 0) || (new_page == pages - 1 && page_delta < 0)) {
-                animate = false;
-            }
-
-            carousel.scroll_to (page_widget, animate);
+            carousel.scroll_to (page_widget, true);
         }
 
         public Carousel () {
@@ -55,7 +48,9 @@ namespace Catalogue {
                 move_relative_page(-1);
             });
 
-            carousel.prepend (new Catalogue.CarouselTile ());
+            carousel.append (new Catalogue.CarouselTile ());
+            carousel.append (new Catalogue.CarouselTile ());
+            carousel.append (new Catalogue.CarouselTile ());
         }
     }
 }
