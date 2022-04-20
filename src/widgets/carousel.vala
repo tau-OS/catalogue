@@ -27,7 +27,6 @@ namespace Catalogue {
         private unowned Gtk.Button next_button;
 
         private void move_relative_page (int page_delta) {
-            var animate = true;
             var current_page = carousel.get_position ();
             var pages = carousel.get_n_pages ();
             var new_page = (((int) current_page) + page_delta + pages) % pages;
