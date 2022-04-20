@@ -28,6 +28,8 @@ namespace Catalogue {
         private Catalogue.WindowInstalled installed;
         private Catalogue.WindowUpdates updates;
 
+        private bool should_button_be_shown;
+
         [GtkCallback]
         public void back_clicked_cb (Gtk.Button source) {
             Signals.get_default ().window_do_back_button_clicked ();
@@ -39,12 +41,18 @@ namespace Catalogue {
             explore = new Catalogue.WindowExplore ();
             installed = new Catalogue.WindowInstalled ();
             updates = new Catalogue.WindowUpdates ();
+            
+            should_button_be_shown = false;
 
             Signals.get_default ().window_show_back_button.connect (() => {
                 back_button.set_visible (true);
+                should_button_be_shown = true;
             });
             Signals.get_default ().window_hide_back_button.connect (() => {
                 back_button.set_visible (false);
+                if (header_stack.get_visible_child_name () == "explore") {
+                    should_button_be_shown = false;
+                }
             });
 
             header_stack.add_titled (explore, "explore", "Explore");
@@ -58,6 +66,15 @@ namespace Catalogue {
             header_stack.add_titled (updates, "updates", "Updates");
             var stack_updates = header_stack.get_page (updates);
             ((!) stack_updates).icon_name = "emblem-synchronizing-symbolic";
+
+            header_stack.notify["visible-child"].connect (() => {
+                print (should_button_be_shown.to_string ());
+                if (header_stack.get_visible_child_name () == "explore" && should_button_be_shown == true) {
+                    Signals.get_default ().window_show_back_button ();
+                } else {
+                    Signals.get_default ().window_hide_back_button ();
+                }
+            });
         }
     }
 }
