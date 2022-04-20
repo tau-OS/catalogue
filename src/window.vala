@@ -68,7 +68,6 @@ namespace Catalogue {
             ((!) stack_updates).icon_name = "emblem-synchronizing-symbolic";
 
             header_stack.notify["visible-child"].connect (() => {
-                print (should_button_be_shown.to_string ());
                 if (header_stack.get_visible_child_name () == "explore" && should_button_be_shown == true) {
                     Signals.get_default ().window_show_back_button ();
                 } else {
