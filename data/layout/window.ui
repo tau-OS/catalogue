@@ -28,6 +28,7 @@
                           </child>
                         <child type="end">
                             <object class="GtkBox">
+                                <property name="spacing">10</property>
                                 <child>
                                     <object class="AdwAvatar">
                                         <property name="size">25</property>
