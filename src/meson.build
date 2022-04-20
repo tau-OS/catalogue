@@ -12,7 +12,8 @@ sources = [
     'widgets/category-tile.vala',
     'widgets/featured-row.vala',
     'widgets/category-row.vala',
-    'widgets/installed-row.vala'
+    'widgets/installed-row.vala',
+    'objects/signals.vala'
 ]
 
 config_file = configure_file(

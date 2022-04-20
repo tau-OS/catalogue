@@ -60,6 +60,8 @@ namespace Catalogue {
             categories.set ("Work", "mail-send-symbolic");
             categories.set ("Apps", "view-grid-symbolic");
 
+            var is_leaflet_active = false;
+
             foreach (var entry in categories.entries) {
                 var tile = new Catalogue.CategoryTile (entry.key, entry.value);
 
@@ -67,38 +69,44 @@ namespace Catalogue {
 
                 tile.clicked.connect (() => {
                     stack.set_visible_child_name (name.down ());
+                    Signals.get_default ().window_show_back_button ();
                 });
                 
                 featured_flowbox.append (tile);
             }
 
             // Handle Rows
-            featured_row_test = new Catalogue.FeaturedRow ("Test Row");
-            featured_row_test.explore_leaflet_open.connect (() => {
+            Signals.get_default ().explore_leaflet_open.connect (() => {
+                is_leaflet_active = true;
                 leaflet.navigate (Adw.NavigationDirection.FORWARD);
+                Signals.get_default ().window_show_back_button ();
             });
+
+            Signals.get_default ().window_do_back_button_clicked.connect ((is_stack) => {
+                if (!is_leaflet_active) {
+                    stack.set_transition_type (Gtk.StackTransitionType.SLIDE_RIGHT);
+                    stack.set_visible_child_name ("featured");
+                    stack.set_transition_type (Gtk.StackTransitionType.SLIDE_LEFT);
+                } else {
+                    leaflet.navigate (Adw.NavigationDirection.BACK);
+                    is_leaflet_active = false;
+                }
+
+                if (stack.get_visible_child_name () == "featured") {
+                    Signals.get_default ().window_hide_back_button ();
+                }
+            });
+
+            
+            
+            featured_row_test = new Catalogue.FeaturedRow ("Test Row");
             featured_box.append (featured_row_test);
 
             var games_row = new Catalogue.CategoryRow ();
-            games_row.explore_leaflet_open.connect (() => {
-                leaflet.navigate (Adw.NavigationDirection.FORWARD);
-            });
             var develop_row = new Catalogue.CategoryRow ();
-            develop_row.explore_leaflet_open.connect (() => {
-                leaflet.navigate (Adw.NavigationDirection.FORWARD);
-            });
             var create_row = new Catalogue.CategoryRow ();
-            create_row.explore_leaflet_open.connect (() => {
-                leaflet.navigate (Adw.NavigationDirection.FORWARD);
-            });
             var work_row = new Catalogue.CategoryRow ();
-            work_row.explore_leaflet_open.connect (() => {
-                leaflet.navigate (Adw.NavigationDirection.FORWARD);
-            });
             var apps_row = new Catalogue.CategoryRow ();
-            apps_row.explore_leaflet_open.connect (() => {
-                leaflet.navigate (Adw.NavigationDirection.FORWARD);
-            });
 
             // shit for other pages
             games_box.append (games_row);

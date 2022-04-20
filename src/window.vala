@@ -21,10 +21,17 @@ namespace Catalogue {
     public class Window : Adw.ApplicationWindow {
         [GtkChild]
         private unowned Adw.ViewStack header_stack;
+        [GtkChild]
+        private unowned Gtk.Button back_button;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
         private Catalogue.WindowUpdates updates;
+
+        [GtkCallback]
+        public void back_clicked_cb (Gtk.Button source) {
+            Signals.get_default ().window_do_back_button_clicked ();
+        }
 
         public Window (Adw.Application app) {
             Object (application: app);
@@ -32,6 +39,13 @@ namespace Catalogue {
             explore = new Catalogue.WindowExplore ();
             installed = new Catalogue.WindowInstalled ();
             updates = new Catalogue.WindowUpdates ();
+
+            Signals.get_default ().window_show_back_button.connect (() => {
+                back_button.set_visible (true);
+            });
+            Signals.get_default ().window_hide_back_button.connect (() => {
+                back_button.set_visible (false);
+            });
 
             header_stack.add_titled (explore, "explore", "Explore");
             var stack_explore = header_stack.get_page (explore);

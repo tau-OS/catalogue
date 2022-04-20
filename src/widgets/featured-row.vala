@@ -24,8 +24,6 @@
         [GtkChild]
         private unowned Gtk.FlowBox row_box;
 
-        public signal void explore_leaflet_open ();
-
         // TODO pass GtkWidgets for the flowbox
         public FeaturedRow (string title) {
             Object ();
@@ -34,8 +32,6 @@
 
             for (var i = 0; i < 10; i++) {
                 var app_tile = new Catalogue.AppTile ("UwU", "This is a test app", "$1.99");
-
-                app_tile.explore_leaflet_open.connect (() => explore_leaflet_open ());
 
                 // this  needs to be updated lol
                 row_box.append (app_tile);
