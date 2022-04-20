@@ -81,7 +81,7 @@
             </object>
         </child>
         <child>
-            <object class="AdwCarouselIndicatorLines" id="lines">
+            <object class="AdwCarouselIndicatorDots" id="lines">
                 <property name="carousel">carousel</property>
             </object>
         </child>
