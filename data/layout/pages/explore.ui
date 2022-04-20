@@ -206,13 +206,7 @@
                 </child>
 
                 <child>
-                    <object class="GtkBox" id="leaflet_expanded">
-                        <child>
-                            <object class="GtkLabel">
-                                <property name="label">Label UwU</property>
-                            </object>
-                        </child>
-                    </object>
+                    <object class="GtkBox" id="leaflet_expanded"></object>
                 </child>
             </object>
         </child>

@@ -6,6 +6,11 @@ sources = [
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
+    'layout/pages/details.vala',
+    'widgets/details/app-header.vala',
+    'widgets/details/app-details.vala',
+    'widgets/details/app-versionhistory.vala',
+
     'widgets/carousel.vala',
     'widgets/carousel-tile.vala',
     'widgets/app-tile.vala',

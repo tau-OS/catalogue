@@ -22,6 +22,8 @@ namespace Catalogue {
         [GtkChild]
         private unowned Adw.Leaflet leaflet;
         [GtkChild]
+        private unowned Gtk.Box leaflet_expanded;
+        [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
         private unowned Gtk.Box featured_box;
@@ -114,6 +116,10 @@ namespace Catalogue {
             create_box.append (create_row);
             work_box.append (work_row);
             apps_box.append (apps_row);
+
+            // Add details page to leaflet
+
+            leaflet_expanded.append (new Catalogue.WindowDetails ());
         }
     }
 }
