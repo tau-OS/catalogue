@@ -22,6 +22,10 @@ namespace Catalogue {
         
         public CarouselTile () {
             Object ();
+
+            this.clicked.connect (() => {
+                Signals.get_default ().explore_leaflet_open ();
+            });
         }
     }
 }

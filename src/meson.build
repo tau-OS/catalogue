@@ -31,8 +31,7 @@ config_file = configure_file(
 deps = [
 	dependency('gtk4'),
   	dependency('libadwaita-1'),
-    dependency('gee-0.8'),
-    meson.get_compiler('c').find_library('m', required: false)
+    dependency('gee-0.8')
 ]
 
 gnome = import('gnome')
