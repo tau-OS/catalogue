@@ -3,7 +3,7 @@
     "runtime" : "org.gnome.Sdk",
     "runtime-version" : "42",
     "sdk" : "org.gnome.Sdk",
-    "command" : "co.tauos.Catalogue.Countdown",
+    "command" : "catalogue",
     "finish-args" : [
         "--share=ipc",
         "--socket=fallback-x11",

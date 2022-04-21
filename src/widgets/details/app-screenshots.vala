@@ -18,17 +18,17 @@
 
  namespace Catalogue {
     // for the future lol
-    private class AppScreenshotImage : Gtk.Image {
-        private AppScreenshotImage () {
-            Object ();
-        }
+    // private class AppScreenshotImage : Gtk.Image {
+    //     private AppScreenshotImage () {
+    //         Object ();
+    //     }
 
-        construct {
-            this.get_style_context ().add_class ("screenshot-image");
+    //     construct {
+    //         this.get_style_context ().add_class ("screenshot-image");
             // wtf is image2
-            this.get_style_context ().add_class ("image1");
-        }
-    }
+    //         this.get_style_context ().add_class ("image1");
+    //     }
+    // }
 
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-screenshots.ui")]
     public class AppScreenshots : Gtk.Box {
