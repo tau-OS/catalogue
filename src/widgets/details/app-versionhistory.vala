@@ -16,11 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory.ui")]
- public class Catalogue.AppVersionHistory : Adw.Bin {
-         
-     public AppVersionHistory () {
-         Object ();
-     }
- }
+namespace Catalogue {
+    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory.ui")]
+    public class AppVersionHistory : Adw.Bin {
+        [GtkChild]
+        private unowned Gtk.ListBox list_box_version_history;
+            
+        public AppVersionHistory () {
+            Object ();
+
+            list_box_version_history.prepend (new Catalogue.AppVersionHistoryRow ());
+        }
+    }
+}
  

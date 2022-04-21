@@ -1,4 +1,4 @@
-/* widgets/details/app-details.vala
+/* widgets/details/app-versionhistory-row.vala
  *
  * Copyright 2022 Fyra Labs
  *
@@ -17,12 +17,11 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-details.ui")]
-    public class AppDetails : Adw.Bin {
+    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory-row.ui")]
+    public class AppVersionHistoryRow : Gtk.ListBoxRow {
             
-        public AppDetails () {
+        public AppVersionHistoryRow () {
             Object ();
         }
     }
 }
- 

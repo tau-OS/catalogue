@@ -16,9 +16,7 @@
                         <style>
                             <class name="boxed-list" />
                         </style>
-                        <!-- <child>
-                                            <object class="GsAppVersionHistoryRow" id="row_latest_version"></object>
-                                        </child> -->
+                        
                         <child>
                             <object class="GtkListBoxRow" id="version_history_button">
                                 <property name="can_focus">True</property>

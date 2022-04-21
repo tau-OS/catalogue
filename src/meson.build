@@ -10,7 +10,8 @@ sources = [
     'widgets/details/app-header.vala',
     'widgets/details/app-details.vala',
     'widgets/details/app-versionhistory.vala',
-
+    'widgets/details/app-versionhistory-row.vala',
+    'widgets/details/app-screenshots.vala',
     'widgets/carousel.vala',
     'widgets/carousel-tile.vala',
     'widgets/app-tile.vala',
@@ -30,7 +31,8 @@ config_file = configure_file(
 deps = [
 	dependency('gtk4'),
   	dependency('libadwaita-1'),
-    dependency('gee-0.8')
+    dependency('gee-0.8'),
+    meson.get_compiler('c').find_library('m', required: false)
 ]
 
 gnome = import('gnome')

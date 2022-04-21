@@ -16,10 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-[GtkTemplate (ui = "/co/tauos/Catalogue/details/app-header.ui")]
-public class Catalogue.AppHeader : Adw.Bin {
-        
-    public AppHeader () {
-        Object ();
+namespace Catalogue {
+    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-header.ui")]
+    public class AppHeader : Adw.Bin {
+            
+        public AppHeader () {
+            Object ();
+        }
     }
 }

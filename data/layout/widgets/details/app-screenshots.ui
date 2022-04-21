@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAppScreenshots" parent="GtkBox">
+        <!-- Should be a stack but idc, I ain't thouching that shit yet -->
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="orientation">vertical</property>
+        <style>
+            <class name="frame" />
+            <class name="view" />
+        </style>
+        <child>
+            <object class="GtkOverlay">
+                <child>
+                    <object class="AdwCarousel" id="carousel">
+                        <property name="vexpand">True</property>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">6</property>
+                                <!-- Arbitrary size chosen to tile together at 16:9;
+                                     see https://blogs.gnome.org/hughsie/2014/07/02/blurry-screenshots-in-gnome-software/ -->
+                                <property name="height_request">423</property>
+                                <property name="hexpand">True</property>
+                                <property name="halign">fill</property>
+                                <style>
+                                    <class name="screenshot-image" />
+                                    <!-- <class name="frame" />
+                                    <class name="view" /> -->
+                                </style>
+                                <child>
+                                    <object class="GtkImage">
+                                        <property name="pixel_size">64</property>
+                                        <property name="icon_name">camera-photo-symbolic</property>
+                                        <property name="valign">end</property>
+                                        <property name="vexpand">True</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">center</property>
+                                        <property name="valign">start</property>
+                                        <property name="vexpand">True</property>
+                                        <property name="label" translatable="yes">No screenshot provided</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">6</property>
+                                <!-- Arbitrary size chosen to tile together at 16:9;
+                                     see https://blogs.gnome.org/hughsie/2014/07/02/blurry-screenshots-in-gnome-software/ -->
+                                <property name="height_request">423</property>
+                                <property name="hexpand">True</property>
+                                <property name="halign">fill</property>
+                                <style>
+                                    <class name="screenshot-image" />
+                                    <!-- <class name="frame" />
+                                    <class name="view" /> -->
+                                </style>
+                                <child>
+                                    <object class="GtkImage">
+                                        <property name="pixel_size">64</property>
+                                        <property name="icon_name">camera-photo-symbolic</property>
+                                        <property name="valign">end</property>
+                                        <property name="vexpand">True</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">center</property>
+                                        <property name="valign">start</property>
+                                        <property name="vexpand">True</property>
+                                        <property name="label" translatable="yes">No screenshot provided</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+                <child type="overlay">
+                    <object class="GtkRevealer" id="button_previous_revealer">
+                        <property name="halign">start</property>
+                        <property name="transition-type">crossfade</property>
+                        <property name="valign">center</property>
+                        <child>
+                            <object class="GtkButton" id="button_previous">
+                                <property name="width-request">64</property>
+                                <property name="height-request">64</property>
+                                <property name="margin-top">9</property>
+                                <property name="margin-bottom">9</property>
+                                <property name="margin-start">9</property>
+                                <property name="margin-end">9</property>
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <accessibility>
+                                    <!-- Translators: This is the accessible description for a button to go to the previous screenshot in the screenshot carousel. -->
+                                    <property name="label" translatable="yes">Previous Screenshot</property>
+                                </accessibility>
+                                <style>
+                                    <class name="circular" />
+                                    <class name="image-button" />
+                                    <class name="osd" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child type="overlay">
+                    <object class="GtkRevealer" id="button_next_revealer">
+                        <property name="halign">end</property>
+                        <property name="transition-type">crossfade</property>
+                        <property name="valign">center</property>
+                        <child>
+                            <object class="GtkButton" id="button_next">
+                                <property name="width-request">64</property>
+                                <property name="height-request">64</property>
+                                <property name="margin-top">9</property>
+                                <property name="margin-bottom">9</property>
+                                <property name="margin-start">9</property>
+                                <property name="margin-end">9</property>
+                                <property name="icon-name">go-next-symbolic</property>
+                                <accessibility>
+                                    <!-- Translators: This is the accessible description for a button to go to the next screenshot in the screenshot carousel. -->
+                                    <property name="label" translatable="yes">Next Screenshot</property>
+                                </accessibility>
+                                <style>
+                                    <class name="circular" />
+                                    <class name="image-button" />
+                                    <class name="osd" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="AdwCarouselIndicatorDots" id="carousel_indicator">
+                <property name="carousel">carousel</property>
+            </object>
+        </child>
+
+    </template>
+</interface>

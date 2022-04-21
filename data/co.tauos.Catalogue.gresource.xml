@@ -18,6 +18,8 @@
     <file alias="details/app-header.ui">layout/widgets/details/app-header.ui</file>
     <file alias="details/app-details.ui">layout/widgets/details/app-details.ui</file>
     <file alias="details/app-versionhistory.ui">layout/widgets/details/app-versionhistory.ui</file>
+    <file alias="details/app-versionhistory-row.ui">layout/widgets/details/app-versionhistory-row.ui</file>
+    <file alias="details/app-screenshots.ui">layout/widgets/details/app-screenshots.ui</file>
     <file>gtk/help-overlay.ui</file>
     <file alias="catalogue.css">styles/catalogue.css</file>
     <file alias="test-icon.png">images/128x128.png</file>

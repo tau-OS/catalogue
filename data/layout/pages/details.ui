@@ -22,13 +22,17 @@
                         </child>
 
                         <child>
-                            <object class="AdwBin" id="app_details_container"></object>
+                            <object class="AdwBin" id="app_screenshots_container"></object>
                         </child>
 
+                        <child>
+                            <object class="AdwBin" id="app_details_container"></object>
+                        </child>
                         
                         <child>
                             <object class="AdwBin" id="app_version_history_container"></object>
                         </child>
+
                     </object>
                 </child>
             </object>
