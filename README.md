@@ -1,6 +1,6 @@
 # Catalogue
 
-![Icon](data/images/icons/hicolor/scalable/apps/co.tauos.Catalogue.svg)
+![Icon](data/icons/co.tauos.Catalogue.svg)
 
 An open app store for developers.
 
