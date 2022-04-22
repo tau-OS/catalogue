@@ -1,7 +1,7 @@
 sources = [
-  	'window.vala',
+    'window.vala',
     'preferences.vala',
-  	'application.vala',
+    'application.vala',
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
@@ -30,8 +30,8 @@ config_file = configure_file(
 )
 
 deps = [
-	dependency('gtk4'),
-  	dependency('libadwaita-1'),
+    dependency('gtk4'),
+    dependency('libadwaita-1'),
     dependency('gee-0.8')
 ]
 
@@ -40,9 +40,9 @@ gnome = import('gnome')
 executable(
 	meson.project_name(),
 	sources,
-    config_file,
+        config_file,
 	asresources,
-  	vala_args: '--target-glib=2.50',
-  	dependencies: deps,
-  	install: true,
+	vala_args: '--target-glib=2.50',
+	dependencies: deps,
+	install: true,
 )
