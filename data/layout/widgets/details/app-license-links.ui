@@ -186,7 +186,7 @@
                                                                                 <property name="halign">center</property>
                                                                                 <property name="hexpand">True</property>
                                                                                 <!-- fucking icon themes -->
-                                                                                <property name="resource">/co/tauos/Catalogue/icons/heart-filled-symbolic.svg</property>
+                                                                                <property name="icon-name">heart-filled-symbolic</property>
                                                                             </object>
                                                                         </child>
                                                                     </object>
@@ -202,7 +202,7 @@
                                                                             <object class="GtkImage" id="lozenge1_image">
                                                                                 <property name="halign">center</property>
                                                                                 <property name="hexpand">True</property>
-                                                                                <property name="resource">/co/tauos/Catalogue/icons/community-symbolic.svg</property>
+                                                                                <property name="icon-name">community-symbolic</property>
                                                                             </object>
                                                                         </child>
                                                                     </object>
@@ -218,7 +218,7 @@
                                                                             <object class="GtkImage" id="lozenge2_image">
                                                                                 <property name="halign">center</property>
                                                                                 <property name="hexpand">True</property>
-                                                                                <property name="resource">/co/tauos/Catalogue/icons/sign-language-symbolic.svg</property>
+                                                                                <property name="icon-name">sign-language-symbolic</property>
                                                                             </object>
                                                                         </child>
                                                                     </object>
@@ -264,7 +264,7 @@
                                                         </child>
                                                         <child>
                                                             <object class="GtkImage">
-                                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                                <property name="icon-name">external-link-symbolic</property>
                                                                 <property name="margin-start">6</property>
                                                             </object>
                                                         </child>

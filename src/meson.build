@@ -1,5 +1,4 @@
 sources = [
-	'main.vala',
   	'window.vala',
     'preferences.vala',
   	'application.vala',
