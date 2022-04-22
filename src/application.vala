@@ -39,6 +39,8 @@ namespace Catalogue {
                 win = new Catalogue.Window (this);
             }
 
+            this.set_resource_base_path ("/co/tauos/Catalogue");
+
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
             Gtk.StyleContext.add_provider_for_display (

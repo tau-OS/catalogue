@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAppLicenseAndLinks" parent="AdwBin">
+        <property name="margin-top">20</property>
+        <child>
+            <object class="AdwClamp">
+                <property name="maximum-size">860</property>
+                <property name="tightening-threshold">576</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <child>
+                    <object class="GtkBox" id="box_license">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="halign">fill</property>
+                                <property name="valign">start</property>
+                                <child>
+                                    <object class="GtkListBox">
+                                        <property name="selection_mode">none</property>
+                                        <property name="valign">start</property>
+                                        <!-- <signal name="row-activated" handler="gs_license_tile_row_activated_cb" /> -->
+                                        <style>
+                                            <class name="boxed-list" />
+                                        </style>
+
+                                        <child>
+                                            <object class="GtkListBoxRow">
+                                                <property name="activatable">False</property>
+                                                <property name="focusable">False</property>
+                                                <child>
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="spacing">8</property>
+                                                        <property name="margin-top">14</property>
+                                                        <property name="margin-bottom">14</property>
+                                                        <property name="margin-start">14</property>
+                                                        <property name="margin-end">14</property>
+
+                                                        <child>
+                                                            <object class="GtkBox">
+                                                                <property name="halign">center</property>
+                                                                <property name="orientation">horizontal</property>
+                                                                <property name="spacing">8</property>
+
+                                                                <child>
+                                                                    <object class="GtkBox" id="lozenge0">
+                                                                        <property name="halign">center</property>
+                                                                        <style>
+                                                                            <class name="context-tile-lozenge" />
+                                                                            <class name="green" />
+                                                                        </style>
+                                                                        <child>
+                                                                            <object class="GtkImage" id="lozenge0_image">
+                                                                                <property name="halign">center</property>
+                                                                                <property name="hexpand">True</property>
+                                                                                <!-- fucking icon themes -->
+                                                                                <property name="resource">/co/tauos/Catalogue/icons/heart-filled-symbolic.svg</property>
+                                                                            </object>
+                                                                        </child>
+                                                                    </object>
+                                                                </child>
+                                                                <child>
+                                                                    <object class="GtkBox" id="lozenge1">
+                                                                        <property name="halign">center</property>
+                                                                        <style>
+                                                                            <class name="context-tile-lozenge" />
+                                                                            <class name="green" />
+                                                                        </style>
+                                                                        <child>
+                                                                            <object class="GtkImage" id="lozenge1_image">
+                                                                                <property name="halign">center</property>
+                                                                                <property name="hexpand">True</property>
+                                                                                <property name="resource">/co/tauos/Catalogue/icons/community-symbolic.svg</property>
+                                                                            </object>
+                                                                        </child>
+                                                                    </object>
+                                                                </child>
+                                                                <child>
+                                                                    <object class="GtkBox" id="lozenge2">
+                                                                        <property name="halign">center</property>
+                                                                        <style>
+                                                                            <class name="context-tile-lozenge" />
+                                                                            <class name="green" />
+                                                                        </style>
+                                                                        <child>
+                                                                            <object class="GtkImage" id="lozenge2_image">
+                                                                                <property name="halign">center</property>
+                                                                                <property name="hexpand">True</property>
+                                                                                <property name="resource">/co/tauos/Catalogue/icons/sign-language-symbolic.svg</property>
+                                                                            </object>
+                                                                        </child>
+                                                                    </object>
+                                                                </child>
+                                                            </object>
+                                                        </child>
+                                                        <child>
+                                                            <object class="GtkLabel" id="title_label">
+                                                                <property name="label">Community Built</property>
+                                                                <attributes>
+                                                                    <attribute name="weight" value="bold" />
+                                                                </attributes>
+                                                            </object>
+                                                        </child>
+                                                        <child>
+                                                            <object class="GtkLabel" id="description_label">
+                                                                <property name="label">This software is developed in the open by a community of volunteers, and released under the GNU GPL v3 license.\n\nYou can contribute and help make it even better.</property>
+                                                                <property name="wrap">True</property>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+
+                                        <child>
+                                            <object class="GtkListBoxRow" id="get_involved_row">
+                                                <property name="activatable">True</property>
+                                                <!-- <signal name="get-involved-activated" handler="gs_details_page_license_tile_get_involved_activated_cb" /> -->
+                                                <child>
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">horizontal</property>
+                                                        <property name="halign">center</property>
+                                                        <property name="margin-top">12</property>
+                                                        <property name="margin-bottom">12</property>
+                                                        <child>
+                                                            <object class="GtkLabel">
+                                                                <property name="xalign">0</property>
+                                                                <property name="yalign">0.5</property>
+                                                                <property name="label" translatable="yes">_Get Involved</property>
+                                                                <property name="use-underline">True</property>
+                                                            </object>
+                                                        </child>
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                                <property name="margin-start">6</property>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                        <!-- <property name="homogeneous" bind-source="GsDetailsPage" bind-property="is-narrow" bind-flags="sync-create|invert-boolean" /> -->
+
+                        <child>
+                            <!-- <object class="GtkBox">
+                                                <property name="hexpand-set">True</property>
+                                                <style>
+                                                    <class name="card" />
+                                                </style>
+
+                                                <child>
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="spacing">8</property>
+                                                        <property name="margin-top">14</property>
+                                                        <property name="margin-bottom">14</property>
+                                                        <property name="margin-start">14</property>
+                                                        <property name="margin-end">14</property>
+                                                        <property name="valign">center</property>
+                                                        <property name="hexpand">True</property>
+                                                        <style>
+                                                            <class name="dim-label" />
+                                                        </style>
+
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="icon-name">dialog-question-symbolic</property>
+                                                                <property name="pixel-size">96</property>
+                                                                <property name="margin-bottom">8</property>
+                                                            </object>
+                                                        </child>
+                                                        <child>
+                                                            <object class="GtkLabel">
+                                                                <property name="label" translatable="yes">No Metadata</property>
+                                                                <attributes>
+                                                                    <attribute name="weight" value="bold" />
+                                                                </attributes>
+                                                            </object>
+                                                        </child>
+                                                        <child>
+                                                            <object class="GtkLabel">
+                                                                <property name="justify">center</property>
+                                                                <property name="label" translatable="yes">This software doesn’t provide any links to a website, code repository or issue tracker.</property>
+                                                                <property name="wrap">True</property>
+                                                                <property name="xalign">0.5</property>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                            </object> -->
+
+
+                            <object class="GtkListBox">
+                                <property name="selection_mode">none</property>
+                                <property name="halign">fill</property>
+                                <property name="valign">start</property>
+                                <style>
+                                    <class name="boxed-list" />
+                                </style>
+                                <child>
+                                    <object class="AdwActionRow" id="project_website_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">webpage-symbolic</property>
+                                        <property name="title" translatable="yes">Project _Website</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="donate_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">money-symbolic</property>
+                                        <property name="title" translatable="yes">_Donate</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="translate_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">flag-outline-thin-symbolic</property>
+                                        <property name="title" translatable="yes">Contribute _Translations</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="report_an_issue_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">computer-fail-symbolic</property>
+                                        <property name="title" translatable="yes">_Report an Issue</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="help_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">help-link-symbolic</property>
+                                        <property name="title" translatable="yes">_Help</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

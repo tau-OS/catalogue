@@ -1,4 +1,4 @@
-/* styles/catalogue.css
+/* widgets/details/app-license-links.vala
  *
  * Copyright 2022 Fyra Labs
  *
@@ -16,24 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-.stack-remove-sidebar {
-    border-right: none;
+ namespace Catalogue {
+    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-license-links.ui")]
+    public class AppLicenseAndLinks : Adw.Bin {
+            
+        public AppLicenseAndLinks () {
+            Object ();
+        }
+    }
 }
-
-.context-tile-lozenge {
-	font-size: 18px;
-	font-weight: bold;
-	border-radius: 99999px;
-	padding: 9px 11px;
-	min-width: 18px;  /* 40px minus the left and right padding */
-	min-height: 22px;  /* 40px minus the top and bottom padding */
-}
-
-.context-tile-lozenge.green,
-.context-tile-lozenge.details-rating-0 {
-	color: @green_5;
-	background-color: alpha(@green_3, .25);
-}
-
-.context-tile-lozenge image { -gtk-icon-style: symbolic; }
-
+ 

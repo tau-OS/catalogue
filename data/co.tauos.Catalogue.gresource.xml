@@ -20,10 +20,18 @@
     <file alias="details/app-versionhistory.ui">layout/widgets/details/app-versionhistory.ui</file>
     <file alias="details/app-versionhistory-row.ui">layout/widgets/details/app-versionhistory-row.ui</file>
     <file alias="details/app-screenshots.ui">layout/widgets/details/app-screenshots.ui</file>
+    <file alias="details/app-license-links.ui">layout/widgets/details/app-license-links.ui</file>
     <file>gtk/help-overlay.ui</file>
-    <file alias="catalogue.css">styles/catalogue.css</file>
-    <file alias="test-icon.png">images/128x128.png</file>
 
+    <file alias="catalogue.css">styles/catalogue.css</file>
+
+    <!-- Icons -->
+    <!-- preprocess="xml-stripblanks" maybe? -->
+    <file alias="test-icon.png">images/128x128.png</file>
     <file alias="up-to-date.svg">images/up-to-date.svg</file>
+    <file alias="icons/heart-filled-symbolic.svg">images/heart-filled-symbolic.svg</file>
+    <file alias="icons/community-symbolic.svg">images/community-symbolic.svg</file>
+    <file alias="icons/sign-language-symbolic.svg">images/sign-language-symbolic.svg</file>
+    <file alias="icons/external-link-symbolic.svg">images/external-link-symbolic.svg</file>
   </gresource>
 </gresources>
