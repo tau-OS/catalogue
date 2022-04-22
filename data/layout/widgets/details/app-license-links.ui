@@ -39,7 +39,7 @@
                                                 <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
                                                 <child>
                                                     <object class="GtkImage">
-                                                        <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                        <property name="icon-name">external-link-symbolic</property>
                                                     </object>
                                                 </child>
                                             </object>
@@ -63,7 +63,7 @@
                                                 <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
                                                 <child>
                                                     <object class="GtkImage">
-                                                        <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                        <property name="icon-name">external-link-symbolic</property>
                                                     </object>
                                                 </child>
                                             </object>
@@ -86,7 +86,7 @@
                                                 <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
                                                 <child>
                                                     <object class="GtkImage">
-                                                        <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                        <property name="icon-name">external-link-symbolic</property>
                                                     </object>
                                                 </child>
                                             </object>
@@ -109,7 +109,7 @@
                                                 <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
                                                 <child>
                                                     <object class="GtkImage">
-                                                        <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                        <property name="icon-name">external-link-symbolic</property>
                                                     </object>
                                                 </child>
                                             </object>
@@ -132,7 +132,7 @@
                                                 <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
                                                 <child>
                                                     <object class="GtkImage">
-                                                        <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                        <property name="icon-name">external-link-symbolic</property>
                                                     </object>
                                                 </child>
                                             </object>
