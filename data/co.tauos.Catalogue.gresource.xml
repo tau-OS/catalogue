@@ -26,13 +26,14 @@
 
     <file alias="catalogue.css">styles/catalogue.css</file>
 
-    <!-- Icons -->
-    <!-- preprocess="xml-stripblanks" maybe? -->
     <file alias="test-icon.png">images/128x128.png</file>
     <file alias="up-to-date.svg">images/up-to-date.svg</file>
-    <file alias="icons/heart-filled-symbolic.svg">images/heart-filled-symbolic.svg</file>
-    <file alias="icons/community-symbolic.svg">images/community-symbolic.svg</file>
-    <file alias="icons/sign-language-symbolic.svg">images/sign-language-symbolic.svg</file>
-    <file alias="icons/external-link-symbolic.svg">images/external-link-symbolic.svg</file>
+  </gresource>
+  <!-- Icons -->
+  <gresource prefix="/co/tauos/Catalogue/icons">
+    <file alias="scalable/actions/heart-filled-symbolic.svg">icons/hicolor/scalable/actions/heart-filled-symbolic.svg</file>
+    <file alias="scalable/actions/community-symbolic.svg">icons/hicolor/scalable/actions/community-symbolic.svg</file>
+    <file alias="scalable/actions/sign-language-symbolic.svg">icons/hicolor/scalable/actions/sign-language-symbolic.svg</file>
+    <file alias="scalable/actions/external-link-symbolic.svg">icons/hicolor/scalable/actions/external-link-symbolic.svg</file>
   </gresource>
 </gresources>

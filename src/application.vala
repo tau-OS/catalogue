@@ -18,38 +18,36 @@
 
 namespace Catalogue {
     public class Application : Adw.Application {
+        private const GLib.ActionEntry app_entries[] = {
+            { "about", on_about_action },
+            { "preferences", on_preferences_action },
+            { "quit", quit }
+        };
+
         public Application () {
             Object (application_id: Config.APP_ID, flags: ApplicationFlags.FLAGS_NONE);
         }
 
         construct {
-            ActionEntry[] action_entries = {
-                { "about", this.on_about_action },
-                { "preferences", this.on_preferences_action },
-                { "quit", this.quit }
-            };
-            this.add_action_entries (action_entries, this);
+            this.add_action_entries (app_entries, this);
             this.set_accels_for_action ("app.quit", {"<primary>q"});
         }
 
-        public override void activate () {
-            base.activate ();
-            var win = this.active_window;
-            if (win == null) {
-                win = new Catalogue.Window (this);
-            }
+        public static int main (string[] args) {
+            var app = new Catalogue.Application ();
+            return app.run (args);
+        }
 
-            this.set_resource_base_path ("/co/tauos/Catalogue");
+        protected override void startup () {
+            resource_base_path = "/co/tauos/Catalogue";
 
-            var provider = new Gtk.CssProvider ();
-            provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
-            Gtk.StyleContext.add_provider_for_display (
-                Gdk.Display.get_default (),
-                provider,
-                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
+            base.startup ();
 
-            win.present ();
+            new Catalogue.Window (this);
+        }
+
+        protected override void activate () {
+            active_window?.present ();
         }
 
         private void on_about_action () {

@@ -186,7 +186,7 @@
                                                                                 <property name="halign">center</property>
                                                                                 <property name="hexpand">True</property>
                                                                                 <!-- fucking icon themes -->
-                                                                                <property name="resource">/co/tauos/Catalogue/icons/heart-filled-symbolic.svg</property>
+                                                                                <property name="icon-name">heart-filled-symbolic</property>
                                                                             </object>
                                                                         </child>
                                                                     </object>
@@ -202,7 +202,7 @@
                                                                             <object class="GtkImage" id="lozenge1_image">
                                                                                 <property name="halign">center</property>
                                                                                 <property name="hexpand">True</property>
-                                                                                <property name="resource">/co/tauos/Catalogue/icons/community-symbolic.svg</property>
+                                                                                <property name="icon-name">community-symbolic</property>
                                                                             </object>
                                                                         </child>
                                                                     </object>
@@ -218,7 +218,7 @@
                                                                             <object class="GtkImage" id="lozenge2_image">
                                                                                 <property name="halign">center</property>
                                                                                 <property name="hexpand">True</property>
-                                                                                <property name="resource">/co/tauos/Catalogue/icons/sign-language-symbolic.svg</property>
+                                                                                <property name="icon-name">sign-language-symbolic</property>
                                                                             </object>
                                                                         </child>
                                                                     </object>
@@ -264,7 +264,7 @@
                                                         </child>
                                                         <child>
                                                             <object class="GtkImage">
-                                                                <property name="resource">/co/tauos/Catalogue/icons/external-link-symbolic.svg</property>
+                                                                <property name="icon-name">external-link-symbolic</property>
                                                                 <property name="margin-start">6</property>
                                                             </object>
                                                         </child>
@@ -323,6 +323,96 @@
                                                     </object>
                                                 </child>
                                             </object> -->
+
+
+                            <object class="GtkListBox">
+                                <property name="selection_mode">none</property>
+                                <property name="halign">fill</property>
+                                <property name="valign">start</property>
+                                <style>
+                                    <class name="boxed-list" />
+                                </style>
+                                <child>
+                                    <object class="AdwActionRow" id="project_website_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">webpage-symbolic</property>
+                                        <property name="title" translatable="yes">Project _Website</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="icon-name">external-link-symbolic</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="donate_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">money-symbolic</property>
+                                        <property name="title" translatable="yes">_Donate</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="icon-name">external-link-symbolic</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="translate_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">flag-outline-thin-symbolic</property>
+                                        <property name="title" translatable="yes">Contribute _Translations</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="icon-name">external-link-symbolic</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="report_an_issue_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">computer-fail-symbolic</property>
+                                        <property name="title" translatable="yes">_Report an Issue</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="icon-name">external-link-symbolic</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="AdwActionRow" id="help_row">
+                                        <property name="activatable">True</property>
+                                        <property name="icon-name">help-link-symbolic</property>
+                                        <property name="title" translatable="yes">_Help</property>
+                                        <property name="subtitle">tauos.co</property>
+                                        <property name="use-underline">True</property>
+                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="icon-name">external-link-symbolic</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
                     </object>
                 </child>
             </object>

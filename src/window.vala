@@ -38,6 +38,14 @@ namespace Catalogue {
         public Window (Adw.Application app) {
             Object (application: app);
 
+            var provider = new Gtk.CssProvider ();
+            provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (),
+                provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+
             explore = new Catalogue.WindowExplore ();
             installed = new Catalogue.WindowInstalled ();
             updates = new Catalogue.WindowUpdates ();
@@ -74,6 +82,8 @@ namespace Catalogue {
                     Signals.get_default ().window_hide_back_button ();
                 }
             });
+
+            this.show ();
         }
     }
 }

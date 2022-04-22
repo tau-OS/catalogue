@@ -1,5 +1,3 @@
-application_id = 'co.tauos.Catalogue'
-
 desktop_file = i18n.merge_file(
   	input: application_id + '.desktop.in',
   	output: application_id + '.desktop',
@@ -43,4 +41,4 @@ if compile_schemas.found()
   	)
 endif
 
-subdir('images')
+subdir('icons')
