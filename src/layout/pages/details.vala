@@ -26,6 +26,8 @@
         [GtkChild]
         private unowned Adw.Bin app_details_container;
         [GtkChild]
+        private unowned Adw.Bin app_context_container;
+        [GtkChild]
         private unowned Adw.Bin app_version_history_container;
         [GtkChild]
         private unowned Adw.Bin app_license_links_container;
@@ -36,6 +38,7 @@
             app_header_container.set_child (new Catalogue.AppHeader ());
             app_screenshots_container.set_child (new Catalogue.AppScreenshots ());
             app_details_container.set_child (new Catalogue.AppDetails ());
+            app_context_container.set_child (new Catalogue.AppContextBar ());
             app_version_history_container.set_child (new Catalogue.AppVersionHistory ());
             app_license_links_container.set_child (new Catalogue.AppLicenseAndLinks ());
         }

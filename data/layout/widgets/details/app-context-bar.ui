@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAppContextBar" parent="AdwBin">
+        <property name="margin-bottom">20</property>
+        <child>
+            <object class="AdwClamp">
+                <property name="maximum-size">860</property>
+                <property name="tightening-threshold">576</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+
+                <child>
+                    <object class="GtkBox">
+                        <property name="homogeneous">True</property>
+                        <property name="spacing">0</property>
+                        <style>
+                            <class name="card" />
+                            <class name="context-bar" />
+                        </style>
+
+                        <child>
+                            <object class="GtkBox">
+                                <property name="homogeneous">True</property>
+
+                                <child>
+                                    <object class="GtkButton" id="storage_tile">
+                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
+                                        <style>
+                                            <class name="context-tile" />
+                                            <class name="flat" />
+                                        </style>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkBox" id="storage_tile_lozenge">
+                                                        <property name="halign">center</property>
+                                                        <style>
+                                                            <class name="context-tile-lozenge" />
+                                                            <class name="grey" />
+                                                        </style>
+                                                        <child>
+                                                            <object class="GtkLabel" id="storage_tile_lozenge_content">
+                                                                <property name="halign">center</property>
+                                                                <property name="hexpand">True</property>
+                                                                <property name="label">20 MB</property>
+                                                                <property name="xalign">0.5</property>
+                                                                <accessibility>
+                                                                    <relation name="labelled-by">storage_tile_title</relation>
+                                                                    <relation name="details">storage_tile_description</relation>
+                                                                </accessibility>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="storage_tile_title">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">Download Size</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="heading" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="storage_tile_description">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">Needs 150 MB of additional system downloads</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="caption" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="GtkButton" id="safety_tile">
+                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
+                                        <style>
+                                            <class name="context-tile" />
+                                            <class name="flat" />
+                                        </style>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkBox" id="safety_tile_lozenge">
+                                                        <property name="halign">center</property>
+                                                        <style>
+                                                            <class name="context-tile-lozenge" />
+                                                            <class name="green" />
+                                                        </style>
+                                                        <child>
+                                                            <object class="GtkImage" id="safety_tile_lozenge_content">
+                                                                <property name="halign">center</property>
+                                                                <property name="hexpand">True</property>
+                                                                <property name="icon-name">safety-symbolic</property>
+                                                                <accessibility>
+                                                                    <relation name="labelled-by">safety_tile_title</relation>
+                                                                    <relation name="details">safety_tile_description</relation>
+                                                                </accessibility>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="safety_tile_title">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">Safe</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="heading" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="safety_tile_description">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">Auditable, no tracking, few permissions</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="caption" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                            </object>
+                        </child>
+
+                        <child>
+                            <object class="GtkBox">
+                                <property name="homogeneous">True</property>
+
+                                <child>
+                                    <object class="GtkButton" id="hardware_support_tile">
+                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
+                                        <style>
+                                            <class name="context-tile" />
+                                            <class name="flat" />
+                                        </style>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkBox" id="hardware_support_tile_lozenge">
+                                                        <property name="halign">center</property>
+                                                        <style>
+                                                            <class name="context-tile-lozenge" />
+                                                            <class name="green" />
+                                                            <class name="wide-image" />
+                                                        </style>
+                                                        <child>
+                                                            <object class="GtkImage" id="hardware_support_tile_lozenge_content">
+                                                                <property name="halign">center</property>
+                                                                <property name="hexpand">True</property>
+                                                                <property name="icon-name">adaptive-symbolic</property>
+                                                                <property name="pixel-size">56</property>
+                                                                <accessibility>
+                                                                    <relation name="labelled-by">hardware_support_tile_title</relation>
+                                                                    <relation name="details">hardware_support_tile_description</relation>
+                                                                </accessibility>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="hardware_support_tile_title">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">Adaptive</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="heading" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="hardware_support_tile_description">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">Works on phones, tablets and desktops</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="caption" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+
+                                <child>
+                                    <object class="GtkButton" id="age_rating_tile">
+                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
+                                        <style>
+                                            <class name="context-tile" />
+                                            <class name="flat" />
+                                        </style>
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">8</property>
+                                                <child>
+                                                    <object class="GtkBox" id="age_rating_tile_lozenge">
+                                                        <property name="halign">center</property>
+                                                        <style>
+                                                            <class name="context-tile-lozenge" />
+                                                            <class name="details-rating-18" />
+                                                        </style>
+                                                        <child>
+                                                            <object class="GtkLabel" id="age_rating_tile_lozenge_content">
+                                                                <property name="halign">center</property>
+                                                                <property name="hexpand">True</property>
+                                                                <property name="label">18+</property>
+                                                                <property name="xalign">0.5</property>
+                                                                <accessibility>
+                                                                    <relation name="labelled-by">age_rating_tile_title</relation>
+                                                                    <relation name="details">age_rating_tile_description</relation>
+                                                                </accessibility>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="age_rating_tile_title">
+                                                        <property name="justify">center</property>
+                                                        <property name="label" translatable="yes">Age Rating</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="heading" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="age_rating_tile_description">
+                                                        <property name="justify">center</property>
+                                                        <property name="label">May contain sex, drugs, rock‘n’roll and more</property>
+                                                        <property name="wrap">True</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <style>
+                                                            <class name="caption" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

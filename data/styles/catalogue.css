@@ -20,6 +20,52 @@
     border-right: none;
 }
 
+.context-tile {
+	border: 1px solid @borders;
+	background-color: transparent;
+	border-radius: 0;
+	padding: 24px 12px 21px 12px;
+	outline-offset: 5px;
+	transition-property: outline, outline-offset, background-image;
+	border-bottom: none;
+	border-right: none;
+}
+
+.context-tile.keyboard-activating, .context-tile:active {
+	background-image: image(alpha(currentColor, .08));
+}
+
+.context-tile:hover {
+	background-image: image(alpha(currentColor, .03));
+}
+
+.context-tile:focus:focus-visible {
+	outline-offset: -1px;
+}
+
+box:first-child .context-tile:first-child {
+	border-top-left-radius: 12px;
+}
+
+.context-bar.horizontal box:last-child .context-tile:last-child,
+.context-bar.vertical box:first-child .context-tile:last-child {
+	border-bottom-left-radius: 12px;
+}
+
+box:last-child .context-tile:last-child {
+	border-bottom-right-radius: 12px;
+}
+
+.context-bar.horizontal box:first-child .context-tile:first-child,
+.context-bar.vertical .context-tile:first-child {
+	border-left: none;
+}
+
+.context-bar.horizontal .context-tile,
+.context-bar.vertical box:first-child .context-tile {
+	border-top: none;
+}
+
 .context-tile-lozenge {
 	font-size: 18px;
 	font-weight: bold;
@@ -29,10 +75,31 @@
 	min-height: 22px;  /* 40px minus the top and bottom padding */
 }
 
+.context-tile-lozenge.wide-image image {
+	/* GtkImage always renders image square, so if we want an image which
+	 * is wide, but still the same height as all the others, we have to
+	 * use this hack to make it zero-height and vertically centred. The
+	 * vertical size group ensures that it does still actually have a
+	 * height. */
+	margin-top: -28px;
+	margin-bottom: -28px;
+}
+
+.context-tile-lozenge.grey {
+	color: alpha(@window_fg_color, .75);
+	background-color: alpha(@window_fg_color, .15);
+}
+
 .context-tile-lozenge.green,
 .context-tile-lozenge.details-rating-0 {
 	color: @green_5;
 	background-color: alpha(@green_3, .25);
+}
+
+.context-tile-lozenge.red,
+.context-tile-lozenge.details-rating-18 {
+	color: @red_4;
+	background-color: alpha(@red_2, .25);
 }
 
 .context-tile-lozenge image { -gtk-icon-style: symbolic; }
