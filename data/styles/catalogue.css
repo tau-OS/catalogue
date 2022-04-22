@@ -29,6 +29,7 @@
 	transition-property: outline, outline-offset, background-image;
 	border-bottom: none;
 	border-right: none;
+    border-top: none;
 }
 
 .context-tile.keyboard-activating, .context-tile:active {
@@ -43,27 +44,9 @@
 	outline-offset: -1px;
 }
 
-box:first-child .context-tile:first-child {
-	border-top-left-radius: 12px;
-}
-
-.context-bar.horizontal box:last-child .context-tile:last-child,
-.context-bar.vertical box:first-child .context-tile:last-child {
-	border-bottom-left-radius: 12px;
-}
-
-box:last-child .context-tile:last-child {
-	border-bottom-right-radius: 12px;
-}
-
 .context-bar.horizontal box:first-child .context-tile:first-child,
 .context-bar.vertical .context-tile:first-child {
 	border-left: none;
-}
-
-.context-bar.horizontal .context-tile,
-.context-bar.vertical box:first-child .context-tile {
-	border-top: none;
 }
 
 .context-tile-lozenge {

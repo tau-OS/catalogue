@@ -15,6 +15,7 @@
                     <object class="GtkBox">
                         <property name="orientation">vertical</property>
                         <property name="margin-top">10</property>
+                        <property name="margin-bottom">20</property>
 
                         <!-- gtk moment -->
                         <child>
