@@ -11,7 +11,7 @@ sources = [
     'widgets/details/app-versionhistory.vala',
     'widgets/details/app-versionhistory-row.vala',
     'widgets/details/app-screenshots.vala',
-    'widgets/details/app-license-links.vala',
+    'widgets/details/app-links.vala',
     'widgets/details/app-context-bar.vala',
     'widgets/carousel.vala',
     'widgets/carousel-tile.vala',

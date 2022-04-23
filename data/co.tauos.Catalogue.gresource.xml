@@ -20,7 +20,7 @@
     <file alias="details/app-versionhistory.ui">layout/widgets/details/app-versionhistory.ui</file>
     <file alias="details/app-versionhistory-row.ui">layout/widgets/details/app-versionhistory-row.ui</file>
     <file alias="details/app-screenshots.ui">layout/widgets/details/app-screenshots.ui</file>
-    <file alias="details/app-license-links.ui">layout/widgets/details/app-license-links.ui</file>
+    <file alias="details/app-links.ui">layout/widgets/details/app-links.ui</file>
     <file alias="details/app-context-bar.ui">layout/widgets/details/app-context-bar.ui</file>
     <file>gtk/help-overlay.ui</file>
 

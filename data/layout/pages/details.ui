@@ -39,7 +39,7 @@
                         </child>
 
                         <child>
-                            <object class="AdwBin" id="app_license_links_container"></object>
+                            <object class="AdwBin" id="app_links_container"></object>
                         </child>
 
                     </object>

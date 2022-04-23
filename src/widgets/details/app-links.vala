@@ -17,10 +17,10 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-license-links.ui")]
-    public class AppLicenseAndLinks : Adw.Bin {
+    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-links.ui")]
+    public class AppLinks : Adw.Bin {
             
-        public AppLicenseAndLinks () {
+        public AppLinks () {
             Object ();
         }
     }

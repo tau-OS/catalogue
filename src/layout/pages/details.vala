@@ -30,7 +30,7 @@
         [GtkChild]
         private unowned Adw.Bin app_version_history_container;
         [GtkChild]
-        private unowned Adw.Bin app_license_links_container;
+        private unowned Adw.Bin app_links_container;
 
         public WindowDetails () {
             Object ();
@@ -40,7 +40,7 @@
             app_details_container.set_child (new Catalogue.AppDetails ());
             app_context_container.set_child (new Catalogue.AppContextBar ());
             app_version_history_container.set_child (new Catalogue.AppVersionHistory ());
-            app_license_links_container.set_child (new Catalogue.AppLicenseAndLinks ());
+            app_links_container.set_child (new Catalogue.AppLinks ());
         }
     }
 }
