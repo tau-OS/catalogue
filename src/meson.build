@@ -32,7 +32,9 @@ config_file = configure_file(
 deps = [
     dependency('gtk4'),
     dependency('libadwaita-1'),
-    dependency('gee-0.8')
+    dependency('gee-0.8'),
+    dependency('flatpak'),
+    dependency ('appstream', version: '>=0.12.10')
 ]
 
 gnome = import('gnome')
