@@ -40,8 +40,6 @@ namespace Catalogue {
                 //      print ("TODO add error dialog");
                 //  }
 
-                print ("Hello World!");
-
                 main_window.leaflet_forward ();
             });
         }
