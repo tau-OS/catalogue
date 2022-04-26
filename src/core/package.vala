@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Core {
+namespace Catalogue.Core {
     public class PackageDetails : Object {
         public string? name { get; set; }
         public string? description { get; set; }

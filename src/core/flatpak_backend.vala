@@ -16,7 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Core {
+
+namespace Catalogue.Core {
     public class FlatpakPackage : Package {
         public weak Flatpak.Installation installation { public get; construct; }
 

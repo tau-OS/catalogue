@@ -16,14 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Core {
+namespace Catalogue.Core {
     public class Job : Object {
         public Type operation { get; construct; }
         public JobArgs? args { get; set; }
         public Error? error { get; set; }
 
         public Value result;
-        
+
         public signal void results_ready ();
 
         public enum Type {

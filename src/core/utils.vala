@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Core {
+namespace Catalogue.Core {
     public static uint get_file_age (GLib.File file) {
         FileInfo info;
         try {
