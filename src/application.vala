@@ -18,6 +18,10 @@
 
 namespace Catalogue {
     public class Application : Adw.Application {
+        public Catalogue.Window main_window { get; set; }
+
+        private Core.Client client;
+
         private const GLib.ActionEntry app_entries[] = {
             { "about", on_about_action },
             { "preferences", on_preferences_action },
@@ -29,6 +33,17 @@ namespace Catalogue {
             flags = ApplicationFlags.FLAGS_NONE;
             add_action_entries (app_entries, this);
             set_accels_for_action ("app.quit", {"<primary>q"});
+
+            client = Core.Client.get_default ();
+            client.cache_update_finished.connect (() => {
+                //  if (error) {
+                //      print ("TODO add error dialog");
+                //  }
+
+                print ("Hello World!");
+
+                main_window.leaflet_forward ();
+            });
         }
 
         protected override void startup () {
@@ -36,12 +51,10 @@ namespace Catalogue {
 
             base.startup ();
 
-            new Catalogue.Window (this);
+            this.main_window = new Catalogue.Window (this);
         }
 
         protected override void activate () {
-            var client = Core.Client.get_default ();
-
             client.update_cache.begin ();
 
             active_window?.present ();

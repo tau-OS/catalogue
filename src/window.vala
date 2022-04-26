@@ -23,6 +23,8 @@ namespace Catalogue {
         private unowned Adw.ViewStack header_stack;
         [GtkChild]
         private unowned Gtk.Button back_button;
+        [GtkChild]
+        private unowned Adw.Leaflet leaflet;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
@@ -33,6 +35,10 @@ namespace Catalogue {
         [GtkCallback]
         public void back_clicked_cb (Gtk.Button source) {
             Signals.get_default ().window_do_back_button_clicked ();
+        }
+
+        public void leaflet_forward () {
+            leaflet.navigate (Adw.NavigationDirection.FORWARD);
         }
 
         public Window (Adw.Application app) {

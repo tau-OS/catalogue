@@ -18,7 +18,8 @@
 
 namespace Catalogue.Core {
     public class Client : Object {
-
+        public signal void cache_update_finished ();
+        
         private GLib.Cancellable cancellable;
         private GLib.DateTime last_cache_update = null;
 
@@ -82,12 +83,14 @@ namespace Catalogue.Core {
                             last_cache_update = new DateTime.now_utc ();
                             settings.set_int64 ("last-refresh-time", last_cache_update.to_unix ());
                             print ("Cache updated successfully");
+                            cache_update_finished ();
                         }
 
                         seconds_since_last_refresh = 0;
                     } catch (Error e) {
                         if (!(e is GLib.IOError.CANCELLED)) {
                             critical ("Update_cache: Refesh cache async failed - %s", e.message);
+                            cache_update_finished ();
                         }
                     } finally {
                         refresh_in_progress = false;
@@ -97,6 +100,7 @@ namespace Catalogue.Core {
                 }
             } else {
                 debug ("Too soon to refresh and not forced");
+                cache_update_finished ();
             }
 
             var next_refresh = SECONDS_BETWEEN_REFRESHES - (uint)seconds_since_last_refresh;
