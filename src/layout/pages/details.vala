@@ -35,6 +35,20 @@
         public WindowDetails () {
             Object ();
 
+            this.realize.connect (() => {
+                var client = Core.Client.get_default ();
+
+                var app = client.get_package_for_component_id ("com.mojang.Minecraft");
+
+                if (app != null) {
+                    print (app.get_name ());
+                    print (app.get_description ());
+                    print (app.get_summary ());
+                } else {
+                    print ("null app :/");
+                }
+            });
+
             app_header_container.set_child (new Catalogue.AppHeader ());
             app_screenshots_container.set_child (new Catalogue.AppScreenshots ());
             app_details_container.set_child (new Catalogue.AppDetails ());

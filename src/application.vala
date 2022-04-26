@@ -48,6 +48,10 @@ namespace Catalogue {
         }
 
         protected override void activate () {
+            var client = Core.Client.get_default ();
+
+            client.update_cache.begin ();
+
             active_window?.present ();
         }
 

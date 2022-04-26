@@ -17,6 +17,7 @@ You'll need the following dependencies:
 - `gee-0.8`
 - `flatpak`
 - `appstream`
+- `libxml-2.0`
 
 Run `meson build` to configure the build environment. Change to the build directory and run `ninja test` to build and run automated tests.
 

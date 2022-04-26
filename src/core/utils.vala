@@ -50,4 +50,133 @@ namespace Core {
                            .replace ("&gt;", ">")
                            .replace ("&#39;", "'");
     }
+
+    public void delete_folder_contents (File folder, Cancellable? cancellable = null) {
+        FileEnumerator enumerator;
+        try {
+            enumerator = folder.enumerate_children (
+                GLib.FileAttribute.STANDARD_NAME + "," + GLib.FileAttribute.STANDARD_TYPE,
+                FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+                cancellable
+            );
+        } catch (Error e) {
+            warning ("Unable to create enumerator to cleanup flatpak metadata: %s", e.message);
+            return;
+        }
+
+        FileInfo? info = null;
+        try {
+            while (!cancellable.is_cancelled () && (info = enumerator.next_file (cancellable)) != null) {
+                if (info.get_file_type () != FileType.DIRECTORY) {
+                    var child = folder.resolve_relative_path (info.get_name ());
+                    debug ("Deleting %s", child.get_path ());
+                    child.delete ();
+                } else {
+                    var child = folder.resolve_relative_path (info.get_name ());
+                    delete_folder_contents (child, cancellable);
+                    child.delete ();
+                }
+            }
+        } catch (Error e) {
+            warning ("Error while cleaning up flatpak metadat directory: %s", e.message);
+        }
+    }
+
+    public static void perform_xml_fixups (string origin_name, File src_file, File dest_file) {
+        var path = src_file.get_path ();
+        Xml.Doc* doc = Xml.Parser.parse_file (path);
+        if (doc == null) {
+            warning ("Appstream XML file %s not found or permissions missing", path);
+            return;
+        }
+
+        Xml.Node* root = doc->get_root_element ();
+        if (root == null) {
+            delete doc;
+            warning ("The xml file '%s' is empty", path);
+            return;
+        }
+
+        if (root->name != "components") {
+            delete doc;
+            warning ("The root node of %s isn't 'components', valid appstream file?", path);
+            return;
+        }
+
+        Xml.Attr* origin_attr = root->has_prop ("origin");
+        if (origin_attr == null) {
+            delete doc;
+            warning ("The root node of %s doesn't have an origin attribute, valid appstream file?", path);
+            return;
+        }
+
+        root->set_prop ("origin", origin_name);
+
+        // FIXME: This is a workaround for https://github.com/ximion/appstream/issues/339
+        // Remap the <metadata> tag that contains the custom x-appcenter-xxx values to
+        // <custom> as expected by the AppStream parser
+        Xml.XPath.Context cntx = new Xml.XPath.Context (doc);
+        Xml.XPath.Object* res = cntx.eval_expression ("/components/component/metadata");
+
+        if (res != null && res->type == Xml.XPath.ObjectType.NODESET && res->nodesetval != null) {
+            for (int i = 0; i < res->nodesetval->length (); i++) {
+                Xml.Node* node = res->nodesetval->item (i);
+                node->set_name ("custom");
+            }
+        }
+
+        /* The below sorting is a workaround for the fact that libappstream uses app ID + remote as a unique
+         * key for an app, and any subsequent duplicates found in the XML are discarded. So if there's a "stable"
+         * branch and a "daily" branch for an application from the same remote, and the daily branch happens to come
+         * first in the file, libappstream throws away the AppData for the stable version.
+         *
+         * See https://github.com/elementary/appcenter/issues/1612 for details
+         */
+        var sorted_components = new Gee.ArrayList<Xml.Node*> ();
+        // Iterate through all components in the appstream XML
+        for (Xml.Node* component = root->children; component != null; component = component->next) {
+            if (component->name != "component") {
+                continue;
+            }
+
+            // Find their bundle tag
+            for (Xml.Node* iter = component->children; iter != null; iter = iter->next) {
+                if (iter->name == "bundle") {
+                    string bundle_id = iter->get_content ();
+                    // If it's not an app, we don't care about sorting it
+                    if (!bundle_id.has_prefix ("app/")) {
+                        break;
+                    }
+
+                    // If it's a stable branch of an app, put it on top of the array
+                    if (bundle_id.has_suffix ("/stable")) {
+                        sorted_components.insert (0, component);
+                    // Otherwise add it to the end
+                    } else {
+                        sorted_components.add (component);
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        // Unlink all of the components we sorted, so we can re-attach them in their new positions
+        // Can't do this during the loop above as it breaks the iterator
+        foreach (var component in sorted_components) {
+            component->unlink ();
+        }
+
+        // Re-attach them in the new order
+        foreach (var component in sorted_components) {
+            root->add_child (component);
+        }
+
+        doc->set_compress_mode (7);
+        doc->save_file (dest_file.get_path ());
+
+        delete res;
+        delete doc;
+    }
+
 }

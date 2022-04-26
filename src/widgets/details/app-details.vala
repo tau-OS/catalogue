@@ -19,9 +19,26 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-details.ui")]
     public class AppDetails : Adw.Bin {
+        [GtkChild]
+        private unowned Gtk.Label application_details_summary;
+        [GtkChild]
+        private unowned Gtk.Label application_details_description;
             
         public AppDetails () {
             Object ();
+
+            this.realize.connect (() => {
+                var client = Core.Client.get_default ();
+
+                var app = client.get_package_for_component_id ("com.mojang.Minecraft");
+
+                if (app != null) {
+                    application_details_summary.set_label (app.get_summary ());
+                    application_details_description.set_label (app.get_description ());
+                } else {
+                    print ("null app :/");
+                }
+            });
         }
     }
 }
