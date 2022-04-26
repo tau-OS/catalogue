@@ -2,6 +2,7 @@ sources = [
     'window.vala',
     'preferences.vala',
     'application.vala',
+    'utils.vala',
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
@@ -20,7 +21,9 @@ sources = [
     'widgets/featured-row.vala',
     'widgets/category-row.vala',
     'widgets/installed-row.vala',
-    'objects/signals.vala'
+    'objects/signals.vala',
+    'core/flatpak_backend.vala',
+    'core/package.vala',
 ]
 
 config_file = configure_file(
@@ -34,7 +37,7 @@ deps = [
     dependency('libadwaita-1'),
     dependency('gee-0.8'),
     dependency('flatpak'),
-    dependency ('appstream', version: '>=0.12.10')
+    dependency('appstream', version: '>=0.12.10'),
 ]
 
 gnome = import('gnome')
