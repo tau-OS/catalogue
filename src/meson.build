@@ -1,4 +1,4 @@
-sources = [
+main_sources = [
     'window.vala',
     'preferences.vala',
     'application.vala',
@@ -22,8 +22,17 @@ sources = [
     'widgets/category-row.vala',
     'widgets/installed-row.vala',
     'objects/signals.vala',
+]
+
+daemon_sources = [
+    'daemon.vala',
+]
+
+core_sources = [
     'core/flatpak_backend.vala',
     'core/package.vala',
+    # TODO move this to core folder
+    'utils.vala', 
 ]
 
 config_file = configure_file(
@@ -44,9 +53,20 @@ gnome = import('gnome')
 
 executable(
 	meson.project_name(),
-	sources,
-        config_file,
+	main_sources,
+    core_sources,
+    config_file,
 	asresources,
+	vala_args: '--target-glib=2.50',
+	dependencies: deps,
+	install: true,
+)
+
+executable(
+	meson.project_name() + '-daemon',
+	daemon_sources,
+    core_sources,
+    config_file,
 	vala_args: '--target-glib=2.50',
 	dependencies: deps,
 	install: true,
