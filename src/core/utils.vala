@@ -1,4 +1,4 @@
-/* utils.vala
+/* core/utils.vala
  *
  * Copyright 2022 Fyra Labs
  *
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Utils {
+namespace Core {
     public static uint get_file_age (GLib.File file) {
         FileInfo info;
         try {

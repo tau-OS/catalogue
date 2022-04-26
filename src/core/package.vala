@@ -106,7 +106,7 @@ namespace Core {
             //      name = backend_details.name;
             //  }
     
-            name = Utils.unescape_markup (name);
+            name = Core.unescape_markup (name);
     
             return name;
         }

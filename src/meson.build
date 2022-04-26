@@ -2,7 +2,6 @@ main_sources = [
     'window.vala',
     'preferences.vala',
     'application.vala',
-    'utils.vala',
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
@@ -31,8 +30,7 @@ daemon_sources = [
 core_sources = [
     'core/flatpak_backend.vala',
     'core/package.vala',
-    # TODO move this to core folder
-    'utils.vala', 
+    'core/utils.vala', 
 ]
 
 config_file = configure_file(
