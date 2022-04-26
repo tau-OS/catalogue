@@ -77,6 +77,8 @@ namespace Catalogue.Core {
         construct {
             worker_thread = new Thread<bool> ("flatpak-worker", worker_func);
 
+            package_list = new Gee.HashMap<string, Package> ();
+
             user_appstream_pool = new AppStream.Pool ();
             user_appstream_pool.set_flags (AppStream.PoolFlags.LOAD_OS_COLLECTION);
 
@@ -135,20 +137,21 @@ namespace Catalogue.Core {
 
         public Package? get_package_for_component_id (string id) {
             var suffixed_id = id + ".desktop";
-            foreach (var package in package_list.values) {
-                if (package.component.id == id) {
-                    return package;
-                } else if (package.component.id == suffixed_id) {
-                    return package;
+
+            if (package_list.values != null) {
+                foreach (var package in package_list.values) {
+                    if (package.component.id == id) {
+                        return package;
+                    } else if (package.component.id == suffixed_id) {
+                        return package;
+                    }
                 }
-            }
+            }            
     
             return null;
         }
 
         private void reload_appstream_pool () {
-            var new_package_list = new Gee.HashMap<string, Package> ();
-
             user_appstream_pool.reset_extra_data_locations ();
             user_appstream_pool.add_extra_data_location (user_metadata_path, AppStream.FormatStyle.COLLECTION);
 
@@ -169,7 +172,7 @@ namespace Catalogue.Core {
                             package = new FlatpakPackage (user_installation, comp);
                         }
 
-                        new_package_list[key] = package;
+                        package_list[key] = package;
                     }
                 });
             }
@@ -194,12 +197,10 @@ namespace Catalogue.Core {
                             package = new FlatpakPackage (user_installation, comp);
                         }
 
-                        new_package_list[key] = package;
+                        package_list[key] = package;
                     }
                 });
             }
-
-            package_list = new_package_list;
         }
 
         public void preprocess_metadata (bool system, GLib.GenericArray<weak Flatpak.Remote> remotes, Cancellable? cancellable) {
