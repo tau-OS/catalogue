@@ -24,6 +24,12 @@ namespace Catalogue {
             { "quit", quit }
         };
 
+        public static GLib.Settings settings;
+
+        static construct {
+            settings = new GLib.Settings (Config.APP_SETTINGS);
+        }
+
         public Application () {
             Object (application_id: Config.APP_ID, flags: ApplicationFlags.FLAGS_NONE);
         }
@@ -31,11 +37,6 @@ namespace Catalogue {
         construct {
             this.add_action_entries (app_entries, this);
             this.set_accels_for_action ("app.quit", {"<primary>q"});
-        }
-
-        public static int main (string[] args) {
-            var app = new Catalogue.Application ();
-            return app.run (args);
         }
 
         protected override void startup () {
@@ -77,4 +78,9 @@ namespace Catalogue {
             preferences.present ();
         }
     }
+}
+
+public static int main (string[] args) {
+    var app = new Catalogue.Application ();
+    return app.run (args);
 }

@@ -19,6 +19,7 @@ conf = configuration_data()
 conf.set_quoted('APP_ID', app_id)
 conf.set_quoted('NAME_SUFFIX', name_suffix)
 conf.set_quoted('VERSION', meson.project_version())
+conf.set_quoted('APP_SETTINGS', application_id + '.Settings')
 
 gnome = import('gnome')
 i18n = import('i18n')
