@@ -25,7 +25,31 @@ namespace Catalogue.Core {
     }
 
     public class Package : Object {
+        public enum State {
+            NOT_INSTALLED,
+            INSTALLED
+        }
+
         public AppStream.Component component { get; protected set; }
+        public State state { public get; private set; default = State.NOT_INSTALLED; }
+
+        // Get if package is installed
+        private bool _installed = false;
+        public bool installed {
+            get {
+                return _installed;
+            }
+        }
+
+        public void mark_installed () {
+            _installed = true;
+            update_state ();
+        }
+
+        public void clear_installed () {
+            _installed = false;
+            update_state ();
+        }
 
         // Get the package author/developer
         private string? _author = null;
@@ -89,6 +113,21 @@ namespace Catalogue.Core {
             _latest_version = null;
     
             this.component = component;
+        }
+
+        public void update_state () {
+            State new_state;
+    
+            if (installed) {
+                new_state = State.INSTALLED;
+            } else {
+                new_state = State.NOT_INSTALLED;
+            }
+    
+            // Only trigger a notify if the state has changed, quite a lot of things listen to this
+            if (state != new_state) {
+                state = new_state;
+            }
         }
     
         private string? name = null;

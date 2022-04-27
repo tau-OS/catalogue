@@ -135,6 +135,57 @@ namespace Catalogue.Core {
             return job;
         }
 
+        public async Gee.Collection<Package> get_installed_applications (Cancellable? cancellable = null) {
+            var installed_apps = new Gee.HashSet<Package> ();
+    
+            if (user_installation == null && system_installation == null) {
+                critical ("Couldn't get installed apps due to no flatpak installation");
+                return installed_apps;
+            }
+    
+            GLib.GenericArray<weak Flatpak.InstalledRef> installed_refs;
+            try {
+                installed_refs = user_installation.list_installed_refs ();
+                installed_apps.add_all (get_installed_apps_from_refs (false, installed_refs, cancellable));
+            } catch (Error e) {
+                critical ("Unable to get installed flatpaks: %s", e.message);
+                return installed_apps;
+            }
+    
+            try {
+                installed_refs = system_installation.list_installed_refs ();
+                installed_apps.add_all (get_installed_apps_from_refs (true, installed_refs, cancellable));
+            } catch (Error e) {
+                critical ("Unable to get installed flatpaks: %s", e.message);
+                return installed_apps;
+            }
+            
+    
+            return installed_apps;
+        }
+
+        private Gee.Collection<Package> get_installed_apps_from_refs (bool system, GLib.GenericArray<weak Flatpak.InstalledRef> installed_refs, Cancellable? cancellable) {
+            var installed_apps = new Gee.HashSet<Package> ();
+    
+            for (int i = 0; i < installed_refs.length; i++) {
+                if (cancellable.is_cancelled ()) {
+                    break;
+                }
+    
+                unowned Flatpak.InstalledRef installed_ref = installed_refs[i];
+    
+                var bundle_id = generate_package_list_key (system, installed_ref.origin, installed_ref.format_ref ());
+                var package = package_list[bundle_id];
+                if (package != null) {
+                    package.mark_installed ();
+                    package.update_state ();
+                    installed_apps.add (package);
+                }
+            }
+    
+            return installed_apps;
+        }
+
         public Package? get_package_for_component_id (string id) {
             var suffixed_id = id + ".desktop";
 
@@ -189,7 +240,7 @@ namespace Catalogue.Core {
                 system_appstream_pool.get_components ().foreach ((comp) => {
                     var bundle = comp.get_bundle (AppStream.BundleKind.FLATPAK);
                     if (bundle != null) {
-                        var key = generate_package_list_key (false, comp.get_origin (), bundle.get_id ());
+                        var key = generate_package_list_key (true, comp.get_origin (), bundle.get_id ());
                         var package = package_list[key];
                         if (package != null) {
                             package.replace_component (comp);

@@ -43,6 +43,19 @@ namespace Catalogue.Core {
             last_cache_update = new DateTime.from_unix_utc (settings.get_int64 ("last-refresh-time"));
         }
 
+        public Package? get_package_for_component_id (string id) {
+            return FlatpakBackend.get_default ().get_package_for_component_id (id);
+        }
+
+        public async Gee.Collection<Package> get_installed_applications (Cancellable? cancellable = null) {
+            var apps = new Gee.TreeSet<Package> ();
+            var installed = yield FlatpakBackend.get_default ().get_installed_applications (cancellable);
+            if (installed != null) {
+                apps.add_all (installed);
+            }
+            return apps;
+        }
+
         // TODO add timer
         public async void update_cache (bool force = false) {
             cancellable.reset ();
@@ -111,10 +124,6 @@ namespace Catalogue.Core {
 
                 return GLib.Source.REMOVE;
             });
-        }
-
-        public Package? get_package_for_component_id (string id) {
-            return FlatpakBackend.get_default ().get_package_for_component_id (id);
         }
 
         private static GLib.Once<Client> instance;
