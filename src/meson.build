@@ -2,6 +2,7 @@ main_sources = [
     'window.vala',
     'preferences.vala',
     'application.vala',
+    'async_mutex.vala',
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',

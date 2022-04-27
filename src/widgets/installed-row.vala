@@ -25,12 +25,12 @@
         private unowned Gtk.Button suffix_button;
 
         // TODO pass an application for details
-        public InstalledRow (string title, string button_label) {
+        public InstalledRow (Core.Package app, string button_label) {
             Object ();
 
-            this.set_title (title);
+            this.set_title (app.get_name ());
 
-            image.set_from_resource ("/co/tauos/Catalogue/test-icon.png");
+            image.set_from_gicon (app.get_icon (64, 64));
             suffix_button.set_label (button_label);
             
         }

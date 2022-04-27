@@ -24,17 +24,42 @@ namespace Catalogue {
         [GtkChild]
         private unowned Adw.PreferencesGroup apps;
 
+        private Cancellable refresh_cancellable;
+
+        private AsyncMutex refresh_mutex = new AsyncMutex ();
+
         public WindowInstalled () {
             Object ();
 
-            in_progress.add (new Catalogue.InstalledRow ("UwU App", "Stop"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
-            apps.add (new Catalogue.InstalledRow ("Second UwU App", "Uninstall"));
+            refresh_cancellable = new Cancellable ();
+
+            //  in_progress.add (new Catalogue.InstalledRow ("UwU App", "Stop"));
+
+            this.realize.connect (() => {
+                get_apps.begin ();
+            });
+        }
+
+        public async void get_apps () {
+            refresh_cancellable.cancel ();
+
+            yield refresh_mutex.lock ();
+
+            refresh_cancellable.reset ();
+
+            unowned Core.Client client = Core.Client.get_default ();
+
+            var installed_apps = yield client.get_installed_applications (refresh_cancellable);
+
+            if (!refresh_cancellable.is_cancelled ()) {
+                print (installed_apps.size.to_string ());
+
+                foreach (var package in installed_apps) {
+                    apps.add (new Catalogue.InstalledRow (package, "Uninstall"));
+                }
+            }
+
+            refresh_mutex.unlock ();
         }
     }
 }
