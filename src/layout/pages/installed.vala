@@ -52,8 +52,6 @@ namespace Catalogue {
             var installed_apps = yield client.get_installed_applications (refresh_cancellable);
 
             if (!refresh_cancellable.is_cancelled ()) {
-                print (installed_apps.size.to_string ());
-
                 foreach (var package in installed_apps) {
                     apps.add (new Catalogue.InstalledRow (package, "Uninstall"));
                 }
