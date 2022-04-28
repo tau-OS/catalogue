@@ -44,6 +44,16 @@ namespace Catalogue {
 
         private Catalogue.FeaturedRow featured_row_test;
 
+        private void generate_category_row (Catalogue.CategoryRow row, AppStream.Category category) {
+            unowned var client = Core.Client.get_default ();
+
+            foreach (var package in client.get_applications_for_category (category)) {
+                var package_row = new Catalogue.AppTile (package);
+
+                row.append (package_row);
+            }
+        }
+
         public WindowExplore () {
             Object ();
 
@@ -51,23 +61,21 @@ namespace Catalogue {
             // Carousel should always be the top element in the featured page
             featured_box.prepend (carousel);
 
-            // Handle Categories
-            var categories = new Gee.HashMap<string, string> ();
-            // Key: Category Name
-            // Value: Category Icon
-            categories.set ("Featured", "starred-symbolic");
-            categories.set ("Games", "applications-games-symbolic");
-            categories.set ("Develop", "application-x-addon-symbolic");
-            categories.set ("Create", "applications-graphics-symbolic");
-            categories.set ("Work", "mail-send-symbolic");
-            categories.set ("Apps", "view-grid-symbolic");
-
             var is_leaflet_active = false;
+            
+            var categories = new Catalogue.Categories ().get_default ();
 
-            foreach (var entry in categories.entries) {
-                var tile = new Catalogue.CategoryTile (entry.key, entry.value);
+            var categories_list = new AppStream.Category[] {};
+            categories_list += categories.games;
+            categories_list += categories.develop;
+            categories_list += categories.create;
+            categories_list += categories.work;
+            categories_list += categories.apps;
 
-                var name = entry.key;
+            foreach (var entry in categories_list) {
+                var name = entry.get_name ();
+
+                var tile = new Catalogue.CategoryTile (name, entry.get_icon ());
 
                 tile.clicked.connect (() => {
                     stack.set_visible_child_name (name.down ());
@@ -101,8 +109,8 @@ namespace Catalogue {
 
             
             
-            featured_row_test = new Catalogue.FeaturedRow ("Test Row");
-            featured_box.append (featured_row_test);
+            //  featured_row_test = new Catalogue.FeaturedRow ("Test Row");
+            //  featured_box.append (featured_row_test);
 
             var games_row = new Catalogue.CategoryRow ();
             var develop_row = new Catalogue.CategoryRow ();
@@ -111,6 +119,12 @@ namespace Catalogue {
             var apps_row = new Catalogue.CategoryRow ();
 
             // shit for other pages
+            generate_category_row (games_row, categories.games);
+            generate_category_row (develop_row, categories.develop);
+            generate_category_row (create_row, categories.create);
+            generate_category_row (work_row, categories.work);
+            generate_category_row (apps_row, categories.apps);
+
             games_box.append (games_row);
             develop_box.append (develop_row);
             create_box.append (create_row);

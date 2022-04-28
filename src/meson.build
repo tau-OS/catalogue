@@ -22,6 +22,7 @@ main_sources = [
     'widgets/category-row.vala',
     'widgets/installed-row.vala',
     'objects/signals.vala',
+    'objects/categories.vala'
 ]
 
 daemon_sources = [

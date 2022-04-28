@@ -20,18 +20,21 @@
     [GtkTemplate (ui = "/co/tauos/Catalogue/app-tile.ui")]
     public class AppTile : Gtk.Button {
         [GtkChild]
+        private unowned Gtk.Image image;
+        [GtkChild]
         private unowned Gtk.Label title_label;
         [GtkChild]
         private unowned Gtk.Label description_label;
         [GtkChild]
         private unowned Gtk.Label price_label;
         
-        public AppTile (string title, string description, string price) {
+        public AppTile (Core.Package package) {
             Object ();
 
-            title_label.set_label (title);
-            description_label.set_label (description);
-            price_label.set_label (price);
+            title_label.set_label (package.get_name ());
+            description_label.set_label (package.get_summary ());
+            price_label.set_label ("Free");
+            image.set_from_gicon (package.get_icon (64, 64));
 
             this.clicked.connect (() => {
                 Signals.get_default ().explore_leaflet_open ();

@@ -186,6 +186,28 @@ namespace Catalogue.Core {
             return installed_apps;
         }
 
+        public Gee.Collection<Package> get_applications_for_category (AppStream.Category category) {
+            unowned GLib.GenericArray<AppStream.Component> components = category.get_components ();
+            // Clear out any cached components that could be from other backends
+            if (components.length != 0) {
+                components.remove_range (0, components.length);
+            }
+    
+            var category_array = new GLib.GenericArray<AppStream.Category> ();
+            category_array.add (category);
+            AppStream.utils_sort_components_into_categories (user_appstream_pool.get_components (), category_array, false);
+            AppStream.utils_sort_components_into_categories (system_appstream_pool.get_components (), category_array, false);
+            components = category.get_components ();
+    
+            var apps = new Gee.TreeSet<Package> ();
+            components.foreach ((comp) => {
+                var packages = get_packages_for_component_id (comp.get_id ());
+                apps.add_all (packages);
+            });
+    
+            return apps;
+        }
+
         public Package? get_package_for_component_id (string id) {
             var suffixed_id = id + ".desktop";
 
@@ -200,6 +222,20 @@ namespace Catalogue.Core {
             }            
     
             return null;
+        }
+
+        public Gee.Collection<Package> get_packages_for_component_id (string id) {
+            var packages = new Gee.ArrayList<Package> ();
+            var suffixed_id = id + ".desktop";
+            foreach (var package in package_list.values) {
+                if (package.component.id == id) {
+                    packages.add (package);
+                } else if (package.component.id == suffixed_id) {
+                    packages.add (package);
+                }
+            }
+    
+            return packages;
         }
 
         private void reload_appstream_pool () {

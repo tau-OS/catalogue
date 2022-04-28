@@ -41,6 +41,7 @@
                                 <property name="vexpand">False</property>
                                 <property name="ellipsize">end</property>
                                 <property name="label">Test</property>
+                                <property name="wrap">true</property>
                                 <style>
                                     <class name="title-1" />
                                 </style>
@@ -54,6 +55,7 @@
                                 <property name="lines">1</property>
                                 <property name="justify">center</property>
                                 <property name="label">Test</property>
+                                <property name="wrap">true</property>
                                 <style>
                                     <class name="caption" />
                                 </style>

@@ -30,12 +30,12 @@
 
             row_container.set_title (title);
 
-            for (var i = 0; i < 10; i++) {
-                var app_tile = new Catalogue.AppTile ("UwU", "This is a test app", "$1.99");
+            //  for (var i = 0; i < 10; i++) {
+            //      var app_tile = new Catalogue.AppTile ("UwU", "This is a test app", "$1.99");
 
-                // this  needs to be updated lol
-                row_box.append (app_tile);
-            }
+            //      // this  needs to be updated lol
+            //      row_box.append (app_tile);
+            //  }
         }
     }
 }

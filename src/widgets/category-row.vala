@@ -22,16 +22,12 @@
         [GtkChild]
         private unowned Gtk.FlowBox row_box;
 
-        // TODO pass GtkWidgets for the flowbox
+        public void append (Gtk.Widget widget) {
+            row_box.append (widget);
+        }
+
         public CategoryRow () {
             Object ();
-
-            for (var i = 0; i < 10; i++) {
-                var app_tile = new Catalogue.AppTile ("UwU", "This is a test app", "$1.99");
-
-                // this  needs to be updated lol
-                row_box.append (app_tile);
-            }
         }
     }
 }

@@ -56,6 +56,10 @@ namespace Catalogue.Core {
             return apps;
         }
 
+        public Gee.Collection<Package> get_applications_for_category (AppStream.Category category) {
+            return FlatpakBackend.get_default ().get_applications_for_category (category);
+        }
+
         // TODO add timer
         public async void update_cache (bool force = false) {
             cancellable.reset ();
