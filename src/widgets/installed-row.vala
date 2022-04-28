@@ -29,6 +29,7 @@
             Object ();
 
             this.set_title (app.get_name ());
+            this.set_subtitle (app.get_version ());
 
             image.set_from_gicon (app.get_icon (64, 64));
             suffix_button.set_label (button_label);
