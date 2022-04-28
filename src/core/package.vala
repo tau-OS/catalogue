@@ -101,6 +101,8 @@ namespace Catalogue.Core {
             internal set { _latest_version = convert_version (value); }
         }
 
+        private PackageDetails? backend_details = null;
+
         public Package (AppStream.Component component) {
             Object (component: component);
         }
@@ -111,6 +113,7 @@ namespace Catalogue.Core {
             summary = null;
             _author = null;
             _latest_version = null;
+            backend_details = null;
     
             this.component = component;
         }
@@ -137,13 +140,13 @@ namespace Catalogue.Core {
             }
     
             name = component.get_name ();
-            //  if (name == null) {
-            //      if (backend_details == null) {
-            //          populate_backend_details_sync ();
-            //      }
+            if (name == null) {
+                if (backend_details == null) {
+                    populate_backend_details_sync ();
+                }
     
-            //      name = backend_details.name;
-            //  }
+                name = backend_details.name;
+            }
     
             name = Core.unescape_markup (name);
     
@@ -154,13 +157,13 @@ namespace Catalogue.Core {
             if (description == null) {
                 description = component.get_description ();
     
-                //  if (description == null) {
-                //      if (backend_details == null) {
-                //          populate_backend_details_sync ();
-                //      }
+                if (description == null) {
+                    if (backend_details == null) {
+                        populate_backend_details_sync ();
+                    }
     
-                //      description = backend_details.description;
-                //  }
+                    description = backend_details.description;
+                }
     
                 if (description == null) {
                     return null;
@@ -190,13 +193,13 @@ namespace Catalogue.Core {
             }
     
             summary = component.get_summary ();
-            //  if (summary == null) {
-            //      if (backend_details == null) {
-            //          populate_backend_details_sync ();
-            //      }
+            if (summary == null) {
+                if (backend_details == null) {
+                    populate_backend_details_sync ();
+                }
     
-            //      summary = backend_details.summary;
-            //  }
+                summary = backend_details.summary;
+            }
     
             return summary;
         }
@@ -263,13 +266,13 @@ namespace Catalogue.Core {
                 return latest_version;
             }
     
-            //  if (backend_details == null) {
-            //      populate_backend_details_sync ();
-            //  }
+            if (backend_details == null) {
+                populate_backend_details_sync ();
+            }
     
-            //  if (backend_details.version != null) {
-            //      latest_version = backend_details.version;
-            //  }
+            if (backend_details.version != null) {
+                latest_version = backend_details.version;
+            }
     
             return latest_version;
         }
@@ -284,6 +287,49 @@ namespace Catalogue.Core {
             }
     
             return returned;
+        }
+
+        public AppStream.Release? get_newest_release () {
+            var releases = component.get_releases ();
+            releases.sort_with_data ((a, b) => {
+                if (a.get_version () == null || b.get_version () == null) {
+                    if (a.get_version () != null) {
+                        return -1;
+                    } else if (b.get_version () != null) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+    
+                return b.vercmp (a);
+            });
+    
+            if (releases.length > 0) {
+                return releases[0];
+            }
+    
+            return null;
+        }
+
+        private void populate_backend_details_sync () {    
+            var loop = new MainLoop ();
+            PackageDetails? result = null;
+            FlatpakBackend.get_default ().get_package_details.begin (this, (obj, res) => {
+                try {
+                    result = FlatpakBackend.get_default ().get_package_details.end (res);
+                } catch (Error e) {
+                    warning (e.message);
+                } finally {
+                    loop.quit ();
+                }
+            });
+    
+            loop.run ();
+            backend_details = result;
+            if (backend_details == null) {
+                backend_details = new PackageDetails ();
+            }
         }
     }
 }
