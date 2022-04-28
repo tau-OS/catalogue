@@ -19,8 +19,8 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/installed.ui")]
     public class WindowInstalled : Adw.Bin {
-        [GtkChild]
-        private unowned Gtk.ListBox in_progress_listbox;
+        //  [GtkChild]
+        //  private unowned Gtk.ListBox in_progress_listbox;
         [GtkChild]
         private unowned Gtk.ListBox apps_listbox;
 
@@ -33,10 +33,11 @@ namespace Catalogue {
 
             refresh_cancellable = new Cancellable ();
 
-            in_progress_listbox.append (new Adw.ActionRow ());
+            //  WILL BE USED WHEN UPDATES WORK LOL
+            //  in_progress_listbox.append (new Adw.ActionRow ());
 
-            // wish there was a signal on row add
-            in_progress_listbox.set_visible (true);
+            //  // wish there was a signal on row add
+            //  in_progress_listbox.set_visible (true);
 
             this.realize.connect (() => {
                 get_apps.begin ();
