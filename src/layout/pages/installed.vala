@@ -20,9 +20,9 @@ namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/installed.ui")]
     public class WindowInstalled : Adw.Bin {
         [GtkChild]
-        private unowned Adw.PreferencesGroup in_progress;
+        private unowned Gtk.ListBox in_progress_listbox;
         [GtkChild]
-        private unowned Adw.PreferencesGroup apps;
+        private unowned Gtk.ListBox apps_listbox;
 
         private Cancellable refresh_cancellable;
 
@@ -33,10 +33,17 @@ namespace Catalogue {
 
             refresh_cancellable = new Cancellable ();
 
-            //  in_progress.add (new Catalogue.InstalledRow ("UwU App", "Stop"));
+            in_progress_listbox.append (new Adw.ActionRow ());
+
+            // wish there was a signal on row add
+            in_progress_listbox.set_visible (true);
 
             this.realize.connect (() => {
                 get_apps.begin ();
+            });
+
+            apps_listbox.set_sort_func ((row1, row2) => {
+                return ((Catalogue.InstalledRow) row1).title.collate (((Catalogue.InstalledRow) row2).title);
             });
         }
 
@@ -53,7 +60,7 @@ namespace Catalogue {
 
             if (!refresh_cancellable.is_cancelled ()) {
                 foreach (var package in installed_apps) {
-                    apps.add (new Catalogue.InstalledRow (package, "Uninstall"));
+                    apps_listbox.append (new Catalogue.InstalledRow (package, "Uninstall"));
                 }
             }
 

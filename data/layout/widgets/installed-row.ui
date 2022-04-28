@@ -2,6 +2,8 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueInstalledRow" parent="AdwActionRow">
+        <property name="selectable">false</property>
+        
         <style>
             <class name="title-3" />
         </style>
