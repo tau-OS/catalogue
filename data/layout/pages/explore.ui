@@ -52,9 +52,9 @@
                                 </child>
                                 <child>
                                     <object class="GtkStackPage">
-                                        <property name="name">games</property>
-                                        <property name="title" translatable="yes">Games</property>
-                                        <property name="icon-name">applications-games-symbolic</property>
+                                        <property name="name">accessories</property>
+                                        <property name="title" translatable="yes">Accessories</property>
+                                        <property name="icon-name">applications-accessories</property>
                                         <property name="child">
                                             <object class="AdwClamp">
                                                 <property name="maximum-size">1000</property>
@@ -62,9 +62,39 @@
                                                 <property name="child">
                                                     <object class="AdwPreferencesGroup">
                                                         <property name="margin-top">24</property>
-                                                        <property name="title" translatable="yes">Games</property>
+                                                        <property name="title" translatable="yes">Accessories</property>
                                                         <child>
-                                                            <object class="GtkBox" id="games_box">
+                                                            <object class="GtkBox" id="accessories_box">
+                                                                <property name="halign">center</property>
+                                                                <property name="hexpand">False</property>
+                                                                <property name="orientation">vertical</property>
+                                                                <property name="margin-bottom">36</property>
+                                                                <property name="margin-start">12</property>
+                                                                <property name="margin-end">12</property>
+                                                                <property name="valign">start</property>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </property>
+                                            </object>
+                                        </property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkStackPage">
+                                        <property name="name">internet</property>
+                                        <property name="title" translatable="yes">Internet</property>
+                                        <property name="icon-name">vapplications-internet</property>
+                                        <property name="child">
+                                            <object class="AdwClamp">
+                                                <property name="maximum-size">1000</property>
+                                                <property name="tightening-threshold">600</property>
+                                                <property name="child">
+                                                    <object class="AdwPreferencesGroup">
+                                                        <property name="margin-top">24</property>
+                                                        <property name="title" translatable="yes">Internet</property>
+                                                        <child>
+                                                            <object class="GtkBox" id="internet_box">
                                                                 <property name="halign">center</property>
                                                                 <property name="hexpand">False</property>
                                                                 <property name="orientation">vertical</property>
@@ -84,7 +114,7 @@
                                     <object class="GtkStackPage">
                                         <property name="name">develop</property>
                                         <property name="title" translatable="yes">Develop</property>
-                                        <property name="icon-name">application-x-addon-symbolic</property>
+                                        <property name="icon-name">applications-development</property>
                                         <property name="child">
                                             <object class="AdwClamp">
                                                 <property name="maximum-size">1000</property>
@@ -112,9 +142,39 @@
                                 </child>
                                 <child>
                                     <object class="GtkStackPage">
+                                        <property name="name">games</property>
+                                        <property name="title" translatable="yes">Games</property>
+                                        <property name="icon-name">applications-games</property>
+                                        <property name="child">
+                                            <object class="AdwClamp">
+                                                <property name="maximum-size">1000</property>
+                                                <property name="tightening-threshold">600</property>
+                                                <property name="child">
+                                                    <object class="AdwPreferencesGroup">
+                                                        <property name="margin-top">24</property>
+                                                        <property name="title" translatable="yes">Games</property>
+                                                        <child>
+                                                            <object class="GtkBox" id="games_box">
+                                                                <property name="halign">center</property>
+                                                                <property name="hexpand">False</property>
+                                                                <property name="orientation">vertical</property>
+                                                                <property name="margin-bottom">36</property>
+                                                                <property name="margin-start">12</property>
+                                                                <property name="margin-end">12</property>
+                                                                <property name="valign">start</property>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </property>
+                                            </object>
+                                        </property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkStackPage">
                                         <property name="name">create</property>
                                         <property name="title" translatable="yes">Create</property>
-                                        <property name="icon-name">applications-graphics-symbolic</property>
+                                        <property name="icon-name">applications-graphics</property>
                                         <property name="child">
                                             <object class="AdwClamp">
                                                 <property name="maximum-size">1000</property>
@@ -144,7 +204,7 @@
                                     <object class="GtkStackPage">
                                         <property name="name">work</property>
                                         <property name="title" translatable="yes">Work</property>
-                                        <property name="icon-name">mail-send-symbolic</property>
+                                        <property name="icon-name">applications-office</property>
                                         <property name="child">
                                             <object class="AdwClamp">
                                                 <property name="maximum-size">1000</property>
@@ -155,36 +215,6 @@
                                                         <property name="title" translatable="yes">Work</property>
                                                         <child>
                                                             <object class="GtkBox" id="work_box">
-                                                                <property name="halign">center</property>
-                                                                <property name="hexpand">False</property>
-                                                                <property name="orientation">vertical</property>
-                                                                <property name="margin-bottom">36</property>
-                                                                <property name="margin-start">12</property>
-                                                                <property name="margin-end">12</property>
-                                                                <property name="valign">start</property>
-                                                            </object>
-                                                        </child>
-                                                    </object>
-                                                </property>
-                                            </object>
-                                        </property>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkStackPage">
-                                        <property name="name">apps</property>
-                                        <property name="title" translatable="yes">Apps</property>
-                                        <property name="icon-name">view-grid-symbolic</property>
-                                        <property name="child">
-                                            <object class="AdwClamp">
-                                                <property name="maximum-size">1000</property>
-                                                <property name="tightening-threshold">600</property>
-                                                <property name="child">
-                                                    <object class="AdwPreferencesGroup">
-                                                        <property name="margin-top">24</property>
-                                                        <property name="title" translatable="yes">Apps</property>
-                                                        <child>
-                                                            <object class="GtkBox" id="apps_box">
                                                                 <property name="halign">center</property>
                                                                 <property name="hexpand">False</property>
                                                                 <property name="orientation">vertical</property>

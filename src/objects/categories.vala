@@ -9,14 +9,40 @@ namespace Catalogue {
             return _categories;
         }
 
+        public AppStream.Category accessories;
+        public AppStream.Category internet;
         public AppStream.Category games;
         public AppStream.Category develop; 
         public AppStream.Category create;
         public AppStream.Category work;
-        public AppStream.Category apps;
 
         construct {
-            games = get_category ("Games", "applications-games-symbolic", {
+            accessories = get_category ("Accessories", "applications-accessories", {
+                "Utility",
+                "Monitor",
+                "System",
+                "Accessibility"
+            });
+            internet = get_category ("Internet", "applications-internet", {
+                "Chat",
+                "Email",
+                "InstantMessaging",
+                "IRCClient",
+                "VideoConference",
+                "Network",
+                "P2P"
+            });
+            develop = get_category ("Develop", "applications-development", {
+                "Database",
+                "Debugger",
+                "Development",
+                "GUIDesigner",
+                "IDE",
+                "RevisionControl",
+                "TerminalEmulator",
+                "WebDevelopment"
+            });
+            games = get_category ("Games", "applications-games", {
                 "ActionGame",
                 "AdventureGame",
                 "ArcadeGame",
@@ -33,17 +59,7 @@ namespace Catalogue {
                 "SportsGame",
                 "StrategyGame"
             });
-            develop = get_category ("Develop", "application-x-addon-symbolic", {
-                "Database",
-                "Debugger",
-                "Development",
-                "GUIDesigner",
-                "IDE",
-                "RevisionControl",
-                "TerminalEmulator",
-                "WebDevelopment"
-            });
-            create = get_category ("Create", "applications-graphics-symbolic", {
+            create = get_category ("Create", "applications-graphics", {
                 "2DGraphics",
                 "3DGraphics",
                 "Graphics",
@@ -73,8 +89,12 @@ namespace Catalogue {
                 "Physics",
                 "Robotics",
                 "Science",
+                "TV",
+                "Video",
+                "Audio",
+                "Music"
             });
-            work = get_category ("Work", "mail-send-symbolic", {
+            work = get_category ("Work", "applications-office", {
                 "Chat",
                 "ContactManagement",
                 "Email",
@@ -98,18 +118,6 @@ namespace Catalogue {
                 "TextEditor",
                 "TextTools",
                 "Translation",
-            });
-            apps = get_category ("Apps", "view-grid-symbolic", {
-                "Security",
-                "Tuner",
-                "TV",
-                "Video",
-                "Monitor",
-                "System",
-                "Education",
-                "Utility",
-                "Audio",
-                "Music"
             });
         }
 

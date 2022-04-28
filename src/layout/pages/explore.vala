@@ -30,15 +30,17 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.FlowBox featured_flowbox;
         [GtkChild]
-        private unowned Gtk.Box games_box;
+        private unowned Gtk.Box accessories_box;
+        [GtkChild]
+        private unowned Gtk.Box internet_box;
         [GtkChild]
         private unowned Gtk.Box develop_box;
+        [GtkChild]
+        private unowned Gtk.Box games_box;
         [GtkChild]
         private unowned Gtk.Box create_box;
         [GtkChild]
         private unowned Gtk.Box work_box;
-        [GtkChild]
-        private unowned Gtk.Box apps_box;
 
         private Catalogue.Carousel carousel;
 
@@ -66,11 +68,12 @@ namespace Catalogue {
             var categories = new Catalogue.Categories ().get_default ();
 
             var categories_list = new AppStream.Category[] {};
-            categories_list += categories.games;
+            categories_list += categories.accessories;
+            categories_list += categories.internet; 
             categories_list += categories.develop;
+            categories_list += categories.games;
             categories_list += categories.create;
             categories_list += categories.work;
-            categories_list += categories.apps;
 
             foreach (var entry in categories_list) {
                 var name = entry.get_name ();
@@ -112,24 +115,27 @@ namespace Catalogue {
             //  featured_row_test = new Catalogue.FeaturedRow ("Test Row");
             //  featured_box.append (featured_row_test);
 
-            var games_row = new Catalogue.CategoryRow ();
+            var accessories_row = new Catalogue.CategoryRow ();
+            var internet_row = new Catalogue.CategoryRow ();
             var develop_row = new Catalogue.CategoryRow ();
+            var games_row = new Catalogue.CategoryRow ();
             var create_row = new Catalogue.CategoryRow ();
             var work_row = new Catalogue.CategoryRow ();
-            var apps_row = new Catalogue.CategoryRow ();
 
             // shit for other pages
-            generate_category_row (games_row, categories.games);
+            generate_category_row (accessories_row, categories.accessories);
+            generate_category_row (internet_row, categories.internet);
             generate_category_row (develop_row, categories.develop);
+            generate_category_row (games_row, categories.games);
             generate_category_row (create_row, categories.create);
             generate_category_row (work_row, categories.work);
-            generate_category_row (apps_row, categories.apps);
 
-            games_box.append (games_row);
+            accessories_box.append (accessories_row);
+            internet_box.append (internet_row);
             develop_box.append (develop_row);
+            games_box.append (games_row);
             create_box.append (create_row);
             work_box.append (work_row);
-            apps_box.append (apps_row);
 
             // Add details page to leaflet
 
