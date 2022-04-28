@@ -20,7 +20,7 @@
             <object class="GtkButton" id="suffix_button">
                 <property name="valign">center</property>
                 <style>
-                    <class name="title-4" />
+                    <class name="heading" />
                     <class name="pill" />
                     <class name="destructive-action" />
                 </style>
