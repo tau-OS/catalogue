@@ -31,6 +31,11 @@ namespace Catalogue {
         construct {
             application_id = Config.APP_ID;
             flags = ApplicationFlags.FLAGS_NONE;
+            Intl.setlocale (LocaleCategory.ALL, "");
+            Intl.textdomain (Config.GETTEXT_PACKAGE);
+            Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+            Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+            
             add_action_entries (app_entries, this);
             set_accels_for_action ("app.quit", {"<primary>q"});
 

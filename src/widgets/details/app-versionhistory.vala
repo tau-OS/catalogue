@@ -22,10 +22,14 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.ListBox list_box_version_history;
             
-        public AppVersionHistory () {
+        public AppVersionHistory (Core.Package package) {
             Object ();
 
-            list_box_version_history.prepend (new Catalogue.AppVersionHistoryRow ());
+            var releases = package.get_newest_releases (1, 5);
+
+            foreach (var release in releases) {
+                list_box_version_history.prepend (new Catalogue.AppVersionHistoryRow (release));
+            }
         }
     }
 }

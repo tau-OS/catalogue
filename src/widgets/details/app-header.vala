@@ -29,20 +29,14 @@ namespace Catalogue {
         public AppHeader (Core.Package app) {
             Object ();
 
+            application_details_title.set_label (app.get_name ());
+            if (app.author == null || app.author == "") {
+                developer_name_label.set_label (app.author_title);
+            } else {
+                developer_name_label.set_label (app.author);
+            }
 
-                if (app != null) {
-                    application_details_title.set_label (app.get_name ());
-                    if (app.author == null || app.author == "") {
-                        developer_name_label.set_label (app.author_title);
-                    } else {
-                        developer_name_label.set_label (app.author);
-                    }
-
-                    application_details_icon.set_from_gicon (app.get_icon (128, 128));
-                } else {
-                    print ("null app :/");
-                }
-           
+            application_details_icon.set_from_gicon (app.get_icon (128, 128));
         }
     }
 }

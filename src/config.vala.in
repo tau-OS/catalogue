@@ -3,4 +3,6 @@ namespace Config {
     public const string NAME_SUFFIX = @NAME_SUFFIX@;
     public const string VERSION = @VERSION@;
     public const string APP_SETTINGS = @APP_SETTINGS@;
+    public const string LOCALEDIR = @LOCALEDIR@;
+    public const string GETTEXT_PACKAGE = @GETTEXT_PACKAGE@;
 }

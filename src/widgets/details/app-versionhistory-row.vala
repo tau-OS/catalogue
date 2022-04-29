@@ -19,9 +19,56 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory-row.ui")]
     public class AppVersionHistoryRow : Gtk.ListBoxRow {
+        [GtkChild]
+        private unowned Gtk.Label version_number_label;
+        [GtkChild]
+        private unowned Gtk.Label version_date_label;
+        [GtkChild]
+        private unowned Gtk.Label version_description_label;
             
-        public AppVersionHistoryRow () {
+        public AppVersionHistoryRow (AppStream.Release release) {
             Object ();
+
+            string version_number = release.get_version ();
+            string version_description = release.get_description ();
+            uint64 version_date = release.get_timestamp ();
+
+            string version_date_string = "";
+            string version_date_string_tooltip = "";
+
+            if (version_description != null && version_description != "") {
+                //  print (version_description);
+                version_number_label.set_label (@"New in Version $(version_number)");
+                try {
+                    version_description_label.set_label (AppStream.markup_convert_simple (version_description));
+                } catch (Error e) {
+                    version_description_label.set_label ("Error parsing description");
+                    warning (e.message);
+                }
+            } else {
+                version_number_label.set_label (@"Version $(version_number)");
+                version_description_label.set_label ("No details for this release");
+            }
+
+            if (version_date != 0) {
+                version_date_string = new Utils ().time_to_string ((int) version_date);
+
+                string format_string = ("%e %B %Y");
+                DateTime date_time = new DateTime.from_unix_local ((int) version_date);
+                version_date_string_tooltip = date_time.format (format_string);
+                version_date_label.set_label (version_date.to_string ());
+            }
+
+            if (version_date_string == null) {
+                version_date_label.set_visible (false);
+            } else {
+                version_date_label.set_label (version_date_string);
+            }
+
+            if (version_date_string_tooltip != null) {
+                version_date_label.set_tooltip_text (version_date_string_tooltip);
+            }
         }
+
     }
 }

@@ -24,21 +24,11 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Label application_details_description;
             
-        public AppDetails () {
+        public AppDetails (Core.Package app) {
             Object ();
 
-            this.realize.connect (() => {
-                var client = Core.Client.get_default ();
-
-                var app = client.get_package_for_component_id ("com.mojang.Minecraft");
-
-                if (app != null) {
-                    application_details_summary.set_label (app.get_summary ());
-                    application_details_description.set_label (app.get_description ());
-                } else {
-                    print ("null app :/");
-                }
-            });
+            application_details_summary.set_label (app.get_summary ());
+            application_details_description.set_label (app.get_description ());
         }
     }
 }
