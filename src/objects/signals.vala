@@ -29,5 +29,5 @@ public class Signals : GLib.Object {
     public signal void window_do_back_button_clicked ();
     public signal void window_show_back_button ();
     public signal void window_hide_back_button ();
-    public signal void explore_leaflet_open ();
+    public signal void explore_leaflet_open (Catalogue.Core.Package package);
 }

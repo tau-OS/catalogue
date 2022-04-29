@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
- namespace Catalogue {
+namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details.ui")]
     public class WindowDetails : Adw.Bin {
         [GtkChild]
@@ -32,10 +32,10 @@
         [GtkChild]
         private unowned Adw.Bin app_links_container;
 
-        public WindowDetails () {
+        public WindowDetails (Core.Package package) {
             Object ();
 
-            app_header_container.set_child (new Catalogue.AppHeader ());
+            app_header_container.set_child (new Catalogue.AppHeader (package));
             app_screenshots_container.set_child (new Catalogue.AppScreenshots ());
             app_details_container.set_child (new Catalogue.AppDetails ());
             app_context_container.set_child (new Catalogue.AppContextBar ());

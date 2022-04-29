@@ -73,6 +73,22 @@ namespace Catalogue.Core {
             }
         }
 
+        private string? _author_title = null;
+        public string author_title {
+            get {
+                if (_author_title != null) {
+                    return _author_title;
+                }
+
+                _author_title = author;
+                if (_author_title == null) {
+                    _author_title = _("%s Developers").printf (get_name ());
+                }
+
+                return _author_title;
+            }
+        }
+
         public string origin_description {
             owned get {
                 var fp_package = this as FlatpakPackage;
@@ -112,6 +128,7 @@ namespace Catalogue.Core {
             description = null;
             summary = null;
             _author = null;
+            _author_title = null;
             _latest_version = null;
             backend_details = null;
     

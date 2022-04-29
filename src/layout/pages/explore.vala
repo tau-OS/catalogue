@@ -89,10 +89,18 @@ namespace Catalogue {
             }
 
             // Handle Rows
-            Signals.get_default ().explore_leaflet_open.connect (() => {
+            Signals.get_default ().explore_leaflet_open.connect ((package) => {
                 is_leaflet_active = true;
                 leaflet.navigate (Adw.NavigationDirection.FORWARD);
                 Signals.get_default ().window_show_back_button ();
+                // Add details page to leaflet
+                var widget_list = new Utils ().get_all_widgets_in_child (leaflet_expanded);
+
+                foreach (var widget in widget_list) {
+                    leaflet_expanded.remove (widget);
+                }
+                
+                leaflet_expanded.append (new Catalogue.WindowDetails (package));
             });
 
             Signals.get_default ().window_do_back_button_clicked.connect ((is_stack) => {
@@ -136,10 +144,6 @@ namespace Catalogue {
             games_box.append (games_row);
             create_box.append (create_row);
             work_box.append (work_row);
-
-            // Add details page to leaflet
-
-            leaflet_expanded.append (new Catalogue.WindowDetails ());
         }
     }
 }

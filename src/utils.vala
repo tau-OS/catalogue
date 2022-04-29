@@ -1,4 +1,4 @@
-/* widgets/carousel-tile.vala
+/* utils.vala
  *
  * Copyright 2022 Fyra Labs
  *
@@ -17,15 +17,19 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/carousel-tile.ui")]
-    public class CarouselTile : Gtk.Button {
-        
-        public CarouselTile () {
-            Object ();
-
-            //  this.clicked.connect (() => {
-            //      Signals.get_default ().explore_leaflet_open ();
-            //  });
+    public class Utils {
+        public Gtk.Widget[] get_all_widgets_in_child (Gtk.Widget parent) {
+            Gtk.Widget[] widgets = {};
+            var widget = parent.get_first_child ();
+            Gtk.Widget? next = null;
+            if (widget != null) {
+                widgets += widget;
+                while ((next = widget.get_next_sibling ()) != null) {
+                    widget = next;
+                    widgets += widget;
+                }
+            }
+            return widgets;
         }
     }
 }

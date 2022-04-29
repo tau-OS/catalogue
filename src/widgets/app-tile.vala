@@ -37,7 +37,7 @@
             image.set_from_gicon (package.get_icon (64, 64));
 
             this.clicked.connect (() => {
-                Signals.get_default ().explore_leaflet_open ();
+                Signals.get_default ().explore_leaflet_open (package);
             });
         }
     }
