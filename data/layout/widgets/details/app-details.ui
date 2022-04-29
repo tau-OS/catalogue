@@ -28,7 +28,7 @@
                         </child>
                         <child>
                             <object class="GtkLabel" id="application_details_description">
-                                <property name="halign">fill</property>
+                                <property name="halign">start</property>
                                 <property name="hexpand">True</property>
                                 <property name="valign">start</property>
                                 <property name="vexpand">False</property>
