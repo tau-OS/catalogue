@@ -19,9 +19,58 @@
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/preferences.ui")]
     public class Preferences : Adw.PreferencesWindow {
+        [GtkChild]
+        private unowned Gtk.ListBox repositories_listbox;
 
         public Preferences () {
             Object ();
+                // SOUP_HTTP_URI_FLAGS
+                var url_flags = (UriFlags.ENCODED | UriFlags.ENCODED_FRAGMENT | UriFlags.ENCODED_PATH | UriFlags.ENCODED_QUERY | UriFlags.SCHEME_NORMALIZE);
+
+                var system_repos = Core.Client.get_default ().get_remotes (true);
+                var user_repos = Core.Client.get_default ().get_remotes (false);
+
+                foreach (var remote in system_repos) {
+                    string url;
+                    try {
+                        url = Uri.parse (remote.get_url (), url_flags).get_host ();
+                    } catch (Error e) {
+                        url = remote.get_url ();
+                        warning ("Error parsing URI: %s", e.message);
+                    }
+                    
+                    var row = new Adw.ActionRow () {
+                        title = remote.get_title (),
+                        subtitle = "%s • %s".printf (url, "System Installation"),
+                        selectable = false
+                    };
+
+                    row.add_suffix (new Gtk.Switch () {
+                        valign = Gtk.Align.CENTER
+                    });
+                    repositories_listbox.append (row);
+                }
+                foreach (var remote in user_repos) {
+                    string url;
+                    try {
+                        url = Uri.parse (remote.get_url (), url_flags).get_host ();
+                    } catch (Error e) {
+                        url = remote.get_url ();
+                        warning ("Error parsing URI: %s", e.message);
+                    }
+
+                    var row = new Adw.ActionRow () {
+                        title = remote.get_title (),
+                        subtitle = "%s • %s".printf (url, "Per-User Installation"),
+                        selectable = false
+                    };
+
+                    row.add_suffix (new Gtk.Switch () {
+                        valign = Gtk.Align.CENTER
+                    });
+                    repositories_listbox.append (row);
+                }
+            
         }
     }
 }
