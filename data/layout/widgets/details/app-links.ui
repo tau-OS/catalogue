@@ -25,22 +25,27 @@
                                 <property name="orientation">horizontal</property>
 
                                 <child>
-                                    <object class="GtkListBox" id="project_website_box">
-                                        <property name="visible">false</property>
-                                        <style>
-                                            <class name="boxed-list" />
-                                        </style>
+                                    <object class="GtkFlowBoxChild">
+                                        <property name="visible" bind-source="project_website_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
-                                            <object class="AdwActionRow" id="project_website_row">
-                                                <property name="activatable">True</property>
-                                                <property name="icon-name">webpage-symbolic</property>
-                                                <property name="title" translatable="yes">Project _Website</property>
-                                                <property name="subtitle">tauos.co</property>
-                                                <property name="use-underline">True</property>
-                                                <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                            <object class="GtkListBox">
+                                                <style>
+                                                    <class name="boxed-list" />
+                                                </style>
                                                 <child>
-                                                    <object class="GtkImage">
-                                                        <property name="icon-name">external-link-symbolic</property>
+                                                    <object class="AdwActionRow" id="project_website_row">
+                                                        <property name="visible">false</property>
+                                                        <property name="activatable">True</property>
+                                                        <property name="icon-name">webpage-symbolic</property>
+                                                        <property name="title" translatable="yes">Project _Website</property>
+                                                        <property name="subtitle">tauos.co</property>
+                                                        <property name="use-underline">True</property>
+                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </child>
                                             </object>
@@ -49,23 +54,28 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox" id="donate_box">
-                                        <property name="visible">false</property>
-                                        <style>
-                                            <class name="boxed-list" />
-                                        </style>
-
+                                    <object class="GtkFlowBoxChild">
+                                        <property name="visible" bind-source="donate_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
-                                            <object class="AdwActionRow" id="donate_row">
-                                                <property name="activatable">True</property>
-                                                <property name="icon-name">money-symbolic</property>
-                                                <property name="title" translatable="yes">_Donate</property>
-                                                <property name="subtitle">tauos.co</property>
-                                                <property name="use-underline">True</property>
-                                                <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                            <object class="GtkListBox">
+                                                <style>
+                                                    <class name="boxed-list" />
+                                                </style>
+
                                                 <child>
-                                                    <object class="GtkImage">
-                                                        <property name="icon-name">external-link-symbolic</property>
+                                                    <object class="AdwActionRow" id="donate_row">
+                                                        <property name="visible">false</property>
+                                                        <property name="activatable">True</property>
+                                                        <property name="icon-name">money-symbolic</property>
+                                                        <property name="title" translatable="yes">_Donate</property>
+                                                        <property name="subtitle">tauos.co</property>
+                                                        <property name="use-underline">True</property>
+                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </child>
                                             </object>
@@ -74,22 +84,27 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox" id="translate_box">
-                                        <property name="visible">false</property>
-                                        <style>
-                                            <class name="boxed-list" />
-                                        </style>
+                                    <object class="GtkFlowBoxChild">
+                                        <property name="visible" bind-source="translate_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
-                                            <object class="AdwActionRow" id="translate_row">
-                                                <property name="activatable">True</property>
-                                                <property name="icon-name">flag-outline-thin-symbolic</property>
-                                                <property name="title" translatable="yes">Contribute _Translations</property>
-                                                <property name="subtitle">tauos.co</property>
-                                                <property name="use-underline">True</property>
-                                                <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                            <object class="GtkListBox">
+                                                <style>
+                                                    <class name="boxed-list" />
+                                                </style>
                                                 <child>
-                                                    <object class="GtkImage">
-                                                        <property name="icon-name">external-link-symbolic</property>
+                                                    <object class="AdwActionRow" id="translate_row">
+                                                        <property name="visible">false</property>
+                                                        <property name="activatable">True</property>
+                                                        <property name="icon-name">flag-outline-thin-symbolic</property>
+                                                        <property name="title" translatable="yes">Contribute _Translations</property>
+                                                        <property name="subtitle">tauos.co</property>
+                                                        <property name="use-underline">True</property>
+                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </child>
                                             </object>
@@ -98,22 +113,27 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox" id="report_an_issue_box">
-                                        <property name="visible">false</property>
-                                        <style>
-                                            <class name="boxed-list" />
-                                        </style>
+                                    <object class="GtkFlowBoxChild">
+                                        <property name="visible" bind-source="report_an_issue_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
-                                            <object class="AdwActionRow" id="report_an_issue_row">
-                                                <property name="activatable">True</property>
-                                                <property name="icon-name">computer-fail-symbolic</property>
-                                                <property name="title" translatable="yes">_Report an Issue</property>
-                                                <property name="subtitle">tauos.co</property>
-                                                <property name="use-underline">True</property>
-                                                <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                            <object class="GtkListBox">
+                                                <style>
+                                                    <class name="boxed-list" />
+                                                </style>
                                                 <child>
-                                                    <object class="GtkImage">
-                                                        <property name="icon-name">external-link-symbolic</property>
+                                                    <object class="AdwActionRow" id="report_an_issue_row">
+                                                        <property name="visible">false</property>
+                                                        <property name="activatable">True</property>
+                                                        <property name="icon-name">computer-fail-symbolic</property>
+                                                        <property name="title" translatable="yes">_Report an Issue</property>
+                                                        <property name="subtitle">tauos.co</property>
+                                                        <property name="use-underline">True</property>
+                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </child>
                                             </object>
@@ -122,22 +142,27 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox" id="help_box">
-                                        <property name="visible">false</property>
-                                        <style>
-                                            <class name="boxed-list" />
-                                        </style>
+                                    <object class="GtkFlowBoxChild">
+                                        <property name="visible" bind-source="help_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
-                                            <object class="AdwActionRow" id="help_row">
-                                                <property name="activatable">True</property>
-                                                <property name="icon-name">help-link-symbolic</property>
-                                                <property name="title" translatable="yes">_Help</property>
-                                                <property name="subtitle">tauos.co</property>
-                                                <property name="use-underline">True</property>
-                                                <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                            <object class="GtkListBox">
+                                                <style>
+                                                    <class name="boxed-list" />
+                                                </style>
                                                 <child>
-                                                    <object class="GtkImage">
-                                                        <property name="icon-name">external-link-symbolic</property>
+                                                    <object class="AdwActionRow" id="help_row">
+                                                        <property name="visible">false</property>
+                                                        <property name="activatable">True</property>
+                                                        <property name="icon-name">help-link-symbolic</property>
+                                                        <property name="title" translatable="yes">_Help</property>
+                                                        <property name="subtitle">tauos.co</property>
+                                                        <property name="use-underline">True</property>
+                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <child>
+                                                            <object class="GtkImage">
+                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            </object>
+                                                        </child>
                                                     </object>
                                                 </child>
                                             </object>
