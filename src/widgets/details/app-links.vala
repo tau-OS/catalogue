@@ -47,24 +47,28 @@
 
             var donate_url = package.component.get_url (AppStream.UrlKind.DONATION);
             if (donate_url != null) {
+                donate_row.set_name (donate_url);
                 donate_row.set_subtitle (new Utils ().get_uri_hostname (donate_url));
                 donate_row.set_visible (true);
             }
 
             var translate_url = package.component.get_url (AppStream.UrlKind.TRANSLATE);
             if (translate_url != null) {
+                translate_row.set_name (translate_url);
                 translate_row.set_subtitle (new Utils ().get_uri_hostname (translate_url));
                 translate_row.set_visible (true);
             }
 
             var issue_url = package.component.get_url (AppStream.UrlKind.BUGTRACKER);
             if (issue_url != null) {
+                report_an_issue_row.set_name (issue_url);
                 report_an_issue_row.set_subtitle (new Utils ().get_uri_hostname (issue_url));
                 report_an_issue_row.set_visible (true);
             }
 
             var help_url = package.component.get_url (AppStream.UrlKind.HELP);
             if (help_url != null) {
+                help_row.set_name (help_url);
                 help_row.set_subtitle (new Utils ().get_uri_hostname (help_url));
                 help_row.set_visible (true);
             }
