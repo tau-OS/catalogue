@@ -40,7 +40,7 @@ namespace Catalogue {
             app_details_container.set_child (new Catalogue.AppDetails (package));
             app_context_container.set_child (new Catalogue.AppContextBar (package));
             app_version_history_container.set_child (new Catalogue.AppVersionHistory (package));
-            app_links_container.set_child (new Catalogue.AppLinks ());
+            app_links_container.set_child (new Catalogue.AppLinks (package));
         }
     }
 }

@@ -73,5 +73,20 @@ namespace Catalogue {
                 return ngettext ("%d year ago", "%d years ago", years_ago).printf (years_ago);
             }
         }
+
+        public string get_uri_hostname (string uri) {
+            // SOUP_HTTP_URI_FLAGS
+            var url_flags = (UriFlags.ENCODED | UriFlags.ENCODED_FRAGMENT | UriFlags.ENCODED_PATH | UriFlags.ENCODED_QUERY | UriFlags.SCHEME_NORMALIZE);
+            string url;
+            
+            try {
+                url = Uri.parse (uri, url_flags).get_host ();
+            } catch (Error e) {
+                url = uri;
+                warning ("Error parsing URI: %s", e.message);
+            }
+
+            return url;
+        }
     }
 }

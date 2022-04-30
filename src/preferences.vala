@@ -24,20 +24,11 @@
 
         public Preferences () {
             Object ();
-                // SOUP_HTTP_URI_FLAGS
-                var url_flags = (UriFlags.ENCODED | UriFlags.ENCODED_FRAGMENT | UriFlags.ENCODED_PATH | UriFlags.ENCODED_QUERY | UriFlags.SCHEME_NORMALIZE);
-
                 var system_repos = Core.Client.get_default ().get_remotes (true);
                 var user_repos = Core.Client.get_default ().get_remotes (false);
 
                 foreach (var remote in system_repos) {
-                    string url;
-                    try {
-                        url = Uri.parse (remote.get_url (), url_flags).get_host ();
-                    } catch (Error e) {
-                        url = remote.get_url ();
-                        warning ("Error parsing URI: %s", e.message);
-                    }
+                    var url = new Utils ().get_uri_hostname (remote.get_url ());
                     
                     var row = new Adw.ActionRow () {
                         title = remote.get_title (),
@@ -51,13 +42,7 @@
                     repositories_listbox.append (row);
                 }
                 foreach (var remote in user_repos) {
-                    string url;
-                    try {
-                        url = Uri.parse (remote.get_url (), url_flags).get_host ();
-                    } catch (Error e) {
-                        url = remote.get_url ();
-                        warning ("Error parsing URI: %s", e.message);
-                    }
+                    var url = new Utils ().get_uri_hostname (remote.get_url ());
 
                     var row = new Adw.ActionRow () {
                         title = remote.get_title (),

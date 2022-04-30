@@ -25,7 +25,8 @@
                                 <property name="orientation">horizontal</property>
 
                                 <child>
-                                    <object class="GtkListBox">
+                                    <object class="GtkListBox" id="project_website_box">
+                                        <property name="visible">false</property>
                                         <style>
                                             <class name="boxed-list" />
                                         </style>
@@ -48,7 +49,8 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox">
+                                    <object class="GtkListBox" id="donate_box">
+                                        <property name="visible">false</property>
                                         <style>
                                             <class name="boxed-list" />
                                         </style>
@@ -72,7 +74,8 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox">
+                                    <object class="GtkListBox" id="translate_box">
+                                        <property name="visible">false</property>
                                         <style>
                                             <class name="boxed-list" />
                                         </style>
@@ -95,7 +98,8 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox">
+                                    <object class="GtkListBox" id="report_an_issue_box">
+                                        <property name="visible">false</property>
                                         <style>
                                             <class name="boxed-list" />
                                         </style>
@@ -118,7 +122,8 @@
                                 </child>
 
                                 <child>
-                                    <object class="GtkListBox">
+                                    <object class="GtkListBox" id="help_box">
+                                        <property name="visible">false</property>
                                         <style>
                                             <class name="boxed-list" />
                                         </style>
