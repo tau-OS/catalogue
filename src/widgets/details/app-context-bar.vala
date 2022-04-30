@@ -24,6 +24,13 @@
         [GtkChild]
         private unowned Gtk.Label storage_tile_description;
 
+        [GtkChild]
+        private unowned Gtk.Box age_rating_tile_lozenge;
+        [GtkChild]
+        private unowned Gtk.Label age_rating_tile_lozenge_content;
+        [GtkChild]
+        private unowned Gtk.Label age_rating_tile_description;
+
         [GtkCallback]
         public void open_oars_dialog () {
             var window = new Adw.Window () {
@@ -37,6 +44,27 @@
             Object ();
 
             get_app_download_size.begin (package);
+
+            package.component.get_content_ratings ().foreach ((rating) => {
+                string age_text = "";
+                ContentRatingHelper.RatingLozengeClasses css_class = ContentRatingHelper.RatingLozengeClasses.UNKNOWN;
+                new ContentRatingHelper ().get_rating_lozenge (rating, out age_text, out css_class);
+                age_rating_tile_lozenge_content.set_label (age_text);
+                age_rating_tile_description.set_label (new ContentRatingHelper ().format_rating_description (css_class));
+                if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_0) {
+                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-0");
+                } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_5) {
+                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-5");
+                } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_12) {
+                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-12");
+                } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_15) {
+                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-15");
+                } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_18) {
+                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-18");
+                } else {
+                    age_rating_tile_lozenge.get_style_context ().add_class ("grey");
+                }
+            });
         }
 
         private async void get_app_download_size (Core.Package package) {

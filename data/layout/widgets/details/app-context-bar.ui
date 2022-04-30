@@ -98,7 +98,6 @@
                                                         <property name="halign">center</property>
                                                         <style>
                                                             <class name="context-tile-lozenge" />
-                                                            <class name="details-rating-18" />
                                                         </style>
                                                         <child>
                                                             <object class="GtkLabel" id="age_rating_tile_lozenge_content">

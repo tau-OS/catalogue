@@ -79,6 +79,24 @@
 	background-color: alpha(@green_3, .25);
 }
 
+.context-tile-lozenge.blue,
+.context-tile-lozenge.details-rating-5 {
+	color: @blue_4;
+	background-color: alpha(@blue_3, .25);
+}
+
+.context-tile-lozenge.yellow,
+.context-tile-lozenge.details-rating-12 {
+	color: #ae7b03;
+	background: alpha(@yellow_5, .25);
+}
+
+.context-tile-lozenge.details-rating-15 {
+	color: @orange_5;
+	background-color: alpha(@orange_4, .25);
+}
+
+
 .context-tile-lozenge.red,
 .context-tile-lozenge.details-rating-18 {
 	color: @red_4;
