@@ -40,7 +40,7 @@
                                                         <property name="title" translatable="yes">Project _Website</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <property name="use-underline">True</property>
-                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <signal name="activated" handler="on_url_clicked" />
                                                         <child>
                                                             <object class="GtkImage">
                                                                 <property name="icon-name">external-link-symbolic</property>
@@ -70,7 +70,7 @@
                                                         <property name="title" translatable="yes">_Donate</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <property name="use-underline">True</property>
-                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <signal name="activated" handler="on_url_clicked" />
                                                         <child>
                                                             <object class="GtkImage">
                                                                 <property name="icon-name">external-link-symbolic</property>
@@ -99,7 +99,7 @@
                                                         <property name="title" translatable="yes">Contribute _Translations</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <property name="use-underline">True</property>
-                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <signal name="activated" handler="on_url_clicked" />
                                                         <child>
                                                             <object class="GtkImage">
                                                                 <property name="icon-name">external-link-symbolic</property>
@@ -128,7 +128,7 @@
                                                         <property name="title" translatable="yes">_Report an Issue</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <property name="use-underline">True</property>
-                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <signal name="activated" handler="on_url_clicked" />
                                                         <child>
                                                             <object class="GtkImage">
                                                                 <property name="icon-name">external-link-symbolic</property>
@@ -157,7 +157,7 @@
                                                         <property name="title" translatable="yes">_Help</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <property name="use-underline">True</property>
-                                                        <!-- <signal name="activated" handler="gs_details_page_link_row_activated_cb" /> -->
+                                                        <signal name="activated" handler="on_url_clicked" />
                                                         <child>
                                                             <object class="GtkImage">
                                                                 <property name="icon-name">external-link-symbolic</property>

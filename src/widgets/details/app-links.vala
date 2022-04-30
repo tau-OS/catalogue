@@ -30,11 +30,17 @@
         [GtkChild]
         private unowned Adw.ActionRow help_row;
 
+        [GtkCallback]
+        public void on_url_clicked (Adw.ActionRow source) {
+            Gtk.show_uri_full.begin (null, source.get_name (), Gdk.CURRENT_TIME, null);
+        }
+
         public AppLinks (Core.Package package) {
             Object ();
 
             var homepage_url = package.component.get_url (AppStream.UrlKind.HOMEPAGE);
             if (homepage_url != null) {
+                project_website_row.set_name (homepage_url);
                 project_website_row.set_subtitle (new Utils ().get_uri_hostname (homepage_url));
                 project_website_row.set_visible (true);
             }
