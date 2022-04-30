@@ -18,6 +18,15 @@
 
 namespace Catalogue {
     public class Utils {
+        public T find_ancestor_of_type<T> (Gtk.Widget? ancestor) {
+            while ((ancestor = ancestor.get_parent ()) != null){
+                if (ancestor.get_type ().is_a (typeof (T)))
+                    return (T) ancestor;
+            }
+        
+            return null;
+        }
+        
         public Gtk.Widget[] get_all_widgets_in_child (Gtk.Widget parent) {
             Gtk.Widget[] widgets = {};
             var widget = parent.get_first_child ();

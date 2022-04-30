@@ -23,6 +23,15 @@
         private unowned Gtk.Label storage_tile_lozenge_content;
         [GtkChild]
         private unowned Gtk.Label storage_tile_description;
+
+        [GtkCallback]
+        public void open_oars_dialog () {
+            var window = new Adw.Window () {
+                modal = true
+            };
+            window.set_transient_for (((Window)new Utils ().find_ancestor_of_type<Window>(this)));
+            window.present ();
+        }
             
         public AppContextBar (Core.Package package) {
             Object ();

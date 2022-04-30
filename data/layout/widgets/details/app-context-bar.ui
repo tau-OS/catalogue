@@ -84,7 +84,7 @@
 
                                 <child>
                                     <object class="GtkButton" id="age_rating_tile">
-                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
+                                        <signal name="clicked" handler="open_oars_dialog" />
                                         <style>
                                             <class name="context-tile" />
                                             <class name="flat" />
