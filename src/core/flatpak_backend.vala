@@ -281,7 +281,7 @@ namespace Catalogue.Core {
                         if (package != null) {
                             package.replace_component (comp);
                         } else {
-                            package = new FlatpakPackage (user_installation, comp);
+                            package = new FlatpakPackage (system_installation, comp);
                         }
 
                         package_list[key] = package;
@@ -412,6 +412,96 @@ namespace Catalogue.Core {
             }
         }
 
+        public async uint64 get_download_size (Package package, Cancellable? cancellable, bool is_update = false) throws GLib.Error {
+            var bundle = package.component.get_bundle (AppStream.BundleKind.FLATPAK);
+            if (bundle == null) {
+                return 0;
+            }
+    
+            unowned var fp_package = package as FlatpakPackage;
+            if (fp_package == null) {
+                return 0;
+            }
+    
+            bool system = fp_package.installation == system_installation;
+    
+            var id = generate_package_list_key (system, package.component.get_origin (), bundle.get_id ());
+            return yield get_download_size_by_id (id, cancellable, is_update, package);
+        }
+    
+        public async uint64 get_download_size_by_id (string id, Cancellable? cancellable, bool is_update = false, Package? package = null) throws GLib.Error {
+            bool system;
+            string origin, bundle_id;
+            var split_success = get_package_list_key_parts (id, out system, out origin, out bundle_id);
+            if (!split_success) {
+                return 0;
+            }
+    
+            unowned Flatpak.Installation? installation = null;
+            if (system) {
+                installation = system_installation;
+            } else {
+                installation = user_installation;
+            }
+    
+            if (installation == null) {
+                return 0;
+            }
+    
+            uint64 download_size = 0;
+    
+            var added_remotes = new Gee.ArrayList<string> ();
+    
+            try {
+                var transaction = new Flatpak.Transaction.for_installation (installation, cancellable);
+                transaction.add_default_dependency_sources ();
+                if (is_update) {
+                    transaction.add_update (bundle_id, null, null);
+                } else {
+                    transaction.add_install (origin, bundle_id, null);
+                }
+    
+                transaction.add_new_remote.connect ((reason, from_id, remote_name, url) => {
+                    if (reason == Flatpak.TransactionRemoteReason.RUNTIME_DEPS) {
+                        added_remotes.add (url);
+                        return true;
+                    }
+    
+                    return false;
+                });
+    
+                transaction.ready.connect (() => {
+                    var operations = transaction.get_operations ();
+                    operations.foreach ((entry) => {
+    
+                        download_size += entry.get_download_size ();
+                    });
+    
+                    // Do not allow the install to start, this is a dry run
+                    return false;
+                });
+    
+                transaction.run (cancellable);
+    
+                // Cleanup any remotes we had to add while testing the transaction
+                installation.list_remotes ().foreach ((remote) => {
+                    if (remote.get_url () in added_remotes) {
+                        try {
+                            installation.remove_remote (remote.get_name ());
+                        } catch (Error e) {
+                            warning ("Error while removing dry run remote: %s", e.message);
+                        }
+                    }
+                });
+            } catch (Error e) {
+                if (!(e is Flatpak.Error.ABORTED)) {
+                    throw e;
+                }
+            }
+    
+            return download_size;
+        }
+
         public async PackageDetails get_package_details (Package package) throws GLib.Error {
             var details = new PackageDetails ();
             details.name = package.component.get_name ();
@@ -481,6 +571,23 @@ namespace Catalogue.Core {
         private string generate_package_list_key (bool system, string origin, string bundle_id) {
             unowned string installation = system ? "system" : "user";
             return "%s/%s/%s".printf (installation, origin, bundle_id);
+        }
+
+        public static bool get_package_list_key_parts (string key, out bool? system, out string? origin, out string? bundle_id) {
+            system = null;
+            origin = null;
+            bundle_id = null;
+    
+            string[] parts = key.split ("/", 3);
+            if (parts.length != 3) {
+                return false;
+            }
+    
+            system = parts[0] == "system";
+            origin = parts[1];
+            bundle_id = parts[2];
+    
+            return true;
         }
 
         public Package? lookup_package_by_id (string id) {

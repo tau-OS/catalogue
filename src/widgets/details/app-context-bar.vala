@@ -19,9 +19,32 @@
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-context-bar.ui")]
     public class AppContextBar : Adw.Bin {
+        [GtkChild]
+        private unowned Gtk.Label storage_tile_lozenge_content;
+        [GtkChild]
+        private unowned Gtk.Label storage_tile_description;
             
-        public AppContextBar () {
+        public AppContextBar (Core.Package package) {
             Object ();
+
+            get_app_download_size.begin (package);
+        }
+
+        private async void get_app_download_size (Core.Package package) {
+            if (package.state == Core.Package.State.INSTALLED) {
+                return;
+            }
+
+            var size = yield package.get_download_size_with_deps ();
+            string human_size = GLib.format_size (size);
+            storage_tile_lozenge_content.set_label (human_size);
+            storage_tile_description.set_label ("Needs up to %s of additional system downloads".printf (human_size));
+
+            tooltip_markup = "<b>%s</b>\n%s".printf (
+                _("Actual Download Size Likely to Be Smaller"),
+                _("Only the parts of apps and updates that are needed will be downloaded.")
+            );
+            storage_tile_description.set_tooltip_markup (tooltip_markup);
         }
     }
 }

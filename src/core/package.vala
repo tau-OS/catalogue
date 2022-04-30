@@ -382,6 +382,17 @@ namespace Catalogue.Core {
             return null;
         }
 
+        public async uint64 get_download_size_with_deps () {
+            uint64 size = 0;
+            try {
+                size = yield FlatpakBackend.get_default ().get_download_size (this, null);
+            } catch (Error e) {
+                warning ("Error getting download size: %s", e.message);
+            }
+
+            return size;
+        }
+
         private void populate_backend_details_sync () {    
             var loop = new MainLoop ();
             PackageDetails? result = null;
