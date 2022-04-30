@@ -593,6 +593,28 @@ namespace Catalogue.Core {
         public Package? lookup_package_by_id (string id) {
             return package_list[id];
         }
+
+        // Preferences work
+        public Gee.ArrayList<Flatpak.Remote> get_remotes (bool system, Cancellable cancellable) {
+            var remotes_list = new Gee.ArrayList<Flatpak.Remote> ();
+            unowned Flatpak.Installation? installation = null;
+
+            if (system) {
+                installation = system_installation;
+            } else {
+                installation = user_installation;
+            }
+
+            try {
+                installation.list_remotes (cancellable).foreach ((remote) => {
+                    remotes_list.add (remote);
+                });
+            } catch (Error e) {
+                warning ("Error getting remotes: %s", e.message);
+            }
+
+            return remotes_list;
+        }
     
         private static GLib.Once<FlatpakBackend> instance;
         public static unowned FlatpakBackend get_default () {

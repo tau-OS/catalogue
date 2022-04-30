@@ -60,6 +60,10 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().get_applications_for_category (category);
         }
 
+        public Gee.ArrayList<Flatpak.Remote> get_remotes (bool use_system) {
+            return FlatpakBackend.get_default ().get_remotes (use_system, cancellable);
+        }
+
         // TODO add timer
         public async void update_cache (bool force = false) {
             cancellable.reset ();
