@@ -67,7 +67,6 @@ namespace Catalogue {
             } else if (weeks_ago < 8) {
                 return ngettext ("%d week ago", "%d weeks ago", weeks_ago).printf (weeks_ago);
             } else if (years_ago < 1) {
-                //  return "%s".printf (ngettext ("%d month ago", "%d months ago", months_ago), months_ago);
                 return ngettext ("%d month ago", "%d months ago", months_ago).printf (months_ago);
             } else {
                 return ngettext ("%d year ago", "%d years ago", years_ago).printf (years_ago);
@@ -78,7 +77,7 @@ namespace Catalogue {
             // SOUP_HTTP_URI_FLAGS
             var url_flags = (UriFlags.ENCODED | UriFlags.ENCODED_FRAGMENT | UriFlags.ENCODED_PATH | UriFlags.ENCODED_QUERY | UriFlags.SCHEME_NORMALIZE);
             string url;
-            
+
             try {
                 url = Uri.parse (uri, url_flags).get_host ();
             } catch (Error e) {
