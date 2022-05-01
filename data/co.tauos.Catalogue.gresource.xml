@@ -40,5 +40,8 @@
     <file alias="scalable/actions/money-symbolic.svg">icons/hicolor/scalable/actions/money-symbolic.svg</file>
     <file alias="scalable/actions/help-link-symbolic.svg">icons/hicolor/scalable/actions/help-link-symbolic.svg</file>
     <file alias="scalable/actions/flag-outline-thin-symbolic.svg">icons/hicolor/scalable/actions/flag-outline-thin-symbolic.svg</file>
+    <file alias="scalable/actions/padlock-open-symbolic.svg">icons/hicolor/scalable/actions/padlock-open-symbolic.svg</file>
+    <file alias="scalable/emblems/face-sad-symbolic.svg">icons/hicolor/scalable/emblems/face-sad-symbolic.svg</file>
+    <file alias="scalable/status/warning-symbolic.svg">icons/hicolor/scalable/status/warning-symbolic.svg</file>
   </gresource>
 </gresources>
