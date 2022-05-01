@@ -162,7 +162,6 @@
                                                                 <property name="halign">center</property>
                                                                 <style>
                                                                     <class name="context-tile-lozenge" />
-                                                                    <class name="green" />
                                                                 </style>
                                                                 <child>
                                                                     <object class="GtkImage" id="lozenge0_image">
@@ -178,7 +177,6 @@
                                                                 <property name="halign">center</property>
                                                                 <style>
                                                                     <class name="context-tile-lozenge" />
-                                                                    <class name="green" />
                                                                 </style>
                                                                 <child>
                                                                     <object class="GtkImage" id="lozenge1_image">
@@ -194,7 +192,6 @@
                                                                 <property name="halign">center</property>
                                                                 <style>
                                                                     <class name="context-tile-lozenge" />
-                                                                    <class name="green" />
                                                                 </style>
                                                                 <child>
                                                                     <object class="GtkImage" id="lozenge2_image">

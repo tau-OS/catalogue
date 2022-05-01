@@ -31,6 +31,23 @@
         [GtkChild]
         private unowned Gtk.Label age_rating_tile_description;
 
+        [GtkChild]
+        private unowned Gtk.Box lozenge0;
+        [GtkChild]
+        private unowned Gtk.Box lozenge1;
+        [GtkChild]
+        private unowned Gtk.Box lozenge2;
+        [GtkChild]
+        private unowned Gtk.Image lozenge0_image;
+        [GtkChild]
+        private unowned Gtk.Image lozenge1_image;
+        [GtkChild]
+        private unowned Gtk.Image lozenge2_image;
+        [GtkChild]
+        private unowned Gtk.Label license_tile_title;
+        [GtkChild]
+        private unowned Gtk.Label license_tile_description;
+
         [GtkCallback]
         public void open_oars_dialog () {
             var window = new Adw.Window () {
@@ -44,6 +61,8 @@
             Object ();
 
             get_app_download_size.begin (package);
+
+            get_app_license (package);
 
             package.component.get_content_ratings ().foreach ((rating) => {
                 string age_text = "";
@@ -65,6 +84,30 @@
                     age_rating_tile_lozenge.get_style_context ().add_class ("grey");
                 }
             });
+        }
+
+        private void get_app_license (Core.Package package) {
+            var app_license = package.component.get_project_license ();
+
+            if (AppStream.license_is_free_license (app_license)) {
+                license_tile_title.set_label ("Community Built");
+                lozenge0_image.set_from_icon_name ("heart-filled-symbolic");
+                lozenge1_image.set_from_icon_name ("community-symbolic");
+                lozenge2_image.set_from_icon_name ("sign-language-symbolic");
+                license_tile_description.set_label ("This software is developed in the open by a community of volunteers, and released under the %s license.\n\nYou can contribute and help make it even better.".printf (app_license));
+                lozenge0.get_style_context ().add_class ("green");
+                lozenge1.get_style_context ().add_class ("green");
+                lozenge2.get_style_context ().add_class ("green");
+            } else {
+                license_tile_title.set_label ("Proprietary");
+                lozenge0_image.set_from_icon_name ("warning-symbolic");
+                lozenge1_image.set_from_icon_name ("face-sad-symbolic");
+                lozenge2_image.set_from_icon_name ("padlock-open-symbolic");
+                license_tile_description.set_label ("This software is not developed in the open. It may be harder to tell if this software is insecure.\n\nYou may not be able to contribute or influence development.");
+                lozenge0.get_style_context ().add_class ("red");
+                lozenge1.get_style_context ().add_class ("red");
+                lozenge2.get_style_context ().add_class ("red");
+            }
         }
 
         private async void get_app_download_size (Core.Package package) {

@@ -47,6 +47,8 @@ namespace Catalogue {
         }
 
         public string format_rating_description (RatingLozengeClasses rating) {
+            // TODO maybe use ratings that are a bit less game-oriented
+
             // yes i stole descriptions from ESRB sorry
             if (rating == RatingLozengeClasses.RATING_18) {
                 return "May include prolonged scenes of intense violence, graphic sexual content and/or gambling with real currency.";
