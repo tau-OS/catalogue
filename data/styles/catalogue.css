@@ -20,6 +20,14 @@
     border-right: none;
 }
 
+.image1 {
+	margin-top: 6px;
+	margin-bottom: 12px;
+	margin-left: 6px;
+	margin-right: 6px;
+}
+
+
 .context-tile {
 	border: 1px solid @borders;
 	background-color: transparent;

@@ -36,7 +36,7 @@ namespace Catalogue {
             Object ();
 
             app_header_container.set_child (new Catalogue.AppHeader (package));
-            app_screenshots_container.set_child (new Catalogue.AppScreenshots ());
+            app_screenshots_container.set_child (new Catalogue.AppScreenshots (package));
             app_details_container.set_child (new Catalogue.AppDetails (package));
             app_context_container.set_child (new Catalogue.AppContextBar (package));
             app_version_history_container.set_child (new Catalogue.AppVersionHistory (package));

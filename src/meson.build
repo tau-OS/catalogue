@@ -37,6 +37,7 @@ core_sources = [
     'core/utils.vala', 
     'core/client.vala',
     'core/job.vala',
+    'core/screenshot_cache.vala'
 ]
 
 config_file = configure_file(

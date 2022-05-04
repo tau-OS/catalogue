@@ -15,6 +15,7 @@
                 <child>
                     <object class="AdwCarousel" id="carousel">
                         <property name="vexpand">True</property>
+                        <!-- TODO remove this and make it appear only on error -->
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
@@ -47,39 +48,6 @@
                                 </child>
                             </object>
                         </child>
-                        <child>
-                            <object class="GtkBox">
-                                <property name="orientation">vertical</property>
-                                <property name="spacing">6</property>
-                                <!-- Arbitrary size chosen to tile together at 16:9;
-                                     see https://blogs.gnome.org/hughsie/2014/07/02/blurry-screenshots-in-gnome-software/ -->
-                                <property name="height_request">423</property>
-                                <property name="hexpand">True</property>
-                                <property name="halign">fill</property>
-                                <style>
-                                    <class name="screenshot-image" />
-                                    <!-- <class name="frame" />
-                                    <class name="view" /> -->
-                                </style>
-                                <child>
-                                    <object class="GtkImage">
-                                        <property name="pixel_size">64</property>
-                                        <property name="icon_name">camera-photo-symbolic</property>
-                                        <property name="valign">end</property>
-                                        <property name="vexpand">True</property>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkLabel">
-                                        <property name="halign">center</property>
-                                        <property name="valign">start</property>
-                                        <property name="vexpand">True</property>
-                                        <property name="label" translatable="yes">No screenshot provided</property>
-                                    </object>
-                                </child>
-                            </object>
-                        </child>
-
                     </object>
                 </child>
                 <child type="overlay">

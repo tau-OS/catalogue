@@ -17,19 +17,6 @@
  */
 
  namespace Catalogue {
-    // for the future lol
-    // private class AppScreenshotImage : Gtk.Image {
-    //     private AppScreenshotImage () {
-    //         Object ();
-    //     }
-
-    //     construct {
-    //         this.get_style_context ().add_class ("screenshot-image");
-            // wtf is image2
-    //         this.get_style_context ().add_class ("image1");
-    //     }
-    // }
-
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-screenshots.ui")]
     public class AppScreenshots : Gtk.Box {
         [GtkChild]
@@ -43,6 +30,9 @@
         [GtkChild]
         private unowned Gtk.Revealer button_next_revealer;
             
+        public const int MAX_WIDTH = 800;
+        GenericArray<AppStream.Screenshot> screenshots;
+        public signal void screenshot_downloaded ();
 
         private void navigate (Adw.NavigationDirection direction) {
             var current_page = carousel.get_position ();
@@ -81,8 +71,10 @@
             }
         }
 
-        public AppScreenshots () {
+        public AppScreenshots (Core.Package package) {
             Object ();
+
+            screenshots = package.component.get_screenshots ();
 
             carousel.page_changed.connect (() => {
                 update_buttons ();
@@ -99,6 +91,98 @@
             button_next.clicked.connect (() => {
                 navigate (Adw.NavigationDirection.FORWARD);
             });
+
+            load_screenshots ();
+        }
+
+        private void load_screenshots () {
+            var cache = Core.Client.get_default ().screenshot_cache;
+
+            if (screenshots.length == 0) {
+                // TODO "no screenshots"
+                return;
+            }
+
+            List<string> urls = new List<string> ();
+
+            var scale = carousel.get_scale_factor ();
+            var min_screenshot_width = MAX_WIDTH * scale;
+
+            screenshots.foreach ((screenshot) => {
+                AppStream.Image? best_image = null;
+                screenshot.get_images ().foreach ((image) => {
+                    // Any image is better then no image
+                    if (best_image == null) {
+                        best_image = image;
+                    }
+
+                    // If our current best is less than the minimum and we have a bigger image, choose that instead
+                    if (best_image.get_width () < min_screenshot_width && image.get_width () >= best_image.get_width ()) {
+                        best_image = image;
+                    }
+
+                    // If our new image is smaller than the current best, but still bigger than the minimum, pick that
+                    if (image.get_width () < best_image.get_width () && image.get_width () >= min_screenshot_width) {
+                        best_image = image;
+                    }
+                });
+
+                if (screenshot.get_kind () == AppStream.ScreenshotKind.DEFAULT && best_image != null) {
+                    urls.prepend (best_image.get_url ());
+                } else if (best_image != null) {
+                    urls.append (best_image.get_url ());
+                }
+            });
+
+            string?[] screenshot_files = new string?[urls.length ()];
+            bool[] results = new bool[urls.length ()];
+            int completed = 0;
+
+            // Fetch each screenshot in parallel.
+            for (int i = 0; i < urls.length (); i++) {
+                string url = urls.nth_data (i);
+                string? file = null;
+                int index = i;
+
+                cache.fetch.begin (url, (obj, res) => {
+                    results[index] = cache.fetch.end (res, out file);
+                    screenshot_files[index] = file;
+                    completed++;
+                    screenshot_downloaded ();
+                });
+            }
+
+            screenshot_downloaded.connect (() => {
+                // Load screenshots that were successfully obtained.
+                if (urls.length () == completed) {
+                    for (int i = 0; i < urls.length (); i++) {
+                        if (results[i] == true) {
+                            load_screenshot (screenshot_files[i]);
+                        }
+                    }
+                } else {
+                    debug ("Not finished loading all screenshots");
+                    return;
+                }
+            });
+        }
+
+        // We need to first download the screenshot locally so that it doesn't freeze the interface.
+        private void load_screenshot (string path) {
+            var scale_factor = carousel.get_scale_factor ();
+            try {
+                var pixbuf = new Gdk.Pixbuf.from_file_at_scale (path, MAX_WIDTH * scale_factor, 600 * scale_factor, true);
+                var image = new Gtk.Picture.for_pixbuf (pixbuf);
+                image.height_request = 423;
+                image.halign = Gtk.Align.CENTER;
+                image.get_style_context ().add_class ("screenshot-image");
+                image.get_style_context ().add_class ("image1");
+
+                image.show ();
+                carousel.append (image);
+            } catch (Error e) {
+                critical (e.message);
+            }
         }
     }
 }

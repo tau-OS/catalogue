@@ -19,6 +19,8 @@
 namespace Catalogue.Core {
     public class Client : Object {
         public signal void cache_update_finished ();
+
+        public ScreenshotCache? screenshot_cache { get; private set; default = new ScreenshotCache (); }
         
         private GLib.Cancellable cancellable;
         private GLib.DateTime last_cache_update = null;
