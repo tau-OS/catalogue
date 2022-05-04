@@ -29,8 +29,8 @@ namespace Catalogue.Core {
 
         construct {
             var screenshot_path = Path.build_filename (
-                GLib.Environment.get_user_cache_dir (),
-                "catalogue",
+                Environment.get_user_cache_dir (),
+                Config.APP_ID,
                 "screenshots"
             );
     

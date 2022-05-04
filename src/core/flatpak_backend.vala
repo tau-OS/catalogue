@@ -87,14 +87,14 @@ namespace Catalogue.Core {
 
             user_metadata_path = Path.build_filename (
                 Environment.get_user_cache_dir (),
-                "catalogue",
+                Config.APP_ID,
                 "flatpak-metadata",
                 "user"
             );
     
             system_metadata_path = Path.build_filename (
                 Environment.get_user_cache_dir (),
-                "catalogue",
+                Config.APP_ID,
                 "flatpak-metadata",
                 "system"
             );
