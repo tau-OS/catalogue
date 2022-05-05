@@ -20,6 +20,8 @@
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-screenshots.ui")]
     public class AppScreenshots : Gtk.Box {
         [GtkChild]
+        private unowned Gtk.Stack stack;
+        [GtkChild]
         private unowned Adw.Carousel carousel;
         [GtkChild]
         private unowned Gtk.Button button_next;
@@ -159,6 +161,12 @@
                         if (results[i] == true) {
                             load_screenshot (screenshot_files[i]);
                         }
+                    }
+
+                    var number_of_screenshots = carousel.get_n_pages ();
+
+                    if (number_of_screenshots > 0) {
+                        stack.set_visible_child_name ("carousel");
                     }
                 } else {
                     debug ("Not finished loading all screenshots");
