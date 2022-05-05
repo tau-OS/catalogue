@@ -22,6 +22,14 @@ namespace Catalogue {
 
         private Core.Client client;
 
+        private const GLib.OptionEntry[] options = {
+            { "details", '\0', 0, OptionArg.STRING, out details_id, 
+              "Show application details (using application ID)", "ID" },
+            { null }
+        };
+
+        public static string details_id;
+
         private const GLib.ActionEntry app_entries[] = {
             { "about", on_about_action },
             { "preferences", on_preferences_action },
@@ -37,6 +45,7 @@ namespace Catalogue {
             Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
             
             add_action_entries (app_entries, this);
+            add_main_option_entries (options);
             set_accels_for_action ("app.quit", {"<primary>q"});
 
             client = Core.Client.get_default ();
@@ -59,6 +68,15 @@ namespace Catalogue {
 
         protected override void activate () {
             client.update_cache.begin ();
+
+            if (details_id != null) {
+                var package = client.get_package_for_component_id (details_id);
+                if (package == null) {
+                    critical ("No package by the ID %s could be found", details_id);
+                } else {
+                    Signals.get_default ().explore_leaflet_open (package);
+                }
+            }
 
             active_window?.present ();
         }

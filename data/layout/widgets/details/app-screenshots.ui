@@ -58,8 +58,6 @@
                                         <child>
                                             <object class="AdwCarousel" id="carousel">
                                                 <property name="vexpand">True</property>
-                                                <!-- TODO remove this and make it appear only on error -->
-
                                             </object>
                                         </child>
                                         <child type="overlay">
