@@ -25,18 +25,28 @@ namespace Catalogue.Core {
     }
 
     public class Package : Object {
+        public signal void info_changed (ChangeInformation.Status status);
+
         public enum State {
+            UPDATE_AVAILABLE,
             NOT_INSTALLED,
             INSTALLED
         }
 
+        public const string RUNTIME_UPDATES_ID = "xxx-runtime-updates";
+
         public AppStream.Component component { get; protected set; }
+        public ChangeInformation change_information { public get; private set; }
         public State state { public get; private set; default = State.NOT_INSTALLED; }
 
         // Get if package is installed
         private bool _installed = false;
         public bool installed {
             get {
+                if (component.get_id () == RUNTIME_UPDATES_ID) {
+                    return true;
+                }
+                
                 return _installed;
             }
         }
@@ -49,6 +59,12 @@ namespace Catalogue.Core {
         public void clear_installed () {
             _installed = false;
             update_state ();
+        }
+
+        public bool is_runtime_updates {
+            get {
+                return component.id == RUNTIME_UPDATES_ID;
+            }
         }
 
         // Get the package author/developer
@@ -119,6 +135,11 @@ namespace Catalogue.Core {
 
         private PackageDetails? backend_details = null;
 
+        construct {
+            change_information = new ChangeInformation ();
+            change_information.status_changed.connect (() => info_changed (change_information.status));
+        }
+
         public Package (AppStream.Component component) {
             Object (component: component);
         }
@@ -139,7 +160,11 @@ namespace Catalogue.Core {
             State new_state;
     
             if (installed) {
-                new_state = State.INSTALLED;
+                if (change_information.has_changes ()) {
+                    new_state = State.UPDATE_AVAILABLE;
+                } else {
+                    new_state = State.INSTALLED;
+                }    
             } else {
                 new_state = State.NOT_INSTALLED;
             }
@@ -394,6 +419,11 @@ namespace Catalogue.Core {
         }
 
         private void populate_backend_details_sync () {    
+            if (component.id == RUNTIME_UPDATES_ID) {
+                backend_details = new PackageDetails ();
+                return;
+            }
+
             var loop = new MainLoop ();
             PackageDetails? result = null;
             FlatpakBackend.get_default ().get_package_details.begin (this, (obj, res) => {

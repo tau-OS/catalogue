@@ -573,7 +573,7 @@ namespace Catalogue.Core {
             return "%s/%s/%s".printf (installation, origin, bundle_id);
         }
 
-        public static bool get_package_list_key_parts (string key, out bool? system, out string? origin, out string? bundle_id) {
+        public bool get_package_list_key_parts (string key, out bool? system, out string? origin, out string? bundle_id) {
             system = null;
             origin = null;
             bundle_id = null;
@@ -588,6 +588,46 @@ namespace Catalogue.Core {
             bundle_id = parts[2];
     
             return true;
+        }
+
+        public async Gee.ArrayList<string> get_updates (Cancellable? cancellable = null) {
+            var updatable_ids = new Gee.ArrayList<string> ();
+    
+            if (user_installation == null && system_installation == null) {
+                critical ("Unable to get flatpak installation when checking for updates");
+                return updatable_ids;
+            }
+    
+            GLib.GenericArray<weak Flatpak.InstalledRef> update_refs;
+    
+            if (user_installation != null) {
+                try {
+                    update_refs = user_installation.list_installed_refs_for_update (cancellable);
+                    for (int i = 0; i < update_refs.length; i++) {
+                        unowned Flatpak.InstalledRef updatable_ref = update_refs[i];
+                        updatable_ids.add (generate_package_list_key (false, updatable_ref.origin, updatable_ref.format_ref ()));
+                    }
+                } catch (Error e) {
+                    critical ("Unable to get list of updatable flatpaks: %s", e.message);
+                    return updatable_ids;
+                }
+            }
+    
+            if (system_installation != null) {
+                try {
+                    update_refs = system_installation.list_installed_refs_for_update (cancellable);
+    
+                    for (int i = 0; i < update_refs.length; i++) {
+                        unowned Flatpak.InstalledRef updatable_ref = update_refs[i];
+                        updatable_ids.add (generate_package_list_key (true, updatable_ref.origin, updatable_ref.format_ref ()));
+                    }
+                } catch (Error e) {
+                    critical ("Unable to get list of updatable flatpaks: %s", e.message);
+                    return updatable_ids;
+                }
+            }
+    
+            return updatable_ids;
         }
 
         public Package? lookup_package_by_id (string id) {

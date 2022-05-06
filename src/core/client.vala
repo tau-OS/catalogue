@@ -70,7 +70,11 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().modify_remote (remote, cancellable);
         }
 
-        // TODO add timer
+        public async void refresh_updates () {
+            // todo notification shit?
+            yield UpdateManager.get_default ().get_updates (null);
+        }
+
         public async void update_cache (bool force = false) {
             cancellable.reset ();
 
