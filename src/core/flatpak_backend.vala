@@ -615,6 +615,38 @@ namespace Catalogue.Core {
 
             return remotes_list;
         }
+
+        public bool modify_remote (Flatpak.Remote remote, Cancellable cancellable) {
+            unowned Flatpak.Installation? installation = null;
+
+            var system_remotes = get_remotes (true, cancellable);
+            var user_remotes = get_remotes (false, cancellable);
+
+            foreach (var sremote in system_remotes) {
+                if (sremote.get_name () == remote.get_name ()) {
+                    installation = system_installation;
+                    try {
+                        return installation.modify_remote (remote, cancellable);
+                    } catch (Error e) {
+                        warning ("Error saving remote state: %s", e.message);
+                    }
+                }
+            }
+
+            foreach (var uremote in user_remotes) {
+                if (uremote.get_name () == remote.get_name ()) {
+                    installation = user_installation;
+                    try {
+                        return installation.modify_remote (remote, cancellable);
+                    } catch (Error e) {
+                        warning ("Error saving remote state: %s", e.message);
+                    }
+                }
+            }
+
+            warning ("Remote not found in installation");
+            return false;
+        }
     
         private static GLib.Once<FlatpakBackend> instance;
         public static unowned FlatpakBackend get_default () {

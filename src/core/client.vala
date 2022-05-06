@@ -66,6 +66,10 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().get_remotes (use_system, cancellable);
         }
 
+        public bool modify_remote (Flatpak.Remote remote) {
+            return FlatpakBackend.get_default ().modify_remote (remote, cancellable);
+        }
+
         // TODO add timer
         public async void update_cache (bool force = false) {
             cancellable.reset ();

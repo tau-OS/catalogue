@@ -24,38 +24,61 @@
 
         public Preferences () {
             Object ();
-                var system_repos = Core.Client.get_default ().get_remotes (true);
-                var user_repos = Core.Client.get_default ().get_remotes (false);
+                
+            var system_repos = Core.Client.get_default ().get_remotes (true);
+            var user_repos = Core.Client.get_default ().get_remotes (false);
 
-                foreach (var remote in system_repos) {
-                    var url = new Utils ().get_uri_hostname (remote.get_url ());
-                    
-                    var row = new Adw.ActionRow () {
-                        title = remote.get_title (),
-                        subtitle = "%s • %s".printf (url, "System Installation"),
-                        selectable = false
-                    };
+            foreach (var remote in system_repos) {
+                var url = new Utils ().get_uri_hostname (remote.get_url ());
 
-                    row.add_suffix (new Gtk.Switch () {
-                        valign = Gtk.Align.CENTER
-                    });
-                    repositories_listbox.append (row);
-                }
-                foreach (var remote in user_repos) {
-                    var url = new Utils ().get_uri_hostname (remote.get_url ());
+                var row = new Adw.ActionRow () {
+                    title = remote.get_title (),
+                    subtitle = "%s • %s".printf (url, "System Installation"),
+                    selectable = false
+                };
 
-                    var row = new Adw.ActionRow () {
-                        title = remote.get_title (),
-                        subtitle = "%s • %s".printf (url, "Per-User Installation"),
-                        selectable = false
-                    };
+                var toggle = new Gtk.Switch () {
+                    valign = Gtk.Align.CENTER,
+                    active = !remote.get_disabled ()
+                };
 
-                    row.add_suffix (new Gtk.Switch () {
-                        valign = Gtk.Align.CENTER
-                    });
-                    repositories_listbox.append (row);
-                }
-            
+                toggle.state_set.connect (() => {
+                    remote.set_disabled (!remote.get_disabled ());
+                    Core.Client.get_default ().modify_remote (remote);
+
+                    // Default handler should still be activated
+                    return false;
+                });
+
+                row.add_suffix (toggle);
+                repositories_listbox.append (row);
+            }
+
+            foreach (var remote in user_repos) {
+                var url = new Utils ().get_uri_hostname (remote.get_url ());
+
+                var row = new Adw.ActionRow () {
+                    title = remote.get_title (),
+                    subtitle = "%s • %s".printf (url, "Per-User Installation"),
+                    selectable = false
+                };
+
+                var toggle = new Gtk.Switch () {
+                    valign = Gtk.Align.CENTER,
+                    active = !remote.get_disabled ()
+                };
+
+                toggle.state_set.connect (() => {
+                    remote.set_disabled (!remote.get_disabled ());
+                    Core.Client.get_default ().modify_remote (remote);
+
+                    // Default handler should still be activated
+                    return false;
+                });
+
+                row.add_suffix (toggle);
+                repositories_listbox.append (row);
+            }
         }
     }
 }
