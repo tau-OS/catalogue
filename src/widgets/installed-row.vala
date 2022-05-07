@@ -25,6 +25,10 @@
         private unowned Gtk.Label app_version;
         [GtkChild]
         private unowned Gtk.Image image;
+        [GtkChild]
+        private unowned Gtk.Button delete_button;
+        [GtkChild]
+        private unowned Gtk.Button update_button;
 
         private Core.Package app;
 
@@ -37,6 +41,13 @@
             app_version.set_label (app.get_version ());
 
             image.set_from_gicon (app.get_icon (64, 64));
+
+            // TODO maybe change this to be a parameter?
+            if (package.state == Core.Package.State.UPDATE_AVAILABLE) {
+                update_button.set_visible (true);
+            } else {
+                delete_button.set_visible (true);
+            }
         }
 
         public string get_app_name () {
