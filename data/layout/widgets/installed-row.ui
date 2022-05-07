@@ -10,6 +10,7 @@
                 <style>
                     <class name="content-block" />
                 </style>
+                <property name="selectable">false</property>
                 <child type="prefix">
                     <object class="GtkBox">
                         <property name="orientation">vertical</property>

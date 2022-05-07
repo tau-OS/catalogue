@@ -53,14 +53,14 @@ namespace Catalogue {
 
                     if (needs_update) {
                         stack.set_visible_child_name ("updates_available");
-                        listbox.append (new Catalogue.InstalledRow (package, "Update"));
+                        listbox.append (new Catalogue.InstalledRow (package));
                     }
                 }
                 
                 // Handle runtime updates package
                 var runtime_updates = Core.UpdateManager.get_default ().runtime_updates;
                 if (runtime_updates.state ==Core.Package.State.UPDATE_AVAILABLE) {
-                    listbox.append (new Catalogue.InstalledRow (runtime_updates, "Update"));
+                    listbox.append (new Catalogue.InstalledRow (runtime_updates));
                 }
             }
         }

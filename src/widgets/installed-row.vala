@@ -26,13 +26,15 @@
         [GtkChild]
         private unowned Gtk.Image image;
         [GtkChild]
+        private unowned Gtk.Button info_button;
+        [GtkChild]
         private unowned Gtk.Button delete_button;
         [GtkChild]
         private unowned Gtk.Button update_button;
 
         private Core.Package app;
 
-        public InstalledRow (Core.Package package, string button_label) {
+        public InstalledRow (Core.Package package) {
             Object ();
 
             app = package;
@@ -48,6 +50,10 @@
             } else {
                 delete_button.set_visible (true);
             }
+
+            info_button.clicked.connect (() => {
+                Signals.get_default ().explore_leaflet_open (package);
+            });
         }
 
         public string get_app_name () {

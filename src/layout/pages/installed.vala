@@ -61,7 +61,7 @@ namespace Catalogue {
 
             if (!refresh_cancellable.is_cancelled ()) {
                 foreach (var package in installed_apps) {
-                    apps_listbox.append (new Catalogue.InstalledRow (package, "Uninstall"));
+                    apps_listbox.append (new Catalogue.InstalledRow (package));
                 }
             }
 
