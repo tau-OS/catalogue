@@ -407,6 +407,21 @@ namespace Catalogue.Core {
             return null;
         }
 
+        public async uint64 get_installed_size () {
+            if (state != State.INSTALLED) {
+                return 0;
+            } else {
+                uint64 size = 0;
+                try {
+                    size = yield FlatpakBackend.get_default ().get_installed_size (this, null);
+                } catch (Error e) {
+                    warning ("Error getting installed size: %s", e.message);
+                }
+
+                return size;
+            }
+        }
+
         public async uint64 get_download_size_with_deps () {
             uint64 size = 0;
             try {

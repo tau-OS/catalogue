@@ -412,6 +412,48 @@ namespace Catalogue.Core {
             }
         }
 
+        public async uint64 get_installed_size (Package package, Cancellable? cancellable) throws GLib.Error {
+            var bundle = package.component.get_bundle (AppStream.BundleKind.FLATPAK);
+            if (bundle == null) {
+                return 0;
+            }
+
+            unowned var fp_package = package as FlatpakPackage;
+            if (fp_package == null) {
+                return 0;
+            }
+
+            bool system = fp_package.installation == system_installation;
+
+            var id = generate_package_list_key (system, package.component.get_origin (), bundle.get_id ());
+            
+            string origin, bundle_id;
+            var split_success = get_package_list_key_parts (id, out system, out origin, out bundle_id);
+            if (!split_success) {
+                return 0;
+            }
+
+            unowned Flatpak.Installation? installation = null;
+            if (system) {
+                installation = system_installation;
+            } else {
+                installation = user_installation;
+            }
+
+            if (installation == null) {
+                return 0;
+            }
+
+            var flatpak_ref = Flatpak.Ref.parse (bundle_id);
+
+            try {
+                var installed_ref = installation.get_installed_ref (Flatpak.RefKind.APP, package.component.get_id (), flatpak_ref.get_arch (), flatpak_ref.get_branch (), cancellable);
+                return installed_ref.get_installed_size ();
+            } catch (Error e) {
+               throw e;
+            }
+        }
+
         public async uint64 get_download_size (Package package, Cancellable? cancellable, bool is_update = false) throws GLib.Error {
             var bundle = package.component.get_bundle (AppStream.BundleKind.FLATPAK);
             if (bundle == null) {
