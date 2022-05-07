@@ -4,7 +4,7 @@
     <template class="CatalogueCarouselTile" parent="GtkButton">
         <property name="halign">fill</property>
         <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
+        <!-- <property name="vexpand">True</property> -->
         <property name="width-request">800</property>
         <style>
             <class name="featured-tile" />
@@ -36,10 +36,10 @@
                         <property name="name">content</property>
                         <property name="child">
                             <object class="GtkBox" id="box">
-                                <property name="halign">center</property>
+                                <property name="halign">start</property>
                                 <property name="orientation">vertical</property>
-                                <property name="margin-top">50</property>
-                                <property name="margin-bottom">50</property>
+                                <property name="margin-top">20</property>
+                                <property name="margin-bottom">20</property>
                                 <property name="margin-start">50</property>
                                 <property name="margin-end">50</property>
                                 <child>
