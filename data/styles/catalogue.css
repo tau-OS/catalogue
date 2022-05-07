@@ -27,6 +27,11 @@
 	margin-right: 6px;
 }
 
+.content-block {
+    padding: 12px 6px;
+    border-radius: 12px;
+    margin: 6px 0;
+}
 
 .context-tile {
 	border: 1px solid @borders;

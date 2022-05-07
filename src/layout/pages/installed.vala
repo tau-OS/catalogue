@@ -44,7 +44,7 @@ namespace Catalogue {
             });
 
             apps_listbox.set_sort_func ((row1, row2) => {
-                return ((Catalogue.InstalledRow) row1).title.collate (((Catalogue.InstalledRow) row2).title);
+                return ((Catalogue.InstalledRow) row1.get_first_child ()).get_app_name ().collate (((Catalogue.InstalledRow) row2.get_first_child ()).get_app_name ());
             });
         }
 

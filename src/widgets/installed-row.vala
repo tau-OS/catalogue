@@ -18,22 +18,29 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/installed-row.ui")]
-    public class InstalledRow : Adw.ActionRow {
+    public class InstalledRow : Adw.Bin {
+        [GtkChild]
+        private unowned Gtk.Label app_name;
+        [GtkChild]
+        private unowned Gtk.Label app_version;
         [GtkChild]
         private unowned Gtk.Image image;
-        [GtkChild]
-        private unowned Gtk.Button suffix_button;
 
-        // TODO pass an application for details
-        public InstalledRow (Core.Package app, string button_label) {
+        private Core.Package app;
+
+        public InstalledRow (Core.Package package, string button_label) {
             Object ();
 
-            this.set_title (app.get_name ());
-            this.set_subtitle (app.get_version ());
+            app = package;
+
+            app_name.set_label (app.get_name ());
+            app_version.set_label (app.get_version ());
 
             image.set_from_gicon (app.get_icon (64, 64));
-            suffix_button.set_label (button_label);
-            
+        }
+
+        public string get_app_name () {
+            return app.get_name ();
         }
     }
 }
