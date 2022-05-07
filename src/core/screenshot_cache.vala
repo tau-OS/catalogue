@@ -241,19 +241,7 @@ namespace Catalogue.Core {
         private static GLib.DateTime? get_modification_time (GLib.FileInfo info) {
             GLib.DateTime? datetime = null;
     
-    #if GLIB_2_62
             datetime = info.get_modification_date_time ();
-    #else
-            var mtime = info.get_attribute_uint64 (GLib.FileAttribute.TIME_MODIFIED);
-            if (mtime != 0) {
-                datetime = new DateTime.from_unix_utc ((int64)mtime);
-    
-                var usec = info.get_attribute_uint32 (GLib.FileAttribute.TIME_MODIFIED_USEC);
-                if (usec != 0) {
-                    datetime = datetime.add (usec);
-                }
-            }
-    #endif
     
             return datetime;
         }
