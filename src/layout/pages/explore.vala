@@ -20,10 +20,6 @@ namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/explore.ui")]
     public class WindowExplore : Adw.Bin {
         [GtkChild]
-        private unowned Adw.Leaflet leaflet;
-        [GtkChild]
-        private unowned Gtk.Box leaflet_expanded;
-        [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
         private unowned Gtk.Box featured_box;
@@ -62,8 +58,6 @@ namespace Catalogue {
             carousel = new Catalogue.Carousel ();
             // Carousel should always be the top element in the featured page
             featured_box.prepend (carousel);
-
-            var is_leaflet_active = false;
             
             var categories = new Catalogue.Categories ().get_default ();
 
@@ -88,29 +82,11 @@ namespace Catalogue {
                 featured_flowbox.append (tile);
             }
 
-            // Handle Rows
-            Signals.get_default ().explore_leaflet_open.connect ((package) => {
-                is_leaflet_active = true;
-                leaflet.navigate (Adw.NavigationDirection.FORWARD);
-                Signals.get_default ().window_show_back_button ();
-                // Add details page to leaflet
-                var widget_list = new Utils ().get_all_widgets_in_child (leaflet_expanded);
-
-                foreach (var widget in widget_list) {
-                    leaflet_expanded.remove (widget);
-                }
-                
-                leaflet_expanded.append (new Catalogue.WindowDetails (package));
-            });
-
-            Signals.get_default ().window_do_back_button_clicked.connect ((is_stack) => {
-                if (!is_leaflet_active) {
+            Signals.get_default ().window_do_back_button_clicked.connect ((is_leaflet) => {
+                if (!is_leaflet) {
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_RIGHT);
                     stack.set_visible_child_name ("featured");
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_LEFT);
-                } else {
-                    leaflet.navigate (Adw.NavigationDirection.BACK);
-                    is_leaflet_active = false;
                 }
 
                 if (stack.get_visible_child_name () == "featured") {

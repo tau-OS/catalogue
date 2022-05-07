@@ -24,7 +24,11 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Button back_button;
         [GtkChild]
-        private unowned Adw.Leaflet leaflet;
+        private unowned Gtk.Button main_back_button;
+        [GtkChild]
+        unowned Adw.Leaflet leaflet;
+        [GtkChild]
+        private unowned Gtk.Box leaflet_contents;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
@@ -33,8 +37,16 @@ namespace Catalogue {
         private bool should_button_be_shown;
 
         [GtkCallback]
-        public void back_clicked_cb (Gtk.Button source) {
-            Signals.get_default ().window_do_back_button_clicked ();
+        public void back_clicked_cb () {
+            leaflet.set_transition_type (Adw.LeafletTransitionType.UNDER);
+            leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            Signals.get_default ().window_do_back_button_clicked (true);
+            leaflet.set_transition_type (Adw.LeafletTransitionType.OVER);
+        }
+
+        [GtkCallback]
+        public void main_back_clicked_cb (Gtk.Button source) {
+            Signals.get_default ().window_do_back_button_clicked (false);
         }
 
         public void leaflet_forward () {
@@ -58,12 +70,26 @@ namespace Catalogue {
             
             should_button_be_shown = false;
 
-            Signals.get_default ().window_show_back_button.connect (() => {
+            // Handle Rows
+            Signals.get_default ().explore_leaflet_open.connect ((package) => {
+                leaflet.navigate (Adw.NavigationDirection.BACK);
                 back_button.set_visible (true);
+                // Add details page to leaflet
+                var widget_list = new Utils ().get_all_widgets_in_child (leaflet_contents);
+
+                foreach (var widget in widget_list) {
+                    leaflet_contents.remove (widget);
+                }
+                
+                leaflet_contents.append (new Catalogue.WindowDetails (package));
+            });
+
+            Signals.get_default ().window_show_back_button.connect (() => {
+                main_back_button.set_visible (true);
                 should_button_be_shown = true;
             });
             Signals.get_default ().window_hide_back_button.connect (() => {
-                back_button.set_visible (false);
+                main_back_button.set_visible (false);
                 if (header_stack.get_visible_child_name () == "explore") {
                     should_button_be_shown = false;
                 }
