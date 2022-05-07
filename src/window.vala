@@ -20,6 +20,8 @@ namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/window.ui")]
     public class Window : Adw.ApplicationWindow {
         [GtkChild]
+        public unowned Gtk.Stack leaflet_stack;
+        [GtkChild]
         private unowned Adw.ViewStack header_stack;
         [GtkChild]
         private unowned Gtk.Button back_button;
@@ -72,6 +74,7 @@ namespace Catalogue {
 
             // Handle Rows
             Signals.get_default ().explore_leaflet_open.connect ((package) => {
+                leaflet_stack.set_visible_child_name ("leaflet_contents");
                 leaflet.navigate (Adw.NavigationDirection.BACK);
                 back_button.set_visible (true);
                 // Add details page to leaflet

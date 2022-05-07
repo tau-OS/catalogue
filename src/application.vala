@@ -68,6 +68,7 @@ namespace Catalogue {
 
         protected override void activate () {
             client.update_cache.begin ();
+            this.main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
 
             if (details_id != null) {
                 var package = client.get_package_for_component_id (details_id);

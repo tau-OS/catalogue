@@ -33,19 +33,33 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkBox" id="leaflet_contents"></object>
-                        </child>
-                        <!-- <child>
-                            <object class="AdwStatusPage">
-                                <property name="vexpand">true</property>
-                                <property name="title">Refreshing cache...</property>
+                            <object class="GtkStack" id="leaflet_stack">
                                 <child>
-                                    <object class="GtkSpinner">
-                                        <property name="spinning">true</property>
+                                    <object class="GtkStackPage">
+                                        <property name="name">refreshing_cache</property>
+                                        <property name="child">
+                                            <object class="AdwStatusPage">
+                                                <property name="vexpand">true</property>
+                                                <property name="title">Refreshing cache...</property>
+                                                <child>
+                                                    <object class="GtkSpinner">
+                                                        <property name="spinning">true</property>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkStackPage">
+                                        <property name="name">leaflet_contents</property>
+                                        <property name="child">
+                                            <object class="GtkBox" id="leaflet_contents"></object>
+                                        </property>
                                     </object>
                                 </child>
                             </object>
-                        </child> -->
+                        </child>
                     </object>
                 </child>
                 <child>
