@@ -37,6 +37,8 @@ namespace Catalogue {
         private unowned Gtk.SearchBar search_bar;
         [GtkChild]
         private unowned Gtk.SearchEntry entry_search;
+        [GtkChild]
+        private unowned Gtk.ToggleButton search_button;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
@@ -53,7 +55,7 @@ namespace Catalogue {
         }
 
         [GtkCallback]
-        public void main_back_clicked_cb (Gtk.Button source) {
+        public void main_back_clicked_cb () {
             Signals.get_default ().window_do_back_button_clicked (false);
         }
 
@@ -78,7 +80,39 @@ namespace Catalogue {
         public Window (Adw.Application app) {
             Object (application: app);
 
+            var go_back = new SimpleAction ("go-back", null);
+
+            go_back.activate.connect (() => {
+                if (leaflet.get_visible_child_name () == "leaflet_secondary") {
+                    back_clicked_cb ();
+                } else {
+                    main_back_clicked_cb ();
+                }
+            });
+            add_action (go_back);
+
+            // i hate accelerators
+            var focus_search = new SimpleAction ("focus-search", null);
+            focus_search.activate.connect (() => search_button.toggled ());
+            add_action (focus_search);
+
+            app.set_accels_for_action ("win.go-back", {"<Alt>Left", "Back"});
+            app.set_accels_for_action ("win.focus-search", {"<Ctrl>f"});
+
             search_bar.connect_entry ((Gtk.Editable) entry_search);
+
+            var key_press_event = new Gtk.EventControllerKey ();
+
+            key_press_event.key_pressed.connect ((keyval) => {
+                if (keyval == Gdk.Key.Escape) {
+                    entry_search.text = "";
+                    return true;
+                }
+    
+                return false;
+            });
+
+            entry_search.add_controller (key_press_event);
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");

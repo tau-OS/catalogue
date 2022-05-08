@@ -12,6 +12,7 @@
                 <property name="can_unfold">false</property>
                 <child>
                     <object class="GtkBox">
+                        <property name="name">leaflet_secondary</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">0</property>
                         <child>
@@ -64,6 +65,7 @@
                 </child>
                 <child>
                     <object class="GtkBox">
+                        <property name="name">leaflet_loader</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">0</property>
                         <child>
