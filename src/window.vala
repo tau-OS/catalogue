@@ -65,6 +65,9 @@ namespace Catalogue {
                 provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+            
+            weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
+            default_theme.add_resource_path ("/co/tauos/Catalogue");
 
             explore = new Catalogue.WindowExplore ();
             installed = new Catalogue.WindowInstalled ();
@@ -100,7 +103,7 @@ namespace Catalogue {
 
             header_stack.add_titled (explore, "explore", "Explore");
             var stack_explore = header_stack.get_page (explore);
-            ((!) stack_explore).icon_name = "starred-symbolic";
+            ((!) stack_explore).icon_name = "explore-symbolic";
 
             header_stack.add_titled (installed, "installed", "Installed");
             var stack_installed = header_stack.get_page (installed);

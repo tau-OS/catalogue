@@ -30,18 +30,26 @@
     <file alias="up-to-date.svg">images/up-to-date.svg</file>
   </gresource>
 
-  <!-- Icons -->
+  <!-- Icons: Every single custom icon that's used in the UI should be listed here, and in the actions folder -->
   <gresource prefix="/co/tauos/Catalogue/icons">
-    <file alias="scalable/actions/heart-filled-symbolic.svg">icons/hicolor/scalable/actions/heart-filled-symbolic.svg</file>
+    <file alias="scalable/actions/applications-accessories-symbolic.svg">icons/hicolor/scalable/actions/applications-accessories-symbolic.svg</file>
+    <file alias="scalable/actions/applications-development-symbolic.svg">icons/hicolor/scalable/actions/applications-development-symbolic.svg</file>
+    <file alias="scalable/actions/applications-games-symbolic.svg">icons/hicolor/scalable/actions/applications-games-symbolic.svg</file>
+    <file alias="scalable/actions/applications-graphics-symbolic.svg">icons/hicolor/scalable/actions/applications-graphics-symbolic.svg</file>
+    <file alias="scalable/actions/applications-internet-symbolic.svg">icons/hicolor/scalable/actions/applications-internet-symbolic.svg</file>
+    <file alias="scalable/actions/applications-office-symbolic.svg">icons/hicolor/scalable/actions/applications-office-symbolic.svg</file>
     <file alias="scalable/actions/community-symbolic.svg">icons/hicolor/scalable/actions/community-symbolic.svg</file>
     <file alias="scalable/actions/sign-language-symbolic.svg">icons/hicolor/scalable/actions/sign-language-symbolic.svg</file>
+    <file alias="scalable/actions/explore-symbolic.svg">icons/hicolor/scalable/actions/explore-symbolic.svg</file>
+    <file alias="scalable/actions/folder-download-symbolic.svg">icons/hicolor/scalable/actions/folder-download-symbolic.svg</file>
+    <file alias="scalable/actions/emblem-synchronizing-symbolic.svg">icons/hicolor/scalable/actions/emblem-synchronizing-symbolic.svg</file>
     <file alias="scalable/actions/external-link-symbolic.svg">icons/hicolor/scalable/actions/external-link-symbolic.svg</file>
     <file alias="scalable/actions/webpage-symbolic.svg">icons/hicolor/scalable/actions/webpage-symbolic.svg</file>
     <file alias="scalable/actions/money-symbolic.svg">icons/hicolor/scalable/actions/money-symbolic.svg</file>
     <file alias="scalable/actions/help-link-symbolic.svg">icons/hicolor/scalable/actions/help-link-symbolic.svg</file>
     <file alias="scalable/actions/flag-outline-thin-symbolic.svg">icons/hicolor/scalable/actions/flag-outline-thin-symbolic.svg</file>
     <file alias="scalable/actions/padlock-open-symbolic.svg">icons/hicolor/scalable/actions/padlock-open-symbolic.svg</file>
-    <file alias="scalable/emblems/face-sad-symbolic.svg">icons/hicolor/scalable/emblems/face-sad-symbolic.svg</file>
-    <file alias="scalable/status/warning-symbolic.svg">icons/hicolor/scalable/status/warning-symbolic.svg</file>
+    <file alias="scalable/actions/face-sad-symbolic.svg">icons/hicolor/scalable/actions/face-sad-symbolic.svg</file>
+    <file alias="scalable/actions/warning-symbolic.svg">icons/hicolor/scalable/actions/warning-symbolic.svg</file>
   </gresource>
 </gresources>

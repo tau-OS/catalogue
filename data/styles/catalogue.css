@@ -22,7 +22,7 @@
 
 .image1 {
 	margin-top: 6px;
-	margin-bottom: 12px;
+	margin-bottom: 6px;
 	margin-left: 6px;
 	margin-right: 6px;
 }
@@ -33,12 +33,16 @@
     margin: 6px 0;
 }
 
+.featured-tile {
+    background: @view_bg_color;
+}
+
 .context-tile {
 	border: 1px solid @borders;
 	background-color: transparent;
 	border-radius: 0;
-	padding: 24px 12px 21px 12px;
-	outline-offset: 5px;
+	padding: 24px 12px 24px 12px;
+	outline-offset: 6px;
 	transition-property: outline, outline-offset, background-image;
 	border-bottom: none;
 	border-right: none;
@@ -65,10 +69,10 @@
 .context-tile-lozenge {
 	font-size: 18px;
 	font-weight: bold;
-	border-radius: 99999px;
-	padding: 9px 11px;
+	border-radius: 999px;
+	padding: 6px 12px;
 	min-width: 18px;  /* 40px minus the left and right padding */
-	min-height: 22px;  /* 40px minus the top and bottom padding */
+	min-height: 24px;  /* 40px minus the top and bottom padding */
 }
 
 .context-tile-lozenge.wide-image image {
@@ -77,8 +81,8 @@
 	 * use this hack to make it zero-height and vertically centred. The
 	 * vertical size group ensures that it does still actually have a
 	 * height. */
-	margin-top: -28px;
-	margin-bottom: -28px;
+	margin-top: -24px;
+	margin-bottom: -24px;
 }
 
 .context-tile-lozenge.grey {
@@ -118,3 +122,28 @@
 
 .context-tile-lozenge image { -gtk-icon-style: symbolic; }
 
+/* Category Tile coloring */
+.tile-accessories {
+    background-color: #F8D8E2;
+	color: #90183D;
+}
+.tile-internet {
+    background-color: #EDF6FE;
+	color: #0453A4;
+}
+.tile-develop {
+    background-color: #FFF6E1;
+	color: #A87801;
+}
+.tile-games {
+    background-color: #E5E1FF;
+	color: #1B07A2;
+}
+.tile-create {
+    background-color: #FFF6EF;
+	color: #A24806;
+}
+.tile-work {
+    background-color: #EDF8F5;
+	color: #2E7A68;
+}

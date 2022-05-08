@@ -2,13 +2,10 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueCarouselTile" parent="GtkButton">
-        <property name="halign">fill</property>
-        <property name="hexpand">True</property>
-        <!-- <property name="vexpand">True</property> -->
+        <property name="hexpand">1</property>
         <property name="width-request">800</property>
         <style>
             <class name="featured-tile" />
-            <class name="card" />
         </style>
 
         <child>
@@ -38,15 +35,15 @@
                             <object class="GtkBox" id="box">
                                 <property name="halign">start</property>
                                 <property name="orientation">vertical</property>
-                                <property name="margin-top">20</property>
-                                <property name="margin-bottom">20</property>
-                                <property name="margin-start">50</property>
-                                <property name="margin-end">50</property>
+                                <property name="margin-top">18</property>
+                                <property name="margin-bottom">18</property>
+                                <property name="margin-start">18</property>
+                                <property name="margin-end">18</property>
+                                <property name="spacing">12</property>
                                 <child>
                                     <object class="GtkImage" id="image">
                                         <property name="resource">/co/tauos/Catalogue/test-icon.png</property>
                                         <property name="pixel-size">128</property>
-                                        <property name="margin-bottom">5</property>
                                         <style>
                                             <class name="icon-dropshadow" />
                                         </style>
@@ -54,10 +51,8 @@
                                 </child>
                                 <child>
                                     <object class="GtkLabel" id="title">
-                                        <property name="xalign">0.5</property>
-                                        <property name="halign">center</property>
-                                        <property name="valign">end</property>
-                                        <property name="vexpand">True</property>
+                                        <property name="xalign">0</property>
+                                        <property name="vexpand">1</property>
                                         <property name="ellipsize">end</property>
                                         <property name="label">Test</property>
                                         <style>
@@ -68,14 +63,12 @@
                                 <child>
                                     <object class="GtkLabel" id="subtitle">
                                         <property name="ellipsize">end</property>
-                                        <property name="xalign">0.5</property>
-                                        <property name="halign">center</property>
-                                        <property name="valign">start</property>
+                                        <property name="xalign">0</property>
                                         <property name="lines">1</property>
-                                        <property name="justify">center</property>
                                         <property name="label">Test</property>
+                                        <property name="margin-bottom">32</property>
                                         <style>
-                                            <class name="caption" />
+                                            <class name="title-3" />
                                         </style>
                                     </object>
                                 </child>
@@ -83,7 +76,6 @@
                         </property>
                     </object>
                 </child>
-
             </object>
         </child>
     </template>

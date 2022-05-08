@@ -5,11 +5,10 @@
         <child>
             <object class="AdwActionRow" id="lbrow">
                 <property name="valign">center</property>
-                <property name="margin-start">18</property>
-                <property name="margin-end">18</property>
                 <style>
                     <class name="content-block" />
                 </style>
+                <property name="activatable">false</property>
                 <property name="selectable">false</property>
                 <child type="prefix">
                     <object class="GtkBox">
@@ -46,12 +45,14 @@
                 <child type="suffix">
                     <object class="GtkBox">
                         <property name="spacing">12</property>
+                        <property name="halign">start</property>
+                        <property name="valign">end</property>
                         <child>
                             <object class="GtkButton" id="info_button">
                                 <property name="name">logo</property>
-                                <property name="icon-name">dialog-information</property>
-                                <property name="halign">start</property>
-                                <property name="valign">end</property>
+                                <property name="width-request">50</property>
+                                <property name="height-request">50</property>
+                                <property name="icon-name">dialog-information-symbolic</property>
                                 <style>
                                     <class name="circular" />
                                     <class name="circular-action" />
@@ -60,11 +61,11 @@
                         </child>
                         <child>
                             <object class="GtkButton" id="delete_button">
-                                <property name="visible">false</property>
+                                <property name="visible">0</property>
                                 <property name="name">logo</property>
+                                <property name="width-request">50</property>
+                                <property name="height-request">50</property>
                                 <property name="icon-name">user-trash-symbolic</property>
-                                <property name="halign">start</property>
-                                <property name="valign">end</property>
                                 <style>
                                     <class name="destructive-action" />
                                     <class name="circular" />
@@ -74,11 +75,11 @@
                         </child>
                         <child>
                             <object class="GtkButton" id="update_button">
-                                <property name="visible">false</property>
+                                <property name="visible">0</property>
                                 <property name="name">logo</property>
                                 <property name="icon-name">go-up</property>
-                                <property name="halign">start</property>
-                                <property name="valign">end</property>
+                                <property name="width-request">50</property>
+                                <property name="height-request">50</property>
                                 <style>
                                     <class name="suggested-action" />
                                     <class name="circular" />

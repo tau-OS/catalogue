@@ -72,7 +72,9 @@ namespace Catalogue {
             foreach (var entry in categories_list) {
                 var name = entry.get_name ();
 
-                var tile = new Catalogue.CategoryTile (name, entry.get_icon ());
+                // + "-symbolic" needed because the icons shouldn't be full-color here.
+                var tile = new Catalogue.CategoryTile (name, entry.get_icon ()+"-symbolic");
+                tile.get_style_context ().add_class ("tile-%s".printf(name.down ()));
 
                 tile.clicked.connect (() => {
                     stack.set_visible_child_name (name.down ());
