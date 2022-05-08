@@ -65,7 +65,7 @@
                 </child>
                 <child>
                     <object class="GtkBox">
-                        <property name="name">leaflet_loader</property>
+                        <property name="name">leaflet_main</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">0</property>
                         <child>

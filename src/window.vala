@@ -83,7 +83,7 @@ namespace Catalogue {
             var go_back = new SimpleAction ("go-back", null);
 
             go_back.activate.connect (() => {
-                if (leaflet.get_visible_child_name () == "leaflet_secondary") {
+                if (leaflet.get_visible_child ().get_name () == "leaflet_secondary") {
                     back_clicked_cb ();
                 } else {
                     main_back_clicked_cb ();
@@ -93,7 +93,7 @@ namespace Catalogue {
 
             // i hate accelerators
             var focus_search = new SimpleAction ("focus-search", null);
-            focus_search.activate.connect (() => search_button.toggled ());
+            focus_search.activate.connect (() => search_button.set_active (!search_button.active));
             add_action (focus_search);
 
             app.set_accels_for_action ("win.go-back", {"<Alt>Left", "Back"});
@@ -105,7 +105,7 @@ namespace Catalogue {
 
             key_press_event.key_pressed.connect ((keyval) => {
                 if (keyval == Gdk.Key.Escape) {
-                    entry_search.text = "";
+                    search_button.set_active (!search_button.active);
                     return true;
                 }
     
