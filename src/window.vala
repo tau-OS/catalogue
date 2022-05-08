@@ -22,6 +22,8 @@ namespace Catalogue {
         [GtkChild]
         public unowned Gtk.Stack leaflet_stack;
         [GtkChild]
+        public unowned Gtk.Stack main_stack;
+        [GtkChild]
         private unowned Adw.ViewStack header_stack;
         [GtkChild]
         private unowned Gtk.Button back_button;
@@ -31,6 +33,10 @@ namespace Catalogue {
         unowned Adw.Leaflet leaflet;
         [GtkChild]
         private unowned Gtk.Box leaflet_contents;
+        [GtkChild]
+        private unowned Gtk.SearchBar search_bar;
+        [GtkChild]
+        private unowned Gtk.SearchEntry entry_search;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
@@ -51,12 +57,28 @@ namespace Catalogue {
             Signals.get_default ().window_do_back_button_clicked (false);
         }
 
+        [GtkCallback]
+        public void search_bar_search_mode_enabled_changed_cb (Object source, GLib.ParamSpec pspec) {
+            var child = main_stack.get_visible_child_name ();
+
+            // I want to provide transitions but until I nail the timing, nah
+            if (child != "search_shell") {
+                //  main_stack.set_transition_type (Gtk.StackTransitionType.OVER_DOWN);
+                main_stack.set_visible_child_name ("search_shell");
+            } else {
+                //  main_stack.set_transition_type (Gtk.StackTransitionType.UNDER_DOWN);
+                main_stack.set_visible_child_name ("main_shell");
+            }
+        }
+
         public void leaflet_forward () {
             leaflet.navigate (Adw.NavigationDirection.FORWARD);
         }
 
         public Window (Adw.Application app) {
             Object (application: app);
+
+            search_bar.connect_entry ((Gtk.Editable) entry_search);
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
