@@ -87,6 +87,14 @@
                                     <object class="GtkBox">
                                         <property name="spacing">10</property>
                                         <child>
+                                            <object class="GtkToggleButton" id="search_button">
+                                                <property name="valign">center</property>
+                                                <property name="tooltip-text" translatable="yes">Search</property>
+                                                <property name="icon-name">edit-find-symbolic</property>
+                                                <property name="active" bind-source="search_bar" bind-property="search-mode-enabled" bind-flags="sync-create|bidirectional" />
+                                            </object>
+                                        </child>
+                                        <child>
                                             <object class="AdwAvatar">
                                                 <property name="size">25</property>
                                             </object>
@@ -103,14 +111,39 @@
                             </object>
                         </child>
                         <child>
-                            <object class="AdwViewStack" id="header_stack">
-                                <property name="vexpand">True</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="AdwViewSwitcherBar" id="switcher_bar">
-                                <property name="stack">header_stack</property>
-                                <property name="reveal" bind-source="switcher_title" bind-property="title-visible" bind-flags="sync-create" />
+                            <object class="GtkBox">
+                                
+                                <child>
+                                    <object class="GtkSearchBar" id="search_bar">
+                                        <property name="key-capture-widget">CatalogueWindow</property>
+                                        <!-- <signal name="notify::search-mode-enabled" handler="search_bar_search_mode_enabled_changed_cb" /> -->
+                                        <child>
+                                            <object class="AdwClamp">
+                                                <property name="hexpand">True</property>
+                                                <property name="maximum_size">900</property>
+                                                <property name="tightening_threshold">500</property>
+                                                <child>
+                                                    <object class="GtkSearchEntry" id="entry_search">
+                                                        <property name="can_focus">True</property>
+                                                        <property name="activates_default">True</property>
+                                                        <!-- <signal name="search-changed" handler="search_changed_handler" /> -->
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="AdwViewStack" id="header_stack">
+                                        <property name="vexpand">True</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="AdwViewSwitcherBar" id="switcher_bar">
+                                        <property name="stack">header_stack</property>
+                                        <property name="reveal" bind-source="switcher_title" bind-property="title-visible" bind-flags="sync-create" />
+                                    </object>
+                                </child>
                             </object>
                         </child>
                     </object>
