@@ -162,9 +162,7 @@
                                             <object class="GtkStackPage">
                                                 <property name="name">search_shell</property>
                                                 <property name="child">
-                                                    <object class="GtkLabel">
-                                                        <property name="label">hello world bitches</property>
-                                                    </object>
+                                                    <object class="AdwBin" id="search_page"></object>
                                                 </property>
                                             </object>
                                         </child>

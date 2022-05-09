@@ -39,12 +39,17 @@ namespace Catalogue {
         private unowned Gtk.SearchEntry entry_search;
         [GtkChild]
         private unowned Gtk.ToggleButton search_button;
+        [GtkChild]
+        private unowned Adw.Bin search_page;
 
         private Catalogue.WindowExplore explore;
         private Catalogue.WindowInstalled installed;
         private Catalogue.WindowUpdates updates;
+        private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
 
         private bool should_button_be_shown;
+
+        private const int VALID_QUERY_LENGTH = 3;
 
         [GtkCallback]
         public void back_clicked_cb () {
@@ -77,8 +82,20 @@ namespace Catalogue {
             leaflet.navigate (Adw.NavigationDirection.FORWARD);
         }
 
+        private void trigger_search () {
+            unowned string query = entry_search.text;
+            bool query_valid = query.length >= VALID_QUERY_LENGTH;
+
+            if (query_valid) {
+                // TODO add categories
+                search_view.search (query, null);
+            }
+        }
+
         public Window (Adw.Application app) {
             Object (application: app);
+
+            search_page.set_child (search_view);
 
             var go_back = new SimpleAction ("go-back", null);
 
@@ -113,6 +130,8 @@ namespace Catalogue {
             });
 
             entry_search.add_controller (key_press_event);
+
+            entry_search.search_changed.connect (() => trigger_search ());
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
