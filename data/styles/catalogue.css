@@ -33,6 +33,11 @@
     margin: 6px 0;
 }
 
+.grid-content-block {
+    margin: 0px;
+    padding: 0px;
+}
+
 .featured-tile {
     background: @view_bg_color;
 }

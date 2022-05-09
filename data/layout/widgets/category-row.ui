@@ -12,7 +12,7 @@
 
         <child>
             <object class="GtkFlowBox" id="row_box">
-                <property name="min-children-per-line">3</property>
+                <property name="min-children-per-line">2</property>
                 <property name="homogeneous">True</property>
                 <property name="column-spacing">14</property>
                 <property name="row-spacing">14</property>
