@@ -8,6 +8,7 @@ main_sources = [
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
     'layout/pages/details.vala',
+    'layout/pages/search.vala',
     'widgets/details/app-header.vala',
     'widgets/details/app-details.vala',
     'widgets/details/app-versionhistory.vala',
@@ -22,6 +23,7 @@ main_sources = [
     'widgets/featured-row.vala',
     'widgets/category-row.vala',
     'widgets/installed-row.vala',
+    'widgets/search-row.vala',
     'objects/signals.vala',
     'objects/categories.vala',
     'helpers/content_rating.vala'
