@@ -70,6 +70,7 @@ namespace Catalogue {
 
             // I want to provide transitions but until I nail the timing, nah
             if (child != "search_shell") {
+                search_view.reset ();
                 //  main_stack.set_transition_type (Gtk.StackTransitionType.OVER_DOWN);
                 main_stack.set_visible_child_name ("search_shell");
             } else {

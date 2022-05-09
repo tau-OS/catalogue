@@ -68,11 +68,7 @@ namespace Catalogue {
 
             current_search_term = query;
             // why the fuck is this not added into Gtk anymore
-            var widget_list = new Utils ().get_all_widgets_in_child (apps_listbox);
-
-            foreach (var widget in widget_list) {
-                apps_listbox.remove (widget);
-            }
+            reset ();
 
             unowned Core.Client client = Core.Client.get_default ();
 
@@ -81,6 +77,15 @@ namespace Catalogue {
 
             foreach (var package in found_apps) {
                 apps_listbox.append (new SearchRow (package));
+            }
+        }
+
+        // Used to reset on listbox open
+        public void reset () {
+            var widget_list = new Utils ().get_all_widgets_in_child (apps_listbox);
+
+            foreach (var widget in widget_list) {
+                apps_listbox.remove (widget);
             }
         }
     }
