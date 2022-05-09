@@ -62,6 +62,10 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().get_applications_for_category (category);
         }
 
+        public Gee.Collection<Package> search_applications (string query, AppStream.Category? category) {
+            return FlatpakBackend.get_default ().search_applications (query, category);
+        }
+
         public Gee.ArrayList<Flatpak.Remote> get_remotes (bool use_system) {
             return FlatpakBackend.get_default ().get_remotes (use_system, cancellable);
         }

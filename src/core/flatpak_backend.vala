@@ -208,6 +208,38 @@ namespace Catalogue.Core {
             return apps;
         }
 
+        public Gee.Collection<Package> search_applications (string query, AppStream.Category? category) {
+            var apps = new Gee.TreeSet<Package> ();
+
+            apps.add_all (search_applications_internal (user_appstream_pool.search (query), category));
+            apps.add_all (search_applications_internal (system_appstream_pool.search (query), category));
+
+            return apps;
+        }
+
+        private Gee.Collection<Package> search_applications_internal (GenericArray<AppStream.Component> search_pool, AppStream.Category? category) {
+            var apps = new Gee.TreeSet<Package> ();
+
+            if (category == null) {
+                search_pool.foreach ((pkg) => {
+                    var packages = get_packages_for_component_id (pkg.get_id ());
+                    apps.add_all (packages);
+                });
+            } else {
+                var category_packages = get_applications_for_category (category);
+                search_pool.foreach ((pkg) => {
+                    var packages = get_packages_for_component_id (pkg.get_id ());
+                    foreach (var package in packages) {
+                        if (package in category_packages) {
+                            apps.add (package);
+                        }
+                    }
+                });
+            }
+
+            return apps;
+        }
+
         public Package? get_package_for_component_id (string id) {
             var suffixed_id = id + ".desktop";
 
