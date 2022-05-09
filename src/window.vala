@@ -42,7 +42,7 @@ namespace Catalogue {
         [GtkChild]
         private unowned Adw.Bin search_page;
 
-        private Catalogue.WindowExplore explore;
+        private Catalogue.WindowExplore explore { get; set; default = new Catalogue.WindowExplore (); }
         private Catalogue.WindowInstalled installed;
         private Catalogue.WindowUpdates updates;
         private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
@@ -86,10 +86,9 @@ namespace Catalogue {
         private void trigger_search () {
             unowned string query = entry_search.text;
             bool query_valid = query.length >= VALID_QUERY_LENGTH;
-
+        
             if (query_valid) {
-                // TODO add categories
-                search_view.search (query, null);
+                search_view.search (query, explore.get_active_category ());
             }
         }
 
@@ -145,7 +144,6 @@ namespace Catalogue {
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
             default_theme.add_resource_path ("/co/tauos/Catalogue");
 
-            explore = new Catalogue.WindowExplore ();
             installed = new Catalogue.WindowInstalled ();
             updates = new Catalogue.WindowUpdates ();
             

@@ -42,6 +42,8 @@ namespace Catalogue {
 
         private Catalogue.FeaturedRow featured_row_test;
 
+        public AppStream.Category? active_category;
+
         private void generate_category_row (Catalogue.CategoryRow row, AppStream.Category category) {
             unowned var client = Core.Client.get_default ();
 
@@ -49,6 +51,14 @@ namespace Catalogue {
                 var package_row = new Catalogue.AppTile (package);
 
                 row.append (package_row);
+            }
+        }
+
+        public AppStream.Category? get_active_category () {
+            if (active_category != null) {
+                return active_category;
+            } else {
+                return null;
             }
         }
 
@@ -77,6 +87,7 @@ namespace Catalogue {
                 tile.get_style_context ().add_class ("tile-%s".printf(name.down ()));
 
                 tile.clicked.connect (() => {
+                    active_category = entry;
                     stack.set_visible_child_name (name.down ());
                     Signals.get_default ().window_show_back_button ();
                 });
@@ -86,6 +97,7 @@ namespace Catalogue {
 
             Signals.get_default ().window_do_back_button_clicked.connect ((is_leaflet) => {
                 if (!is_leaflet) {
+                    active_category = null;
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_RIGHT);
                     stack.set_visible_child_name ("featured");
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_LEFT);
