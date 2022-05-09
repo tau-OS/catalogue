@@ -7,6 +7,7 @@
     <file alias="installed.ui">layout/pages/installed.ui</file>
     <file alias="updates.ui">layout/pages/updates.ui</file>
     <file alias="details.ui">layout/pages/details.ui</file>
+    <file alias="search.ui">layout/pages/search.ui</file>
     <file alias="carousel.ui">layout/widgets/carousel.ui</file>
     <file alias="carousel-tile.ui">layout/widgets/carousel-tile.ui</file>
     <file alias="app-tile.ui">layout/widgets/app-tile.ui</file>
@@ -14,6 +15,7 @@
     <file alias="featured-row.ui">layout/widgets/featured-row.ui</file>
     <file alias="category-row.ui">layout/widgets/category-row.ui</file>
     <file alias="installed-row.ui">layout/widgets/installed-row.ui</file>
+    <file alias="search-row.ui">layout/widgets/search-row.ui</file>
 
     <file alias="details/app-header.ui">layout/widgets/details/app-header.ui</file>
     <file alias="details/app-details.ui">layout/widgets/details/app-details.ui</file>

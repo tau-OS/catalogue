@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueSearchRow" parent="AdwBin">
+        <child>
+            <object class="AdwActionRow" id="lbrow">
+                <property name="valign">center</property>
+                <style>
+                    <class name="content-block" />
+                </style>
+                <property name="activatable">false</property>
+                <property name="selectable">false</property>
+                <child type="prefix">
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <child>
+                            <object class="GtkImage" id="image">
+                                <property name="name">logo</property>
+                                <property name="pixel-size">64</property>
+                                <property name="halign">start</property>
+                                <style>
+                                    <class name="icon-dropshadow" />
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="app_name">
+                                <property name="label">My Application</property>
+                                <property name="halign">start</property>
+                                <style>
+                                    <class name="title-4" />
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="app_description">
+                                <property name="label">Test</property>
+                                <property name="justify">center</property>
+                                <property name="halign">start</property>
+                                <property name="ellipsize">end</property>
+                                <property name="lines">1</property>
+                                <property name="wrap">true</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child type="suffix">
+                    <object class="GtkBox">
+                        <property name="spacing">12</property>
+                        <property name="halign">start</property>
+                        <property name="valign">end</property>
+                        <child>
+                            <object class="GtkButton" id="info_button">
+                                <property name="name">logo</property>
+                                <property name="width-request">50</property>
+                                <property name="height-request">50</property>
+                                <property name="icon-name">dialog-information-symbolic</property>
+                                <style>
+                                    <class name="circular" />
+                                    <class name="circular-action" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
