@@ -119,6 +119,7 @@ namespace Catalogue {
                 File file = File.new_for_path (filename);
                 print ("File passed as %s", filename);
 
+                // TODO this should support branches
                 if (flatpak_helper.get_reference_type (file) == FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REF) {
                     try {
                         // Verify that remote exists
