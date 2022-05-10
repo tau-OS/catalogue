@@ -26,7 +26,8 @@ main_sources = [
     'widgets/search-row.vala',
     'objects/signals.vala',
     'objects/categories.vala',
-    'helpers/content_rating.vala'
+    'helpers/content_rating.vala',
+    'helpers/flatpak_ref.vala'
 ]
 
 daemon_sources = [
