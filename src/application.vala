@@ -115,7 +115,37 @@ namespace Catalogue {
             }
 
             if (filename != null) {
+                var flatpak_helper = new FlatpakRefHelper ();
+                File file = File.new_for_path (filename);
                 print ("File passed as %s", filename);
+
+                if (flatpak_helper.get_reference_type (file) == FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REF) {
+                    try {
+                        // Verify that remote exists
+                        if (client.does_remote_url_exist (flatpak_helper.parse_flatpak_ref (file, "Url"))) {
+                            var app = flatpak_helper.parse_flatpak_ref (file, "Name");
+                            var package = client.get_package_for_component_id (app);
+                            if (package != null) {
+                                Signals.get_default ().explore_leaflet_open (package);
+                            } else {
+                                info ("Package '%s' could not be found".printf (app));
+                                return;
+                            }
+                        } else {
+                            print ("Remote not added, TODO add remote\n");
+                        }
+                    } catch (KeyFileError e) {
+                        warning (e.message);
+                    }
+                } else if (flatpak_helper.get_reference_type (file) == FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REPO) {
+                    try {
+                        print (flatpak_helper.parse_flatpak_ref (file, "Url"));
+                    } catch (KeyFileError e) {
+                        warning (e.message);
+                    }
+                } else {
+                    print ("i have no idea wtf this is");
+                }
             }
 
             active_window?.present ();
