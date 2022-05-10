@@ -761,6 +761,26 @@ namespace Catalogue.Core {
             warning ("Remote not found in installation");
             return false;
         }
+
+        public bool does_remote_url_exist (string url, Cancellable cancellable) {
+            var system_remotes = get_remotes (true, cancellable);
+            var user_remotes = get_remotes (false, cancellable);
+
+            foreach (var remote in system_remotes) {
+                if (remote.get_url () == url) {
+                    return true;
+                }
+            }
+
+            foreach (var remote in user_remotes) {
+                if (remote.get_url () == url) {
+                    return true;
+                }
+            }
+
+            warning ("Remote URL not found in installation");
+            return false;
+        }
     
         private static GLib.Once<FlatpakBackend> instance;
         public static unowned FlatpakBackend get_default () {
