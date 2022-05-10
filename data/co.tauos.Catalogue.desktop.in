@@ -8,3 +8,4 @@ Terminal=false
 Type=Application
 Categories=GNOME;GTK;System;PackageManager;
 StartupNotify=true
+MimeType=x-scheme-handler/appstream;x-scheme-handler/catalogue;

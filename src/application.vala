@@ -58,15 +58,47 @@ namespace Catalogue {
             });
         }
 
-        protected override void startup () {
+        public override void open (File[] files, string hint) {
+            activate ();
+
+            var file = files[0];
+            if (file == null) {
+                return;
+            }
+
+            if (file.has_uri_scheme ("type")) {
+                return;
+            }
+
+            if (!file.has_uri_scheme ("appstream") && !file.has_uri_scheme ("catalogue")) {
+                return;
+            }
+
+            string link = file.get_uri ().replace ("appstream://", "").replace ("catalogue://", "");
+            if (link.has_suffix ("/")) {
+                link = link.substring (0, link.last_index_of_char ('/'));
+            }
+
+            var package = client.get_package_for_component_id (link);
+            if (package != null) {
+                Signals.get_default ().explore_leaflet_open (package);
+            } else {
+                info (_("Specified link '%s' could not be found").printf (link));
+                return;
+                //  string? search_term = Uri.unescape_string (link);
+                //  if (search_term != null) {
+                //      main_window.search (search_term);
+                //  }
+            }
+        }
+
+        protected override void activate () {
             resource_base_path = "/co/tauos/Catalogue";
 
             base.startup ();
 
             this.main_window = new Catalogue.Window (this);
-        }
 
-        protected override void activate () {
             client.update_cache.begin ();
             this.main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
 

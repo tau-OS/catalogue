@@ -58,14 +58,12 @@ public class SearchProvider : Object {
     }
 
     public void activate_result (string result, string[] terms, uint32 timestamp) throws GLib.Error {
-        print ("Hello World %s", result);
-        //  var file = GLib.File.new_for_uri ("appstream://" + Uri.escape_string (result));
-        //  GLib.Application.get_default ().open ({ file }, "");
+        var file = GLib.File.new_for_uri ("appstream://" + Uri.escape_string (result));
+        GLib.Application.get_default ().open ({ file }, "");
     }
 
     public void launch_search (string[] terms, uint32 timestamp) throws GLib.Error {
-        print ("Hello World %s", terms[0]);
-        //  var file = GLib.File.new_for_uri ("appstream://" + Uri.escape_string (string.joinv (" ", terms)));
-        //  GLib.Application.get_default ().open ({ file }, "");
+        var file = GLib.File.new_for_uri ("appstream://" + Uri.escape_string (string.joinv (" ", terms)));
+        GLib.Application.get_default ().open ({ file }, "");
     }
 }
