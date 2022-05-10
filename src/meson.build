@@ -31,6 +31,7 @@ main_sources = [
 
 daemon_sources = [
     'daemon.vala',
+    'services/search_provider.vala'
 ]
 
 core_sources = [
