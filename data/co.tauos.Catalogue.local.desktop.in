@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Software Install
+Comment=Install selected software on the system
+Exec=catalogue --filename %f
+Icon=system-software-install
+Terminal=false
+Type=Application
+Categories=System;
+StartupNotify=true
+MimeType=application/vnd.flatpak;application/vnd.flatpak.repo;application/vnd.flatpak.ref;
+NoDisplay=true

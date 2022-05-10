@@ -7,6 +7,15 @@ desktop_file = i18n.merge_file(
   	install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
+local_desktop_file = i18n.merge_file(
+  	input: application_id + '.local.desktop.in',
+  	output: application_id + '.local.desktop',
+  	type: 'desktop',
+  	po_dir: '../po',
+  	install: true,
+  	install_dir: join_paths(get_option('datadir'), 'applications')
+)
+
 # GNOME Shell Search Provider
 configure_file(
     input: application_id + '.search-provider.ini.in',
@@ -19,6 +28,9 @@ desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   	test('Validate desktop file', desktop_utils,
     		args: [desktop_file]
+  	)
+    test('Validate local desktop file', desktop_utils,
+    		args: [local_desktop_file]
   	)
 endif
 

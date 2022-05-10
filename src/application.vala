@@ -25,10 +25,13 @@ namespace Catalogue {
         private const GLib.OptionEntry[] options = {
             { "details", '\0', 0, OptionArg.STRING, out details_id, 
               "Show application details (using application ID)", "ID" },
+            { "filename", 'f', 0, OptionArg.FILENAME, out filename, 
+              "Open a local package file", "FILENAME" }, 
             { null }
         };
 
         public static string details_id;
+        public static string filename;
 
         private const GLib.ActionEntry app_entries[] = {
             { "about", on_about_action },
@@ -109,6 +112,10 @@ namespace Catalogue {
                 } else {
                     Signals.get_default ().explore_leaflet_open (package);
                 }
+            }
+
+            if (filename != null) {
+                print ("File passed as %s", filename);
             }
 
             active_window?.present ();
