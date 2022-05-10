@@ -1,8 +1,10 @@
 [Desktop Entry]
 Name=catalogue
+Comment=Browse and manage apps
 Exec=catalogue
 Icon=co.tauos.Catalogue
+Keywords=install;uninstall;remove;catalogue;store;apps;software;
 Terminal=false
 Type=Application
-Categories=GTK;
+Categories=GNOME;GTK;System;PackageManager;
 StartupNotify=true
