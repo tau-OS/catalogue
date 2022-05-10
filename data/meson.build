@@ -7,6 +7,14 @@ desktop_file = i18n.merge_file(
   	install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
+# GNOME Shell Search Provider
+configure_file(
+    input: application_id + '.search-provider.ini.in',
+    output: application_id + '.search-provider.ini',
+    configuration: conf,
+    install_dir: join_paths(get_option('datadir'), 'gnome-shell', 'search-providers')
+)
+
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   	test('Validate desktop file', desktop_utils,
@@ -32,6 +40,12 @@ endif
 install_data(
 	application_id + '.gschema.xml',
   	install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
+)
+
+install_data(
+    meson.project_name() + '.service',
+    # Unfortunately there's not a good directory variable
+    install_dir: join_paths(get_option('sysconfdir'), 'systemd', 'system', 'multi-user.target.wants')
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)

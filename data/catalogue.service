@@ -1,0 +1,12 @@
+[Unit]
+Description=Catalogue Daemon Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/catalogue-daemon
+Restart=on-failure
+RestartSec=42s
+
+[Install]
+WantedBy=multi-user.target
