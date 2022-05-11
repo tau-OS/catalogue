@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAddRepositoryDialog" parent="GtkDialog">
+        <property name="modal">true</property>
+        <property name="title">Add Repository</property>
+        <property name="default-height">250</property>
+        <property name="default-width">450</property>
+        <property name="margin-top">10</property>
+        <!-- fucking internal child -->
+        <child internal-child="content_area">
+            <object class="GtkBox">
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">You are about to add the following repository:</property>
+                        <property name="halign">center</property>
+                        <property name="xalign">0.5</property>
+                        <property name="vexpand">False</property>
+                        <property name="ellipsize">end</property>
+                        <property name="wrap">true</property>
+                        <style>
+                            <class name="title-4" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="AdwClamp">
+                        <property name="hexpand">True</property>
+                        <property name="maximum_size">400</property>
+                        <property name="tightening_threshold">500</property>
+                        <child>
+                            <object class="AdwActionRow" id="lbrow">
+                                <property name="valign">center</property>
+                                <property name="halign">fill</property>
+                                <property name="hexpand">True</property>
+                                <property name="vexpand">True</property>
+                                <style>
+                                    <class name="featured-tile" />
+                                    <class name="card" />
+                                    <class name="content-block" />
+                                    <class name="grid-content-block " />
+                                </style>
+                                <child type="prefix">
+                                    <object class="GtkBox">
+                                        <property name="orientation">horizontal</property>
+                                        <property name="spacing">6</property>
+                                        <!-- TODO add icon but it keeps segfaulting -->
+                                        <!-- <child>
+                                            <object class="GtkImage" id="image">
+                                                <property name="resource">/co/tauos/Catalogue/test-icon.png</property>
+                                                <property name="name">logo</property>
+                                                <property name="pixel-size">48</property>
+                                                <property name="halign">start</property>
+                                                <style>
+                                                    <class name="icon-dropshadow" />
+                                                </style>
+                                            </object>
+                                        </child> -->
+                                        <child>
+                                            <object class="GtkBox">
+                                                <property name="orientation">vertical</property>
+                                                <property name="spacing">6</property>
+                                                <child>
+                                                    <object class="GtkLabel" id="title_label">
+                                                        <property name="label">Catalogue</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="xalign">0.5</property>
+                                                        <property name="vexpand">False</property>
+                                                        <property name="ellipsize">end</property>
+                                                        <property name="wrap">true</property>
+                                                        <style>
+                                                            <class name="title-4" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="description_label">
+                                                        <property name="label">Central repository for Catalogue</property>
+                                                        <property name="justify">center</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="ellipsize">end</property>
+                                                        <property name="lines">1</property>
+                                                        <property name="wrap">true</property>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="GtkLabel" id="url_label">
+                                                        <property name="label">https://repo.tauos.co/catalogue/</property>
+                                                        <property name="justify">center</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="ellipsize">end</property>
+                                                        <property name="lines">1</property>
+                                                        <property name="wrap">true</property>
+                                                        <style>
+                                                            <class name="caption" />
+                                                        </style>
+                                                    </object>
+                                                </child>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+
+        <child type="action">
+            <object class="GtkButton" id="button_ok">
+                <property name="label">Add Repo</property>
+                <style>
+                    <class name="suggested-action" />
+                </style>
+            </object>
+        </child>
+        <child type="action">
+            <object class="GtkButton" id="button_cancel">
+                <property name="label">Cancel</property>
+                <style>
+                    <class name="destructive-action" />
+                </style>
+            </object>
+        </child>
+        <action-widgets>
+            <action-widget response="cancel" default="true">button_cancel</action-widget>
+            <action-widget response="ok" default="true">button_ok</action-widget>
+        </action-widgets>
+    </template>
+</interface>

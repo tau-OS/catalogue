@@ -3,6 +3,9 @@
   <gresource prefix="/co/tauos/Catalogue">
     <file alias="window.ui">layout/window.ui</file>
     <file alias="preferences.ui">layout/preferences.ui</file>
+
+    <file alias="Dialogs/add-repository.ui">layout/dialogs/add-repository.ui</file>
+
     <file alias="explore.ui">layout/pages/explore.ui</file>
     <file alias="installed.ui">layout/pages/installed.ui</file>
     <file alias="updates.ui">layout/pages/updates.ui</file>
