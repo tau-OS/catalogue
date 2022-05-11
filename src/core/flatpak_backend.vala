@@ -56,6 +56,9 @@ namespace Catalogue.Core {
         public static Flatpak.Installation? user_installation { get; private set; }
         public static Flatpak.Installation? system_installation { get; private set; }
 
+        private static GLib.FileMonitor user_installation_changed_monitor;
+        private static GLib.FileMonitor system_installation_changed_monitor;
+
         private bool worker_func () {
             while (thread_should_run) {
                 var job = jobs.pop ();
@@ -85,6 +88,72 @@ namespace Catalogue.Core {
             system_appstream_pool = new AppStream.Pool ();
             system_appstream_pool.set_flags (AppStream.PoolFlags.LOAD_OS_COLLECTION);
 
+            // Monitor the FlatpakInstallation for changes (e.g. adding/removing remotes)
+            if (user_installation != null) {
+                try {
+                    user_installation_changed_monitor = user_installation.create_monitor ();
+                } catch (Error e) {
+                    warning ("Couldn't user create Installation File Monitor : %s", e.message);
+                }
+
+                user_installation_changed_monitor.changed.connect (() => {
+                    if (!working) {
+                        debug ("Flatpak user installation changed.");
+
+                        // Clear the installed state of all packages as something may have changed we weren't
+                        // aware of
+                        foreach (var package in package_list.values) {
+                            if (package.state != Package.State.NOT_INSTALLED || package.installed) {
+                                package.clear_installed ();
+                            }
+                        }
+
+                        trigger_update_check.begin ();
+                    }
+                });
+            } else {
+                warning ("Couldn't create user Installation File Monitor due to no installation");
+            }
+
+            if (system_installation != null) {
+                try {
+                    system_installation_changed_monitor = system_installation.create_monitor ();
+                } catch (Error e) {
+                    warning ("Couldn't create system Installation File Monitor : %s", e.message);
+                }
+
+                system_installation_changed_monitor.changed.connect (() => {
+                    // Only trigger a cache refresh if we're not doing anything (i.e. its an external change)
+                    if (!working) {
+                        debug ("Flatpak system installation changed.");
+
+                        // Clear the installed state of all packages as something may have changed we weren't
+                        // aware of
+                        foreach (var package in package_list.values) {
+                            if (package.state != Package.State.NOT_INSTALLED || package.installed) {
+                                package.clear_installed ();
+                            }
+                        }
+
+                        // Reloads the appstream data for enabled remotes and checks what applications are
+                        // installed/require updates
+                        trigger_update_check.begin ();
+                    }
+                });
+            } else {
+                warning ("Couldn't create system Installation File Monitor due to no installation");
+            }
+
+            private async void trigger_update_check () {
+                try {
+                    yield refresh_cache (null);
+                } catch (Error e) {
+                    warning ("Unable to refresh cache after external change: %s", e.message);
+                }
+        
+                yield get_updates (null);
+            }
+            
             user_metadata_path = Path.build_filename (
                 Environment.get_user_cache_dir (),
                 Config.APP_ID,
