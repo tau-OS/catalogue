@@ -140,8 +140,24 @@ namespace Catalogue {
                     }
                 } else if (flatpak_helper.get_reference_type (file) == FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REPO) {
                     try {
-                        print (flatpak_helper.parse_flatpak_ref (file, "Url"));
+
+                        // Verify that remote does not exist
+                        if (!client.does_remote_url_exist (flatpak_helper.parse_flatpak_repo (file, "Url"))) {
+                            var bytes = file.load_bytes (null, null);
+                            var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo (file, "Title"), bytes);
+                            var win = this.active_window;
+                            if (win == null) {
+                                error ("Cannot find main window");
+                            }
+                            var dialog = new Catalogue.AddRepositoryDialog (remote);
+                            dialog.set_transient_for (win);
+                            dialog.present ();
+                        } else {
+                            warning ("Remote %s already exists".printf (flatpak_helper.parse_flatpak_repo(file, "Title")));
+                        }
                     } catch (KeyFileError e) {
+                        warning (e.message);
+                    } catch (Error e) {
                         warning (e.message);
                     }
                 } else {
