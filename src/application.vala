@@ -134,6 +134,22 @@ namespace Catalogue {
                             }
                         } else {
                             print ("Remote not added, TODO add remote\n");
+                            try {
+                                var uri = File.new_for_uri (flatpak_helper.parse_flatpak_ref (file, "RuntimeRepo"));
+                                var bytes = uri.load_bytes (null, null);
+                                var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo (uri, "Title"), bytes);
+                                var win = this.active_window;
+                                if (win == null) {
+                                    error ("Cannot find main window");
+                                }
+                                var dialog = new Catalogue.AddRepositoryDialog (remote);
+                                dialog.set_transient_for (win);
+                                dialog.present ();
+                            } catch (KeyFileError e) {
+                                warning (e.message);
+                            } catch (Error e) {
+                                warning (e.message);
+                            }
                         }
                     } catch (KeyFileError e) {
                         warning (e.message);
