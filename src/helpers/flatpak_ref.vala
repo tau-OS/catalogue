@@ -45,26 +45,6 @@ namespace Catalogue {
                 return REFERENCE_TYPE.UNKNOWN;
             }
         }
-        
-        public bool does_key_exist (File filename, string key) {
-            KeyFile parsed_file = new KeyFile ();
-
-            try {
-                parsed_file.load_from_file (filename.get_path (), KeyFileFlags.NONE);
-            } catch (KeyFileError e) {
-                warning (e.message);
-            } catch (FileError e) {
-                warning (e.message);
-            }
-
-            foreach (var group in parsed_file.get_groups ()) {
-                if (parsed_file.has_key (group, key)) {
-                    return true;
-                }
-            }
-
-            return false;
-        } 
 
         public string parse_flatpak_repo (File filename, string key) throws KeyFileError {
             KeyFile parsed_file = new KeyFile ();

@@ -143,16 +143,6 @@ namespace Catalogue.Core {
             } else {
                 warning ("Couldn't create system Installation File Monitor due to no installation");
             }
-
-            private async void trigger_update_check () {
-                try {
-                    yield refresh_cache (null);
-                } catch (Error e) {
-                    warning ("Unable to refresh cache after external change: %s", e.message);
-                }
-        
-                yield get_updates (null);
-            }
             
             user_metadata_path = Path.build_filename (
                 Environment.get_user_cache_dir (),
@@ -169,6 +159,16 @@ namespace Catalogue.Core {
             );
     
             reload_appstream_pool ();
+        }
+
+        private async void trigger_update_check () {
+            try {
+                yield refresh_cache (null);
+            } catch (Error e) {
+                warning ("Unable to refresh cache after external change: %s", e.message);
+            }
+    
+            yield get_updates (null);
         }
 
         static construct {
