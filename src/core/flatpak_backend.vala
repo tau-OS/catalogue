@@ -831,6 +831,22 @@ namespace Catalogue.Core {
             return false;
         }
 
+        public bool create_remote (Flatpak.Remote remote, bool use_system_installation, Cancellable cancellable) {
+            unowned Flatpak.Installation? installation = null;
+            if (use_system_installation) {
+                installation = system_installation;
+            } else {
+                installation = user_installation;
+            }
+
+            try {
+                return installation.add_remote (remote, false, cancellable);
+            } catch (Error e) {
+                warning ("Error adding remote: %s", e.message);
+                return false;
+            }
+        }
+
         public bool does_remote_url_exist (string url, Cancellable cancellable) {
             var system_remotes = get_remotes (true, cancellable);
             var user_remotes = get_remotes (false, cancellable);

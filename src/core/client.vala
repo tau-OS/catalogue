@@ -78,6 +78,10 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().does_remote_url_exist (url, cancellable);
         }
 
+        public bool create_remote (Flatpak.Remote remote) {
+            return FlatpakBackend.get_default ().create_remote (remote, true, cancellable);
+        }
+
         public async void refresh_updates () {
             // todo notification shit?
             yield UpdateManager.get_default ().get_updates (null);
