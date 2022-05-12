@@ -44,16 +44,6 @@ namespace Catalogue {
 
         public AppStream.Category? active_category;
 
-        private void generate_category_row (Catalogue.CategoryRow row, AppStream.Category category) {
-            unowned var client = Core.Client.get_default ();
-
-            foreach (var package in client.get_applications_for_category (category)) {
-                var package_row = new Catalogue.AppTile (package);
-
-                row.append (package_row);
-            }
-        }
-
         public AppStream.Category? get_active_category () {
             if (active_category != null) {
                 return active_category;
@@ -113,20 +103,12 @@ namespace Catalogue {
             //  featured_row_test = new Catalogue.FeaturedRow ("Test Row");
             //  featured_box.append (featured_row_test);
 
-            var accessories_row = new Catalogue.CategoryRow ();
-            var internet_row = new Catalogue.CategoryRow ();
-            var develop_row = new Catalogue.CategoryRow ();
-            var games_row = new Catalogue.CategoryRow ();
-            var create_row = new Catalogue.CategoryRow ();
-            var work_row = new Catalogue.CategoryRow ();
-
-            // shit for other pages
-            generate_category_row (accessories_row, categories.accessories);
-            generate_category_row (internet_row, categories.internet);
-            generate_category_row (develop_row, categories.develop);
-            generate_category_row (games_row, categories.games);
-            generate_category_row (create_row, categories.create);
-            generate_category_row (work_row, categories.work);
+            var accessories_row = new Catalogue.CategoryRow (categories.accessories);
+            var internet_row = new Catalogue.CategoryRow (categories.internet);
+            var develop_row = new Catalogue.CategoryRow (categories.develop);
+            var games_row = new Catalogue.CategoryRow (categories.games);
+            var create_row = new Catalogue.CategoryRow (categories.create);
+            var work_row = new Catalogue.CategoryRow (categories.work);
 
             accessories_box.append (accessories_row);
             internet_box.append (internet_row);

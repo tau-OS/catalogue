@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <requires lib="gtk" version="4.0" />
-    <template class="CatalogueAppTile" parent="GtkButton">
+    <template class="CatalogueSkeletonTile" parent="GtkButton">
         <child>
             <object class="AdwActionRow" id="lbrow">
                 <property name="valign">center</property>

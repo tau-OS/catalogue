@@ -152,3 +152,9 @@
     background-color: #EDF8F5;
 	color: #2E7A68;
 }
+
+.skeleton {
+    border-radius: 12px;
+    background-color: #f0f0f2;
+    color: #f0f0f2;
+}

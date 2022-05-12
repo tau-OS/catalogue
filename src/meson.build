@@ -25,6 +25,7 @@ main_sources = [
     'widgets/category-row.vala',
     'widgets/installed-row.vala',
     'widgets/search-row.vala',
+    'widgets/skeleton-tile.vala',
     'objects/signals.vala',
     'objects/categories.vala',
     'helpers/content_rating.vala',

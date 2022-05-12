@@ -20,14 +20,51 @@
     [GtkTemplate (ui = "/co/tauos/Catalogue/category-row.ui")]
     public class CategoryRow : Adw.Bin {
         [GtkChild]
+        private unowned Gtk.Stack stack;
+        [GtkChild]
+        private unowned Gtk.FlowBox loading_row_box;
+        [GtkChild]
         private unowned Gtk.FlowBox row_box;
 
-        public void append (Gtk.Widget widget) {
-            row_box.append (widget);
+        private void reset () {
+            var widget_list = new Utils ().get_all_widgets_in_child (row_box);
+
+            foreach (var widget in widget_list) {
+                row_box.remove (widget);
+            }
         }
 
-        public CategoryRow () {
+        public CategoryRow (AppStream.Category? category) {
             Object ();
+
+            for (var i = 0; i < 6; i++){
+                loading_row_box.append (new Catalogue.SkeletonTile ());
+            }
+
+            stack.set_visible_child_name ("loading");
+
+            this.realize.connect (() => {
+                if (category != null) {
+                        unowned var client = Core.Client.get_default ();
+                        Gee.Collection<Catalogue.AppTile> pkgs = new Gee.ArrayList<Catalogue.AppTile> ();
+
+                        foreach (var package in client.get_applications_for_category (category)) {
+                            var package_row = new Catalogue.AppTile (package);
+
+                            pkgs.add (package_row);
+                        }
+
+                        reset ();
+
+                        if (!pkgs.is_empty) {
+                            foreach (var package in pkgs) {
+                                row_box.append (package);
+                            }
+
+                            stack.set_visible_child_name ("content");
+                        }
+                }
+            });
         }
     }
 }
