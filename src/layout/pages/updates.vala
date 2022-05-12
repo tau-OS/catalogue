@@ -32,8 +32,11 @@ namespace Catalogue {
 
             refresh_cancellable = new Cancellable ();
 
-            this.realize.connect (() => {
+            stack.set_visible_child_name ("refreshing_updates");
+
+            Idle.add (() => {
                 get_apps.begin ();
+                return GLib.Source.REMOVE;
             });
         }
 
@@ -54,6 +57,8 @@ namespace Catalogue {
                     if (needs_update) {
                         stack.set_visible_child_name ("updates_available");
                         listbox.append (new Catalogue.InstalledRow (package));
+                    } else {
+                        stack.set_visible_child_name ("up_to_date");
                     }
                 }
                 
