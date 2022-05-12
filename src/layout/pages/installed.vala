@@ -19,6 +19,8 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/installed.ui")]
     public class WindowInstalled : Adw.Bin {
+        [GtkChild]
+        private unowned Gtk.Stack stack;
         //  [GtkChild]
         //  private unowned Gtk.ListBox in_progress_listbox;
         [GtkChild]
@@ -33,14 +35,17 @@ namespace Catalogue {
 
             refresh_cancellable = new Cancellable ();
 
+            stack.set_visible_child_name ("refreshing_installed");
+
             //  WILL BE USED WHEN UPDATES WORK LOL
             //  in_progress_listbox.append (new Adw.ActionRow ());
 
             //  // wish there was a signal on row add
             //  in_progress_listbox.set_visible (true);
 
-            this.realize.connect (() => {
+            Idle.add (() => {
                 get_apps.begin ();
+                return GLib.Source.REMOVE;
             });
 
             apps_listbox.set_sort_func ((row1, row2) => {
@@ -62,6 +67,12 @@ namespace Catalogue {
             if (!refresh_cancellable.is_cancelled ()) {
                 foreach (var package in installed_apps) {
                     apps_listbox.append (new Catalogue.InstalledRow (package));
+                }
+
+                if (installed_apps.is_empty) {
+                    stack.set_visible_child_name ("no_installed");
+                } else {
+                    stack.set_visible_child_name ("installed_packages");
                 }
             }
 

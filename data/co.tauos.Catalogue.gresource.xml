@@ -33,6 +33,7 @@
 
     <file alias="test-icon.png">images/128x128.png</file>
     <file alias="up-to-date.svg">images/up-to-date.svg</file>
+    <file alias="no-installed-apps.svg">images/no-installed-apps.svg</file>
   </gresource>
 
   <!-- Icons: Every single custom icon that's used in the UI should be listed here, and in the actions folder -->
