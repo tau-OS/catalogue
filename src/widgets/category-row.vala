@@ -34,6 +34,29 @@
             }
         }
 
+        private async void fill_row (AppStream.Category category) {
+            unowned var client = Core.Client.get_default ();
+            Gee.Collection<Catalogue.AppTile> pkgs = new Gee.ArrayList<Catalogue.AppTile> ();
+
+            foreach (var package in client.get_applications_for_category (category)) {
+                var package_row = new Catalogue.AppTile (package);
+
+                pkgs.add (package_row);
+            }
+
+            reset ();
+
+            if (!pkgs.is_empty) {
+                foreach (var package in pkgs) {
+                    row_box.append (package);
+                }
+
+                stack.set_visible_child_name ("content");
+            }
+
+            return;
+        }
+
         public CategoryRow (AppStream.Category? category) {
             Object ();
 
@@ -45,24 +68,11 @@
 
             this.realize.connect (() => {
                 if (category != null) {
-                        unowned var client = Core.Client.get_default ();
-                        Gee.Collection<Catalogue.AppTile> pkgs = new Gee.ArrayList<Catalogue.AppTile> ();
-
-                        foreach (var package in client.get_applications_for_category (category)) {
-                            var package_row = new Catalogue.AppTile (package);
-
-                            pkgs.add (package_row);
-                        }
-
-                        reset ();
-
-                        if (!pkgs.is_empty) {
-                            foreach (var package in pkgs) {
-                                row_box.append (package);
-                            }
-
-                            stack.set_visible_child_name ("content");
-                        }
+                    try {
+                        new Thread<void>.try ("thread", () => {fill_row.begin (category);});
+                    } catch (Error e) {
+                        warning (e.message);
+                    }
                 }
             });
         }

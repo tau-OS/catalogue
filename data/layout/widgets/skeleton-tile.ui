@@ -68,6 +68,7 @@
                                 <property name="xalign">0.1</property>
                                 <property name="lines">1</property>
                                 <property name="justify">center</property>
+                                <property name="valign">center</property>
                                 <property name="label">$1.99</property>
                                 <property name="margin-top">3</property>
                                 <property name="margin-bottom">3</property>

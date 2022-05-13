@@ -34,10 +34,12 @@ namespace Catalogue {
 
             stack.set_visible_child_name ("refreshing_updates");
 
-            Idle.add (() => {
-                get_apps.begin ();
-                return GLib.Source.REMOVE;
-            });
+            try {
+                Thread<void> thread = new Thread<void>.try ("thread", () => {get_apps.begin ();});
+                thread.join ();
+            } catch (Error e) {
+                warning (e.message);
+            }
         }
 
         public async void get_apps () {
@@ -51,15 +53,22 @@ namespace Catalogue {
             var installed_apps = yield client.get_installed_applications (refresh_cancellable);
 
             if (!refresh_cancellable.is_cancelled ()) {
+                bool does_need_update = false;
                 foreach (var package in installed_apps) {
                     var needs_update = package.state == Core.Package.State.UPDATE_AVAILABLE;
 
                     if (needs_update) {
-                        stack.set_visible_child_name ("updates_available");
+                        does_need_update = true;
                         listbox.append (new Catalogue.InstalledRow (package));
                     } else {
-                        stack.set_visible_child_name ("up_to_date");
+                        does_need_update = false;
                     }
+                }
+
+                if (does_need_update) {
+                    stack.set_visible_child_name ("updates_available");
+                } else {
+                    stack.set_visible_child_name ("up_to_date");
                 }
                 
                 // Handle runtime updates package

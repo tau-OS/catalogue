@@ -43,10 +43,11 @@ namespace Catalogue {
             //  // wish there was a signal on row add
             //  in_progress_listbox.set_visible (true);
 
-            Idle.add (() => {
-                get_apps.begin ();
-                return GLib.Source.REMOVE;
-            });
+            try {
+                new Thread<void>.try ("thread", () => {get_apps.begin ();});
+            } catch (Error e) {
+                warning (e.message);
+            }
 
             apps_listbox.set_sort_func ((row1, row2) => {
                 return ((Catalogue.InstalledRow) row1.get_first_child ()).get_app_name ().collate (((Catalogue.InstalledRow) row2.get_first_child ()).get_app_name ());
