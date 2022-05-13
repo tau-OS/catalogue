@@ -35,8 +35,7 @@ namespace Catalogue {
             stack.set_visible_child_name ("refreshing_updates");
 
             try {
-                Thread<void> thread = new Thread<void>.try ("thread", () => {get_apps.begin ();});
-                thread.join ();
+                new Thread<void>.try ("thread", () => {get_apps.begin ();});
             } catch (Error e) {
                 warning (e.message);
             }
