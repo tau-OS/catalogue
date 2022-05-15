@@ -59,8 +59,6 @@ namespace Catalogue {
                     if (needs_update) {
                         does_need_update = true;
                         listbox.append (new Catalogue.InstalledRow (package));
-                    } else {
-                        does_need_update = false;
                     }
                 }
 
