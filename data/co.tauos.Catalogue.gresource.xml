@@ -5,6 +5,7 @@
     <file alias="preferences.ui">layout/preferences.ui</file>
 
     <file alias="Dialogs/add-repository.ui">layout/dialogs/add-repository.ui</file>
+    <file alias="Dialogs/version-history.ui">layout/dialogs/version-history.ui</file>
 
     <file alias="explore.ui">layout/pages/explore.ui</file>
     <file alias="installed.ui">layout/pages/installed.ui</file>
@@ -35,6 +36,7 @@
     <file alias="test-icon.png">images/128x128.png</file>
     <file alias="up-to-date.svg">images/up-to-date.svg</file>
     <file alias="no-installed-apps.svg">images/no-installed-apps.svg</file>
+    <file alias="ghost.svg">images/ghost.svg</file>
   </gresource>
 
   <!-- Icons: Every single custom icon that's used in the UI should be listed here, and in the actions folder -->
@@ -58,5 +60,6 @@
     <file alias="scalable/actions/padlock-open-symbolic.svg">icons/hicolor/scalable/actions/padlock-open-symbolic.svg</file>
     <file alias="scalable/actions/face-sad-symbolic.svg">icons/hicolor/scalable/actions/face-sad-symbolic.svg</file>
     <file alias="scalable/actions/warning-symbolic.svg">icons/hicolor/scalable/actions/warning-symbolic.svg</file>
+    
   </gresource>
 </gresources>

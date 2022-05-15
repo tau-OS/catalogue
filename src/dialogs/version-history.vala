@@ -1,4 +1,4 @@
-/* widgets/details/app-versionhistory.vala
+/* dialog/version-history.vala
  *
  * Copyright 2022 Fyra Labs
  *
@@ -16,32 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory.ui")]
-    public class AppVersionHistory : Adw.Bin {
+ namespace Catalogue {
+    [GtkTemplate (ui = "/co/tauos/Catalogue/Dialogs/version-history.ui")]
+    public class VersionHistoryDialog : Gtk.Dialog {
         [GtkChild]
         private unowned Gtk.ListBox list_box_version_history;
-        [GtkChild]
-        private unowned Gtk.ListBoxRow version_history_button;
 
-        private Core.Package app;
-
-        [GtkCallback]
-        private void open_history_dialog (Gtk.ListBoxRow row) {
-            if (row == version_history_button) {
-                var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
-                var dialog = new Catalogue.VersionHistoryDialog (app);
-                dialog.set_transient_for (win);
-                dialog.present ();
-            }
-        }
-            
-        public AppVersionHistory (Core.Package package) {
+        public VersionHistoryDialog (Core.Package package) {
             Object ();
 
-            app = package;
-
-            var releases = package.get_newest_releases (1, 5);
+            var releases = package.component.get_releases ();
 
             foreach (var release in releases) {
                 list_box_version_history.prepend (new Catalogue.AppVersionHistoryRow (release));
@@ -49,4 +33,3 @@ namespace Catalogue {
         }
     }
 }
- 

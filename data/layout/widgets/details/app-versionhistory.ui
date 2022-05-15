@@ -16,9 +16,11 @@
                         <style>
                             <class name="boxed-list" />
                         </style>
+                        <signal name="row-activated" handler="open_history_dialog" swapped="no" />
                         
                         <child>
                             <object class="GtkListBoxRow" id="version_history_button">
+                                <property name="name">version_history_button</property>
                                 <property name="can_focus">True</property>
                                 <child>
                                     <object class="GtkBox">

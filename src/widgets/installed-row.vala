@@ -72,8 +72,10 @@
                 }
             });
 
-            // Set the parent element to be unselectable lol
-            ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
+            this.realize.connect (() => {
+                // Set the parent element to be unselectable lol
+                ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
+            });
         }
 
         private async void update_clicked (Core.Package package) {

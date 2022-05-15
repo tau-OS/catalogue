@@ -4,6 +4,7 @@ main_sources = [
     'application.vala',
     'utils.vala',
     'dialogs/add-repository.vala',
+    'dialogs/version-history.vala',
     'layout/pages/explore.vala',
     'layout/pages/installed.vala',
     'layout/pages/updates.vala',
