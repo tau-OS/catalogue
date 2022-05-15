@@ -42,13 +42,18 @@ namespace Catalogue {
                 warning (e.message);
             }
 
-            Signals.get_default ().updates_progress_bar_change.connect ((package) => {
+            Signals.get_default ().updates_progress_bar_change.connect ((package, is_finished) => {
                 Idle.add (() => {
-                    if (progress_bar.get_visible () != true) {
-                        progress_bar.set_visible (true);
+                    if (is_finished) {
+                        progress_bar.set_visible (false);
+                        return GLib.Source.REMOVE;
+                    } else {
+                        if (progress_bar.get_visible () != true) {
+                            progress_bar.set_visible (true);
+                        }
+                        progress_bar.fraction = package.progress;
+                        return GLib.Source.REMOVE;
                     }
-                    progress_bar.fraction = package.progress;
-                    return GLib.Source.REMOVE;
                 });
             });
         }
@@ -83,6 +88,7 @@ namespace Catalogue {
                 // Handle runtime updates package
                 var runtime_updates = Core.UpdateManager.get_default ().runtime_updates;
                 if (runtime_updates.state ==Core.Package.State.UPDATE_AVAILABLE) {
+                    stack.set_visible_child_name ("updates_available");
                     listbox.append (new Catalogue.InstalledRow (runtime_updates));
                 }
             }

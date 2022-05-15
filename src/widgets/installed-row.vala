@@ -62,18 +62,25 @@
             });
 
             package.change_information.progress_changed.connect (() => {
-                Signals.get_default ().updates_progress_bar_change (package);
+                Signals.get_default ().updates_progress_bar_change (package, false);
+            });
+
+            package.info_changed.connect ((status) => {
+                if (status == Core.ChangeInformation.Status.FINISHED) {
+                    progress_spinner.set_visible (false);
+                    Signals.get_default ().updates_progress_bar_change (package, true);
+                }
             });
         }
 
         private async void update_clicked (Core.Package package) {
+            info_button.set_sensitive (false);
+            update_button.set_sensitive (false);
+            // TODO this should still be sensetive but should stop the transaction
+            delete_button.set_sensitive (false);
+            progress_spinner.set_visible (true);
             try {
                 yield package.update ();
-                info_button.set_sensitive (false);
-                update_button.set_sensitive (false);
-                // TODO this should still be sensetive but should stop the transaction
-                delete_button.set_sensitive (false);
-                progress_spinner.set_visible (true);
             } catch (Error e) {
                 if (!(e is GLib.IOError.CANCELLED)) {
                     critical (e.message);
