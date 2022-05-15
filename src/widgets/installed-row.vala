@@ -71,6 +71,9 @@
                     Signals.get_default ().updates_progress_bar_change (package, true);
                 }
             });
+
+            // Set the parent element to be unselectable lol
+            ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
         }
 
         private async void update_clicked (Core.Package package) {
