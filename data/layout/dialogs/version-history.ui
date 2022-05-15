@@ -37,6 +37,8 @@
 
                                         <child>
                                             <object class="GtkListBoxRow">
+                                                <property name="selectable">false</property>
+                                                <property name="activatable">false</property>
                                                 <child>
                                                     <object class="GtkBox">
                                                         <property name="orientation">horizontal</property>
@@ -68,26 +70,5 @@
                 </child>
             </object>
         </child>
-
-        <!-- <child type="action">
-            <object class="GtkButton" id="button_ok">
-                <property name="label">Add Repo</property>
-                <style>
-                    <class name="suggested-action" />
-                </style>
-            </object>
-        </child>
-        <child type="action">
-            <object class="GtkButton" id="button_cancel">
-                <property name="label">Cancel</property>
-                <style>
-                    <class name="destructive-action" />
-                </style>
-            </object>
-        </child>
-        <action-widgets>
-            <action-widget response="cancel" default="true">button_cancel</action-widget>
-            <action-widget response="ok" default="true">button_ok</action-widget>
-        </action-widgets> -->
     </template>
 </interface>
