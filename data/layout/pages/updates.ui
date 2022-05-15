@@ -49,42 +49,56 @@
                     <object class="GtkStackPage">
                         <property name="name">updates_available</property>
                         <property name="child">
-                            <object class="GtkScrolledWindow">
-                                <property name="can_focus">True</property>
-                                <property name="hscrollbar_policy">never</property>
-                                <property name="vscrollbar_policy">automatic</property>
-                                <property name="vexpand">True</property>
-                                <style>
-                                    <class name="list-page" />
-                                </style>
+                            <object class="GtkOverlay">
+                                <child type="overlay">
+                                    <object class="GtkProgressBar" id="progress_bar">
+                                        <property name="valign">start</property>
+                                        <property name="fraction">0.5</property>
+                                        <property name="visible">false</property>
+                                        <style>
+                                            <class name="osd" />
+                                        </style>
+                                    </object>
+                                </child>
                                 <child>
-                                    <object class="AdwClamp">
-                                        <property name="maximum-size">600</property>
-                                        <property name="tightening-threshold">600</property>
-                                        <property name="child">
-                                            <object class="GtkBox">
-                                                <property name="orientation">vertical</property>
-                                                <property name="spacing">12</property>
-                                                <property name="margin-top">24</property>
-                                                <property name="margin-bottom">20</property>
+                                    <object class="GtkScrolledWindow">
+                                        <property name="can_focus">True</property>
+                                        <property name="hscrollbar_policy">never</property>
+                                        <property name="vscrollbar_policy">automatic</property>
+                                        <property name="vexpand">True</property>
+                                        <style>
+                                            <class name="list-page" />
+                                        </style>
+                                        <child>
+                                            <object class="AdwClamp">
+                                                <property name="maximum-size">600</property>
+                                                <property name="tightening-threshold">600</property>
+                                                <property name="child">
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">vertical</property>
+                                                        <property name="spacing">12</property>
+                                                        <property name="margin-top">24</property>
+                                                        <property name="margin-bottom">20</property>
 
-                                                <child>
-                                                    <object class="AdwPreferencesGroup">
-                                                        <property name="title" translatable="yes">Available Updates</property>
-                                                        <style>
-                                                            <class name="section" />
-                                                        </style>
                                                         <child>
-                                                            <object class="GtkListBox" id="listbox">
+                                                            <object class="AdwPreferencesGroup">
+                                                                <property name="title" translatable="yes">Available Updates</property>
                                                                 <style>
-                                                                    <class name="boxed-list" />
+                                                                    <class name="section" />
                                                                 </style>
+                                                                <child>
+                                                                    <object class="GtkListBox" id="listbox">
+                                                                        <style>
+                                                                            <class name="boxed-list" />
+                                                                        </style>
+                                                                    </object>
+                                                                </child>
                                                             </object>
                                                         </child>
                                                     </object>
-                                                </child>
+                                                </property>
                                             </object>
-                                        </property>
+                                        </child>
                                     </object>
                                 </child>
                             </object>

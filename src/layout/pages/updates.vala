@@ -24,6 +24,8 @@ namespace Catalogue {
         private unowned Gtk.Stack stack;
         [GtkChild]
         private unowned Gtk.ListBox listbox;
+        [GtkChild]
+        private unowned Gtk.ProgressBar progress_bar;
 
         private Cancellable refresh_cancellable;
 
@@ -39,6 +41,16 @@ namespace Catalogue {
             } catch (Error e) {
                 warning (e.message);
             }
+
+            Signals.get_default ().updates_progress_bar_change.connect ((package) => {
+                Idle.add (() => {
+                    if (progress_bar.get_visible () != true) {
+                        progress_bar.set_visible (true);
+                    }
+                    progress_bar.fraction = package.progress;
+                    return GLib.Source.REMOVE;
+                });
+            });
         }
 
         public async void get_apps () {
