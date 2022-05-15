@@ -2,7 +2,6 @@ main_sources = [
     'window.vala',
     'preferences.vala',
     'application.vala',
-    'async_mutex.vala',
     'utils.vala',
     'dialogs/add-repository.vala',
     'layout/pages/explore.vala',
@@ -45,7 +44,8 @@ core_sources = [
     'core/job.vala',
     'core/screenshot_cache.vala',
     'core/change_information.vala',
-    'core/update_manager.vala'
+    'core/update_manager.vala',
+    'async_mutex.vala'
 ]
 
 config_file = configure_file(

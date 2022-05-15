@@ -25,11 +25,15 @@ namespace Catalogue.Core {
         private GLib.Cancellable cancellable;
         private GLib.DateTime last_cache_update = null;
 
+        public uint updates_number { get; private set; default = 0U; }
+        
         private uint update_cache_timeout_id = 0;
 
         private bool refresh_in_progress = false;
 
         private const int SECONDS_BETWEEN_REFRESHES = 60 * 60 * 24;
+
+        private AsyncMutex update_notification_mutex = new AsyncMutex ();
 
         public static GLib.Settings settings;
 
@@ -83,8 +87,24 @@ namespace Catalogue.Core {
         }
 
         public async void refresh_updates () {
-            // todo notification shit?
-            yield UpdateManager.get_default ().get_updates (null);
+            yield update_notification_mutex.lock ();
+
+            bool was_empty = updates_number == 0U;
+            updates_number = yield UpdateManager.get_default ().get_updates (null);
+
+            var application = GLib.Application.get_default ();
+            if (was_empty && updates_number != 0U) {
+                string title = ngettext ("Update Available", "Updates Available", updates_number);
+                string body = ngettext ("%u update is available for your system", "%u updates are available for your system", updates_number).printf (updates_number);
+                
+                var notification = new Notification (title);
+                notification.set_body (body);
+                notification.set_icon (new ThemedIcon ("software-update-available"));
+
+                application.send_notification ("catalouge.updates", notification);
+            } else {
+                application.withdraw_notification ("catalogue.updates");
+            }
         }
 
         public async void update_cache (bool force = false) {
