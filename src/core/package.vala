@@ -42,6 +42,12 @@ namespace Catalogue.Core {
         public GLib.Cancellable action_cancellable { public get; private set; }
         public State state { public get; private set; default = State.NOT_INSTALLED; }
 
+        public double progress {
+            get {
+                return change_information.progress;
+            }
+        }
+
         // Get if package is installed
         private bool _installed = false;
         public bool installed {
@@ -219,6 +225,7 @@ namespace Catalogue.Core {
                 if (success) {
                     change_information.complete ();
                     state = after_success;
+                    print ("Package Updated!!!!");
                 } else {
                     state = after_fail;
                     change_information.cancel ();

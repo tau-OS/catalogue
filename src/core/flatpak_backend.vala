@@ -59,6 +59,9 @@ namespace Catalogue.Core {
         private static GLib.FileMonitor user_installation_changed_monitor;
         private static GLib.FileMonitor system_installation_changed_monitor;
 
+        private uint total_operations;
+        private int current_operation;
+
         private bool worker_func () {
             while (thread_should_run) {
                 var job = jobs.pop ();
@@ -749,16 +752,13 @@ namespace Catalogue.Core {
                 }
             }
 
-            uint transactions = 0;
             bool run_system = false, run_user = false;
             if (system_updates.length > 0) {
                 run_system = true;
-                transactions++;
             }
 
             if (user_updates.length > 0) {
                 run_user = true;
-                transactions++;
             }
 
             bool success = true;
@@ -812,17 +812,41 @@ namespace Catalogue.Core {
                 }
             });
 
-            transaction.ready.connect (() => {
-                var ops = transaction.get_operations ();
-
-                foreach (var op in ops) {
-                    print ("%s\n", op.get_ref ());
-                    print ("%s\n", op.get_remote ());
-                }
-
-                //  i'm lazy :)
-                return false;
+            transaction.new_operation.connect ((operation, progress) => {
+                current_operation++;
+    
+                progress.changed.connect (() => {
+                    if (cancellable.is_cancelled ()) {
+                        return;
+                    }
+    
+                    // Calculate the progress contribution of the previous operations not including the current, hence -1
+                    double existing_progress = (double)(current_operation - 1) / (double)total_operations;
+                    double this_op_progress = (double)progress.get_progress () / 100.0f / (double)total_operations;
+                    change_information.callback (true, "Updating", existing_progress + this_op_progress, ChangeInformation.Status.RUNNING);
+                });
             });
+
+            transaction.operation_error.connect ((operation, e, detail) => {
+                warning ("Flatpak installation failed: %s", e.message);
+                if (e is GLib.IOError.CANCELLED) {
+                    change_information.callback (false, "Cancelling", 1.0f, ChangeInformation.Status.CANCELLED);
+                    success = true;
+                    // The user hit cancel, don't go any further
+                    return false;
+                } else {
+                    // If there was an error while updating a single package in the transaction, we probably still want
+                    // the rest updated, continue.
+                    return true;
+                }
+            });
+
+            transaction.ready.connect (() => {
+                total_operations = transaction.get_operations ().length ();
+                return true;
+            });
+
+            current_operation = 0;
 
             try {
                 success = transaction.run (cancellable);

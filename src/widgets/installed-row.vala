@@ -58,6 +58,17 @@
             update_button.clicked.connect (() => {
                 update_clicked.begin (package);
             });
+
+            package.change_information.progress_changed.connect (() => {
+                update_progress (package);
+            });
+        }
+
+        protected void update_progress (Core.Package package) {
+            Idle.add (() => {
+                print ("%f\n", package.progress);
+                return GLib.Source.REMOVE;
+            });
         }
 
         private async void update_clicked (Core.Package package) {

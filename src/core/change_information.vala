@@ -22,7 +22,8 @@ namespace Catalogue.Core {
             UNKNOWN,
             CANCELLED,
             WAITING,
-            FINISHED
+            FINISHED,
+            RUNNING
         }
 
         public signal void status_changed ();
