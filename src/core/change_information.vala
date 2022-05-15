@@ -19,13 +19,20 @@
 namespace Catalogue.Core {
     public class ChangeInformation : Object {
         public enum Status {
-            UNKNOWN
+            UNKNOWN,
+            CANCELLED,
+            WAITING,
+            FINISHED
         }
 
         public signal void status_changed ();
+        public signal void progress_changed ();
 
         public Gee.MultiMap<unowned FlatpakBackend, string> updatable_packages { public get; private set; }
+        public bool can_cancel { public get; private set; default=true; }
+        public double progress { public get; private set; default=0.0f; }
         public Status status { public get; private set; default=Status.UNKNOWN; }
+        public string status_description { public get; private set; default="Waiting"; }
         public uint64 size;
 
         construct {
@@ -37,9 +44,53 @@ namespace Catalogue.Core {
             return updatable_packages.size > 0;
         }
 
+        public void start () {
+            progress = 0.0f;
+            status = Status.WAITING;
+            status_description = "Waiting";
+            status_changed ();
+            progress_changed ();
+        }
+    
+        public void complete () {
+            status = Status.FINISHED;
+            status_description = "Finished";
+            status_changed ();
+            reset_progress ();
+        }
+    
+        public void cancel () {
+            progress = 0.0f;
+            status = Status.CANCELLED;
+            status_description = "Cancelling";
+            reset_progress ();
+            status_changed ();
+            progress_changed ();
+        }
+
         public void clear_update_info () {
             updatable_packages.clear ();
             size = 0;
+        }
+
+        public void reset_progress () {
+            status = Status.UNKNOWN;
+            status_description = "Starting";
+            progress = 0.0f;
+        }
+
+        public void callback (bool can_cancel, string status_description, double progress, Status status) {
+            if (this.can_cancel != can_cancel || this.status_description != status_description || this.status != status) {
+                this.can_cancel = can_cancel;
+                this.status_description = status_description;
+                this.status = status;
+                status_changed ();
+            }
+    
+            if (this.progress != progress) {
+                this.progress = progress;
+                progress_changed ();
+            }
         }
     }
 }

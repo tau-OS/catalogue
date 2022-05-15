@@ -67,6 +67,9 @@ namespace Catalogue.Core {
                     case Job.Type.REFRESH_CACHE:
                         refresh_cache_internal (job);
                         break;
+                    case Job.Type.UPDATE_PACKAGE:
+                        update_package_internal (job);
+                        break;
                     default:
                         assert_not_reached ();
                 }
@@ -711,6 +714,130 @@ namespace Catalogue.Core {
             return job.result.get_boolean ();
         }
 
+        private void update_package_internal (Job job) {
+            unowned var args = (UpdatePackageArgs)job.args;
+            unowned var package = args.package;
+            unowned ChangeInformation change_information = args.change_information;
+            unowned var cancellable = args.cancellable;
+
+            if (user_installation == null && system_installation == null) {
+                critical ("Error getting flatpak installation");
+                job.result = false;
+                job.results_ready ();
+                return;
+            }
+
+            string[] user_updates = {};
+            string[] system_updates = {};
+
+            foreach (var updatable in package.change_information.updatable_packages[this]) {
+                bool system = false;
+                string bundle_id = "";
+
+                var split_success = get_package_list_key_parts (updatable, out system, null, out bundle_id);
+                if (!split_success) {
+                    job.result = Value (typeof (bool));
+                    job.result.set_boolean (false);
+                    job.results_ready ();
+                    return;
+                }
+
+                if (system) {
+                    system_updates += (owned) bundle_id;
+                } else {
+                    user_updates += (owned) bundle_id;
+                }
+            }
+
+            uint transactions = 0;
+            bool run_system = false, run_user = false;
+            if (system_updates.length > 0) {
+                run_system = true;
+                transactions++;
+            }
+
+            if (user_updates.length > 0) {
+                run_user = true;
+                transactions++;
+            }
+
+            bool success = true;
+
+            if (run_system) {
+                if (!run_updates_transaction (true, system_updates, change_information, cancellable)) {
+                    success = false;
+                }
+            }
+
+            if (run_user) {
+                if (!run_updates_transaction (false, user_updates, change_information, cancellable)) {
+                    success = false;
+                }
+            }
+
+            job.result = Value (typeof (bool));
+            job.result.set_boolean (success);
+            job.results_ready ();
+        }
+
+        private bool run_updates_transaction (bool is_system, string[] ids, ChangeInformation? change_information, Cancellable? cancellable) {
+            Flatpak.Transaction transaction;
+            try {
+                if (is_system) {
+                    transaction = new Flatpak.Transaction.for_installation (system_installation, cancellable);
+                } else {
+                    transaction = new Flatpak.Transaction.for_installation (user_installation, cancellable);
+                    transaction.add_default_dependency_sources ();
+                }
+            } catch (Error e) {
+                critical ("Error creating transaction for flatpak updates: %s", e.message);
+                return false;
+            }
+
+            try {
+                foreach (unowned string bundle_id in ids) {
+                    transaction.add_update (bundle_id, null, null);
+                }
+            } catch (Error e) {
+                critical ("Error adding update to flatpak transaction: %s", e.message);
+            }
+
+            bool success = false;
+
+            transaction.choose_remote_for_ref.connect ((@ref, runtime_ref, remotes) => {
+                if (remotes.length > 0) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            });
+
+            transaction.ready.connect (() => {
+                var ops = transaction.get_operations ();
+
+                foreach (var op in ops) {
+                    print ("%s\n", op.get_ref ());
+                    print ("%s\n", op.get_remote ());
+                }
+
+                //  i'm lazy :)
+                return false;
+            });
+
+            try {
+                success = transaction.run (cancellable);
+            } catch (Error e) {
+                if (e is GLib.IOError.CANCELLED) {
+                    change_information.callback (false, "Cancelling", 1.0f, ChangeInformation.Status.CANCELLED);
+                    success = true;
+                } else {
+                    success = false;
+                }
+            }
+    
+            return success;
+        }
+
         private string generate_package_list_key (bool system, string origin, string bundle_id) {
             unowned string installation = system ? "system" : "user";
             return "%s/%s/%s".printf (installation, origin, bundle_id);
@@ -731,6 +858,20 @@ namespace Catalogue.Core {
             bundle_id = parts[2];
     
             return true;
+        }
+
+        public async bool update_package (Package package, ChangeInformation? change_information, Cancellable? cancellable) throws GLib.Error {
+            var job_args = new UpdatePackageArgs ();
+            job_args.package = package;
+            job_args.change_information = change_information;
+            job_args.cancellable = cancellable;
+
+            var job = yield launch_job (Job.Type.UPDATE_PACKAGE, job_args);
+            if (job.error != null) {
+                throw job.error;
+            }
+
+            return job.result.get_boolean ();
         }
 
         public async Gee.ArrayList<string> get_updates (Cancellable? cancellable = null) {
