@@ -192,7 +192,7 @@ namespace Catalogue {
                                    "authors", authors,
                                    "artists", artists,
                                    "comments", "A nice way to manage the software on your system.",
-                                   "copyright", "Copyright © 2022 Fyra Labs",
+                                   "copyright", "Made with <3 by Fyra Labs",
                                    "logo-icon-name", Config.APP_ID,
                                    "website", "https://tauos.co",
                                    "website-label", "tauOS Website",
