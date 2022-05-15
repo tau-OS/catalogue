@@ -89,7 +89,7 @@
         private void get_app_license (Core.Package package) {
             var app_license = package.component.get_project_license ();
 
-            if (AppStream.license_is_free_license (app_license)) {
+            if (app_license != null && AppStream.license_is_free_license (app_license)) {
                 license_tile_title.set_label ("Community Built");
                 lozenge0_image.set_from_icon_name ("heart-filled-symbolic");
                 lozenge1_image.set_from_icon_name ("community-symbolic");
