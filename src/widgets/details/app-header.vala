@@ -25,6 +25,8 @@ namespace Catalogue {
         private unowned Gtk.Label application_details_title;
         [GtkChild]
         private unowned Gtk.Label developer_name_label;
+        [GtkChild]
+        private unowned Gtk.Button action_button;
             
         public AppHeader (Core.Package app) {
             Object ();
@@ -37,6 +39,19 @@ namespace Catalogue {
             }
 
             application_details_icon.set_from_gicon (app.get_icon (128, 128));
+
+            if (app.state == Core.Package.State.INSTALLED) {
+                if (app.state == Core.Package.State.UPDATE_AVAILABLE) {
+                    action_button.set_label ("Update");
+                    action_button.get_style_context ().add_class ("suggested-action");
+                } else {
+                    action_button.set_label ("Remove");
+                    action_button.get_style_context ().add_class ("destructive-action");
+                }
+            } else {
+                action_button.set_label ("Install");
+                action_button.get_style_context ().add_class ("suggested-action");
+            }
         }
     }
 }
