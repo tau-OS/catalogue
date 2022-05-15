@@ -192,13 +192,25 @@ namespace Catalogue.Core {
             }
         }
 
-        public async bool update (bool refresh_updates_afer = true) throws GLib.Error {
+        public async bool update (bool refresh_updates_after = true) throws GLib.Error {
             if (state != State.UPDATE_AVAILABLE) {
                 return false;
             }
 
             var success = yield perform_operation (State.UPDATING, State.INSTALLED, State.UPDATE_AVAILABLE);
-            if (success && refresh_updates_afer) {
+            if (success) {
+                string title = "Package %s Updated".printf (this.get_name ());
+                var application = GLib.Application.get_default ();
+                var notification = new Notification (title);
+                // TODO this is a dumb AF icon to use
+                notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
+
+                application.send_notification ("catalouge.successful_install", notification);
+                debug ("Package %s Updated", this.get_name ());
+            }
+
+            //  TODO add notification somewhere else
+            if (success && refresh_updates_after) {
                 unowned Client client = Client.get_default ();
                 yield client.refresh_updates ();
             }
@@ -225,7 +237,6 @@ namespace Catalogue.Core {
                 if (success) {
                     change_information.complete ();
                     state = after_success;
-                    print ("Package Updated!!!!");
                 } else {
                     state = after_fail;
                     change_information.cancel ();
