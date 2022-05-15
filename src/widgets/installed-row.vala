@@ -44,8 +44,8 @@
 
             image.set_from_gicon (app.get_icon (64, 64));
 
-            // TODO maybe change this to be a parameter?
-            if (package.state == Core.Package.State.UPDATE_AVAILABLE) {
+            // TODO show both?
+            if (package.update_available) {
                 update_button.set_visible (true);
             } else {
                 delete_button.set_visible (true);
@@ -54,6 +54,20 @@
             info_button.clicked.connect (() => {
                 Signals.get_default ().explore_leaflet_open (package);
             });
+
+            update_button.clicked.connect (() => {
+                update_clicked.begin (package);
+            });
+        }
+
+        private async void update_clicked (Core.Package package) {
+            try {
+                yield package.update ();
+            } catch (Error e) {
+                if (!(e is GLib.IOError.CANCELLED)) {
+                    critical (e.message);
+                }
+            }
         }
 
         public string get_app_name () {

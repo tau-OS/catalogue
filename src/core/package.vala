@@ -25,18 +25,21 @@ namespace Catalogue.Core {
     }
 
     public class Package : Object {
+        public signal void changing (bool is_changing);
         public signal void info_changed (ChangeInformation.Status status);
 
         public enum State {
             UPDATE_AVAILABLE,
             NOT_INSTALLED,
-            INSTALLED
+            INSTALLED,
+            UPDATING
         }
 
         public const string RUNTIME_UPDATES_ID = "xxx-runtime-updates";
 
         public AppStream.Component component { get; protected set; }
         public ChangeInformation change_information { public get; private set; }
+        public GLib.Cancellable action_cancellable { public get; private set; }
         public State state { public get; private set; default = State.NOT_INSTALLED; }
 
         // Get if package is installed
@@ -59,6 +62,12 @@ namespace Catalogue.Core {
         public void clear_installed () {
             _installed = false;
             update_state ();
+        }
+
+        public bool update_available {
+            get {
+                return state == State.UPDATE_AVAILABLE;
+            }
         }
 
         public bool is_runtime_updates {
@@ -138,6 +147,8 @@ namespace Catalogue.Core {
         construct {
             change_information = new ChangeInformation ();
             change_information.status_changed.connect (() => info_changed (change_information.status));
+        
+            action_cancellable = new GLib.Cancellable ();
         }
 
         public Package (AppStream.Component component) {
@@ -172,6 +183,63 @@ namespace Catalogue.Core {
             // Only trigger a notify if the state has changed, quite a lot of things listen to this
             if (state != new_state) {
                 state = new_state;
+            }
+        }
+
+        public async bool update (bool refresh_updates_afer = true) throws GLib.Error {
+            if (state != State.UPDATE_AVAILABLE) {
+                return false;
+            }
+
+            var success = yield perform_operation (State.UPDATING, State.INSTALLED, State.UPDATE_AVAILABLE);
+            if (success && refresh_updates_afer) {
+                unowned Client client = Client.get_default ();
+                yield client.refresh_updates ();
+            }
+
+            return success;
+        }
+
+        private async bool perform_operation (State performing, State after_success, State after_fail) throws GLib.Error {
+            bool success = false;
+            
+            changing (true);
+
+            action_cancellable.reset ();
+            change_information.start ();
+            state = performing;
+
+            try {
+                success = yield perform_package_operation ();
+            } catch (GLib.Error e) {
+                warning ("Operation failed for package %s - %s", get_name (), e.message);
+                throw e;
+            } finally {
+                changing (false);
+                if (success) {
+                    change_information.complete ();
+                    state = after_success;
+                } else {
+                    state = after_fail;
+                    change_information.cancel ();
+                }
+            }
+
+            return success;
+        }
+
+        private async bool perform_package_operation () throws GLib.Error {
+            switch (state) {
+                case State.UPDATING:
+                    var success = yield FlatpakBackend.get_default ().update_package (this, change_information, action_cancellable);
+                    if (success) {
+                        change_information.clear_update_info ();
+                        update_state ();
+                    }
+
+                    return success;
+                default:
+                    return false;
             }
         }
     
