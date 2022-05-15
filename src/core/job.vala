@@ -27,7 +27,8 @@ namespace Catalogue.Core {
         public signal void results_ready ();
 
         public enum Type {
-            REFRESH_CACHE
+            REFRESH_CACHE,
+            UPDATE_PACKAGE
         }
 
         public Job (Type type) {
@@ -38,6 +39,12 @@ namespace Catalogue.Core {
     public abstract class JobArgs { }
 
     public class RefreshCacheArgs : JobArgs {
+        public Cancellable? cancellable;
+    }
+
+    public class UpdatePackageArgs : JobArgs {
+        public Package package;
+        public ChangeInformation? change_information;
         public Cancellable? cancellable;
     }
 }
