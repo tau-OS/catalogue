@@ -4,7 +4,12 @@
     <key type="x" name="last-refresh-time">
       <default>0</default>
       <summary>Unix UTC time of last cache refresh</summary>
-      <description>Used to determine when AppCenter last refreshed its caches and checked for package updates</description>
+      <description>Used to determine when Catalogue last refreshed its caches</description>
+    </key>
+    <key type="x" name="last-update-check-time">
+      <default>0</default>
+      <summary>Unix UTC time of last updates refresh</summary>
+      <description>Used to determine when Catalogue last checked for package updates</description>
     </key>
 	</schema>
 </schemalist>

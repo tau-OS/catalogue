@@ -29,7 +29,7 @@
                                 FIXME: AdwStatusPage does not support images, it only supports GdkPaintables and icons.
                                 We use a child element with a GtkImage for now
                             -->
-                            <object class="AdwStatusPage">
+                            <object class="AdwStatusPage" id="status_page_up_to_date">
                                 <property name="title">Up to Date</property>
                                 <property name="description">Last checked: 25:69</property>
                                 <property name="child">

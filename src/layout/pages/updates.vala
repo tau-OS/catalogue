@@ -23,6 +23,8 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
+        private unowned Adw.StatusPage status_page_up_to_date;
+        [GtkChild]
         private unowned Gtk.ListBox listbox;
         [GtkChild]
         private unowned Gtk.ProgressBar progress_bar;
@@ -37,7 +39,7 @@ namespace Catalogue {
             stack.set_visible_child_name ("refreshing_updates");
 
             try {
-                new Thread<void>.try ("thread", () => {get_apps.begin ();});
+                new Thread<void>.try ("thread", () => {get_apps.begin (true);});
             } catch (Error e) {
                 warning (e.message);
             }
@@ -56,15 +58,25 @@ namespace Catalogue {
                     }
                 });
             });
+            
+            var client = Core.Client.get_default ();
+            client.installed_apps_changed.connect (() => {
+                stack.set_visible_child_name ("refreshing_updates");
+                try {
+                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
+                } catch (Error e) {
+                    warning (e.message);
+                }
+            });
         }
 
-        public async void get_apps () {
+        public async void get_apps (bool force = false) {
             refresh_cancellable.cancel ();
 
             refresh_cancellable.reset ();
 
             unowned Core.Client client = Core.Client.get_default ();
-            yield client.refresh_updates ();
+            yield client.refresh_updates (force);
 
             var installed_apps = yield client.get_installed_applications (refresh_cancellable);
 
@@ -88,6 +100,10 @@ namespace Catalogue {
                 if (does_need_update) {
                     stack.set_visible_child_name ("updates_available");
                 } else {
+                    var time = new DateTime.from_unix_local (client.settings.get_int64 ("last-update-check-time")).format ("%X");
+                    if (time != null) {
+                        status_page_up_to_date.set_description ("Last checked: %s".printf (time));
+                    }
                     stack.set_visible_child_name ("up_to_date");
                 }
                 
@@ -109,7 +125,12 @@ namespace Catalogue {
         public void remove_row (Gtk.ListBoxRow row) {
             listbox.remove (row);
             if (listbox.get_first_child ().get_type () != typeof (Gtk.ListBoxRow)) {
-                get_apps.begin ();
+                stack.set_visible_child_name ("refreshing_updates");
+                try {
+                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
+                } catch (Error e) {
+                    warning (e.message);
+                }
             }
         }
     }

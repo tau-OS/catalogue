@@ -19,15 +19,18 @@
 namespace Catalogue.Core {
     public class Client : Object {
         public signal void cache_update_finished ();
+        public signal void installed_apps_changed ();
 
         public ScreenshotCache? screenshot_cache { get; private set; default = new ScreenshotCache (); }
         
         private GLib.Cancellable cancellable;
         private GLib.DateTime last_cache_update = null;
+        private GLib.DateTime last_refresh_update = null;
 
         public uint updates_number { get; private set; default = 0U; }
         
         private uint update_cache_timeout_id = 0;
+        private uint refresh_updates_timeout_id = 0;
 
         private bool refresh_in_progress = false;
 
@@ -35,18 +38,17 @@ namespace Catalogue.Core {
 
         private AsyncMutex update_notification_mutex = new AsyncMutex ();
 
-        public static GLib.Settings settings;
-
-        static construct {
-            settings = new GLib.Settings (Config.APP_SETTINGS);
-        }
+        public GLib.Settings settings;
 
         private Client () { }
 
         construct {
+            settings = new GLib.Settings (Config.APP_SETTINGS);
+
             cancellable = new GLib.Cancellable ();
 
             last_cache_update = new DateTime.from_unix_utc (settings.get_int64 ("last-refresh-time"));
+            last_refresh_update = new DateTime.from_unix_utc (settings.get_int64 ("last-update-check-time"));
         }
 
         public Package? get_package_for_component_id (string id) {
@@ -86,25 +88,107 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().create_remote (remote, true, cancellable);
         }
 
-        public async void refresh_updates () {
-            yield update_notification_mutex.lock ();
+        //  public async void refresh_updates () {
+        //      yield update_notification_mutex.lock ();
 
-            bool was_empty = updates_number == 0U;
-            updates_number = yield UpdateManager.get_default ().get_updates (null);
+        //      bool was_empty = updates_number == 0U;
+        //      updates_number = yield UpdateManager.get_default ().get_updates (null);
 
-            var application = GLib.Application.get_default ();
-            if (was_empty && updates_number != 0U) {
-                string title = ngettext ("Update Available", "Updates Available", updates_number);
-                string body = ngettext ("%u update is available for your system", "%u updates are available for your system", updates_number).printf (updates_number);
+        //      var application = GLib.Application.get_default ();
+        //      if (was_empty && updates_number != 0U) {
+        //          string title = ngettext ("Update Available", "Updates Available", updates_number);
+        //          string body = ngettext ("%u update is available for your system", "%u updates are available for your system", updates_number).printf (updates_number);
                 
-                var notification = new Notification (title);
-                notification.set_body (body);
-                notification.set_icon (new ThemedIcon ("software-update-available"));
+        //          var notification = new Notification (title);
+        //          notification.set_body (body);
+        //          notification.set_icon (new ThemedIcon ("software-update-available"));
 
-                application.send_notification ("catalouge.updates", notification);
-            } else {
-                application.withdraw_notification ("catalogue.updates");
+        //          application.send_notification ("catalouge.updates", notification);
+        //      } else {
+        //          application.withdraw_notification ("catalogue.updates");
+        //      }
+
+        //      update_notification_mutex.unlock ();
+        //      installed_apps_changed ();
+        //  }
+
+        public async void refresh_updates (bool force = false) {
+            yield update_notification_mutex.lock ();
+            cancellable.reset ();
+
+            debug ("Refreshing updates");
+
+            // Only update cache one at a time :)
+            if (refresh_in_progress) {
+                debug ("A refresh is already in progress");
+                return;
             }
+
+            if (refresh_updates_timeout_id > 0) {
+                if (force) {
+                    debug ("Forced refresh_updates called when there is an on-going timeout - cancelling timeout");
+                    Source.remove (refresh_updates_timeout_id);
+                    refresh_updates_timeout_id = 0;
+                } else {
+                    debug ("Refresh timeout running and not forced - returning");
+                    return;
+                }
+            }
+
+            var nm = NetworkMonitor.get_default ();
+
+            /* One cache update a day, keeps the doctor away! */
+            var seconds_since_last_refresh = new DateTime.now_utc ().difference (last_refresh_update) / GLib.TimeSpan.SECOND;
+            bool last_update_is_old = seconds_since_last_refresh >= SECONDS_BETWEEN_REFRESHES;
+
+            if (force || last_update_is_old) {
+                if (nm.get_network_available ()) {
+
+                    refresh_in_progress = true;
+                    try {
+                        bool was_empty = updates_number == 0U;
+                        updates_number = yield UpdateManager.get_default ().get_updates (null);
+
+                        var application = GLib.Application.get_default ();
+                        if (was_empty && updates_number != 0U) {
+                            string title = ngettext ("Update Available", "Updates Available", updates_number);
+                            string body = ngettext ("%u update is available for your system", "%u updates are available for your system", updates_number).printf (updates_number);
+                            
+                            var notification = new Notification (title);
+                            notification.set_body (body);
+                            notification.set_icon (new ThemedIcon ("software-update-available"));
+
+                            application.send_notification ("catalouge.updates", notification);
+
+                            installed_apps_changed ();
+                        } else {
+                            application.withdraw_notification ("catalogue.updates");
+                        }
+
+                        seconds_since_last_refresh = 0;
+                    } finally {
+                        refresh_in_progress = false;
+                    }
+                } else {
+                    critical ("No Network Available");
+                }
+            } else {
+                debug ("Too soon to refresh and not forced");
+                installed_apps_changed ();
+            }
+
+            var next_refresh = SECONDS_BETWEEN_REFRESHES - (uint)seconds_since_last_refresh;
+            debug ("Setting a timeout for a refresh in %f minutes", next_refresh / 60.0f);
+            last_refresh_update = new DateTime.now_utc ();
+                            settings.set_int64 ("last-update-check-time", last_refresh_update.to_unix ());
+            refresh_updates_timeout_id = GLib.Timeout.add_seconds (next_refresh, () => {
+                refresh_updates_timeout_id = 0;
+                refresh_updates.begin (true);
+
+                return GLib.Source.REMOVE;
+            });
+
+            update_notification_mutex.unlock ();
         }
 
         public async void update_cache (bool force = false) {
@@ -115,7 +199,7 @@ namespace Catalogue.Core {
 
             // Only update cache one at a time :)
             if (refresh_in_progress) {
-                debug ("Update cache already in progress");
+                debug ("A refresh is already in progress");
                 return;
             }
 
