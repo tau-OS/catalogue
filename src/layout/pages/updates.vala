@@ -75,7 +75,13 @@ namespace Catalogue {
 
                     if (needs_update) {
                         does_need_update = true;
-                        listbox.append (new Catalogue.InstalledRow (package));
+                        var row = new Catalogue.InstalledRow (package);
+                        row.action_complete.connect ((source, was_successful) => {
+                            if (was_successful) {
+                                remove_row ((Gtk.ListBoxRow) source.get_parent ());
+                            }
+                        });
+                        listbox.append (row);
                     }
                 }
 
@@ -89,8 +95,21 @@ namespace Catalogue {
                 var runtime_updates = Core.UpdateManager.get_default ().runtime_updates;
                 if (runtime_updates.state ==Core.Package.State.UPDATE_AVAILABLE) {
                     stack.set_visible_child_name ("updates_available");
-                    listbox.append (new Catalogue.InstalledRow (runtime_updates));
+                    var row = new Catalogue.InstalledRow (runtime_updates);
+                    row.action_complete.connect ((source, was_successful) => {
+                        if (was_successful) {
+                            remove_row ((Gtk.ListBoxRow) source.get_parent ());
+                        }
+                    });
+                    listbox.append (row);
                 }
+            }
+        }
+
+        public void remove_row (Gtk.ListBoxRow row) {
+            listbox.remove (row);
+            if (listbox.get_first_child ().get_type () != typeof (Gtk.ListBoxRow)) {
+                get_apps.begin ();
             }
         }
     }

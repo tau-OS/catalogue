@@ -36,6 +36,9 @@
 
         private Core.Package app;
 
+        //  used to remove elements from rows lol :)
+        public signal void action_complete (InstalledRow source, bool was_successful);
+
         public InstalledRow (Core.Package package) {
             Object ();
 
@@ -85,7 +88,10 @@
             delete_button.set_sensitive (false);
             progress_spinner.set_visible (true);
             try {
-                yield package.update ();
+                var success = yield package.update ();
+                if (success) {
+                    action_complete (this, true);
+                }
             } catch (Error e) {
                 if (!(e is GLib.IOError.CANCELLED)) {
                     critical (e.message);

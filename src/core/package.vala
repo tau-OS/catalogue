@@ -192,7 +192,7 @@ namespace Catalogue.Core {
             }
         }
 
-        public async bool update (bool refresh_updates_after = true) throws GLib.Error {
+        public async bool update () throws GLib.Error {
             if (state != State.UPDATE_AVAILABLE) {
                 return false;
             }
@@ -207,12 +207,6 @@ namespace Catalogue.Core {
 
                 application.send_notification ("catalouge.successful_install", notification);
                 debug ("Package %s Updated", this.get_name ());
-            }
-
-            //  TODO add notification somewhere else
-            if (success && refresh_updates_after) {
-                unowned Client client = Client.get_default ();
-                yield client.refresh_updates ();
             }
 
             return success;
