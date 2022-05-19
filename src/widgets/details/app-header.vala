@@ -40,7 +40,7 @@ namespace Catalogue {
 
             application_details_icon.set_from_gicon (app.get_icon (128, 128));
 
-            if (app.state == Core.Package.State.INSTALLED) {
+            if (app.state == Core.Package.State.INSTALLED || app.state == Core.Package.State.UPDATE_AVAILABLE) {
                 if (app.state == Core.Package.State.UPDATE_AVAILABLE) {
                     action_button.set_label ("Update");
                     action_button.get_style_context ().add_class ("suggested-action");

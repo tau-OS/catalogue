@@ -111,7 +111,7 @@
         }
 
         private async void get_app_download_size (Core.Package package) {
-            if (package.state == Core.Package.State.INSTALLED) {
+            if (package.state == Core.Package.State.INSTALLED || package.state == Core.Package.State.UPDATE_AVAILABLE) {
                 var size = yield package.get_installed_size ();
                 string human_size = GLib.format_size (size);
                 storage_tile_lozenge_content.set_label (human_size);
