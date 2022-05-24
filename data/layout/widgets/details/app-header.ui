@@ -119,24 +119,24 @@
                                                 <property name="valign">center</property>
                                                 <child type="center">
                                                     <object class="GtkBox">
-                                                        <property name="spacing">18</property>
+                                                        <property name="spacing">12</property>
+                                                        <property name="halign">start</property>
+                                                        <property name="valign">end</property>
+                                                        <property name="orientation">horizontal</property>
                                                         <child>
                                                             <object class="GtkSpinner" id="progress_spinner">
-                                                                <property name="width-request">36</property>
-                                                                <property name="height-request">36</property>
+                                                                <property name="width-request">48</property>
+                                                                <property name="height-request">48</property>
                                                                 <property name="spinning">true</property>
                                                                 <property name="visible">false</property>
                                                             </object>
                                                         </child>
                                                         <child>
                                                             <object class="GtkButton" id="action_button">
-                                                                <property name="visible">True</property>
-                                                                <property name="use_underline">True</property>
-                                                                <property name="label" translatable="yes">_Cancel</property>
-                                                                <property name="can_focus">True</property>
-                                                                <property name="receives_default">True</property>
-                                                                <property name="valign">center</property>
-                                                                <property name="margin-bottom">3</property>
+                                                                <property name="name">logo</property>
+                                                                <property name="width-request">50</property>
+                                                                <property name="height-request">50</property>
+                                                                <property name="icon-name">dialog-information-symbolic</property>
                                                                 <style>
                                                                     <class name="list-button" />
                                                                 </style>

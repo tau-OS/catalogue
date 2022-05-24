@@ -31,9 +31,21 @@ namespace Catalogue {
         private unowned Adw.Bin app_version_history_container;
         [GtkChild]
         private unowned Adw.Bin app_links_container;
+        [GtkChild]
+        private unowned Gtk.ProgressBar progress_bar;
 
         public WindowDetails (Core.Package package) {
             Object ();
+
+            package.change_information.progress_changed.connect (() => {
+                progress_bar_change (package, false);
+            });
+
+            package.info_changed.connect ((status) => {
+                if (status == Core.ChangeInformation.Status.FINISHED) {
+                    progress_bar_change (package, true);
+                }
+            });
 
             app_header_container.set_child (new Catalogue.AppHeader (package));
             app_screenshots_container.set_child (new Catalogue.AppScreenshots (package));
@@ -41,6 +53,21 @@ namespace Catalogue {
             app_context_container.set_child (new Catalogue.AppContextBar (package));
             app_version_history_container.set_child (new Catalogue.AppVersionHistory (package));
             app_links_container.set_child (new Catalogue.AppLinks (package));
+        }
+
+        private void progress_bar_change (Core.Package package, bool is_finished) {
+            Idle.add (() => {
+                if (is_finished) {
+                    progress_bar.set_visible (false);
+                    return GLib.Source.REMOVE;
+                } else {
+                    if (progress_bar.get_visible () != true) {
+                        progress_bar.set_visible (true);
+                    }
+                    progress_bar.fraction = package.progress;
+                    return GLib.Source.REMOVE;
+                }
+            });
         }
     }
 }

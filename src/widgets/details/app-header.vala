@@ -27,6 +27,8 @@ namespace Catalogue {
         private unowned Gtk.Label developer_name_label;
         [GtkChild]
         private unowned Gtk.Button action_button;
+        [GtkChild]
+        private unowned Gtk.Spinner progress_spinner;
             
         public AppHeader (Core.Package app) {
             Object ();
@@ -40,10 +42,27 @@ namespace Catalogue {
 
             application_details_icon.set_from_gicon (app.get_icon (128, 128));
 
+            app.info_changed.connect ((status) => {
+                if (status == Core.ChangeInformation.Status.FINISHED) {
+                    progress_spinner.set_visible (false);
+                }
+            });
+
+            get_state (app);
+        }
+
+        private void get_state (Core.Package app) {
+            action_button.set_sensitive (true);
+            action_button.get_style_context ().remove_class ("suggested-action");
+            action_button.get_style_context ().remove_class ("destructive-action");
             if (app.state == Core.Package.State.INSTALLED || app.state == Core.Package.State.UPDATE_AVAILABLE) {
                 if (app.state == Core.Package.State.UPDATE_AVAILABLE) {
                     action_button.set_label ("Update");
                     action_button.get_style_context ().add_class ("suggested-action");
+
+                    action_button.clicked.connect (() => {
+                        update_clicked.begin (app);
+                    });
                 } else {
                     action_button.set_label ("Remove");
                     action_button.get_style_context ().add_class ("destructive-action");
@@ -51,6 +70,38 @@ namespace Catalogue {
             } else {
                 action_button.set_label ("Install");
                 action_button.get_style_context ().add_class ("suggested-action");
+
+                action_button.clicked.connect (() => {
+                    install_clicked.begin (app);
+                });
+            }
+        }
+
+        private async void update_clicked (Core.Package package) {
+            // TODO this should still be sensetive but should stop the transaction
+            action_button.set_sensitive (false);
+            progress_spinner.set_visible (true);
+            try {
+                yield package.update ();
+                get_state (package);
+            } catch (Error e) {
+                if (!(e is GLib.IOError.CANCELLED)) {
+                    critical (e.message);
+                }
+            }
+        }
+
+        private async void install_clicked (Core.Package package) {
+            // TODO this should still be sensetive but should stop the transaction
+            action_button.set_sensitive (false);
+            progress_spinner.set_visible (true);
+            try {
+                yield package.install ();
+                get_state (package);
+            } catch (Error e) {
+                if (!(e is GLib.IOError.CANCELLED)) {
+                    critical (e.message);
+                }
             }
         }
     }
