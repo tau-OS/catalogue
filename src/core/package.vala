@@ -32,6 +32,7 @@ namespace Catalogue.Core {
             UPDATE_AVAILABLE,
             NOT_INSTALLED,
             INSTALLED,
+            INSTALLING,
             UPDATING
         }
 
@@ -212,6 +213,26 @@ namespace Catalogue.Core {
             return success;
         }
 
+        public async bool install () throws GLib.Error {
+            if (state != State.NOT_INSTALLED) {
+                return false;
+            }
+
+            var success = yield perform_operation (State.INSTALLING, State.INSTALLED, State.NOT_INSTALLED);
+            if (success) {
+                string title = "Package %s Installed".printf (this.get_name ());
+                var application = GLib.Application.get_default ();
+                var notification = new Notification (title);
+                // TODO this is a dumb AF icon to use
+                notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
+
+                application.send_notification ("catalouge.successful_install", notification);
+                debug ("Package %s Installed", this.get_name ());
+            }
+
+            return success;
+        }
+
         private async bool perform_operation (State performing, State after_success, State after_fail) throws GLib.Error {
             bool success = false;
             
@@ -249,6 +270,11 @@ namespace Catalogue.Core {
                         update_state ();
                     }
 
+                    return success;
+                case State.INSTALLING:
+                    var success = yield FlatpakBackend.get_default ().install_package (this, change_information, action_cancellable);
+                    _installed = success;
+                    update_state ();
                     return success;
                 default:
                     return false;

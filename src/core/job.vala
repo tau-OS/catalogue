@@ -28,7 +28,8 @@ namespace Catalogue.Core {
 
         public enum Type {
             REFRESH_CACHE,
-            UPDATE_PACKAGE
+            UPDATE_PACKAGE,
+            INSTALL_PACKAGE
         }
 
         public Job (Type type) {
@@ -43,6 +44,12 @@ namespace Catalogue.Core {
     }
 
     public class UpdatePackageArgs : JobArgs {
+        public Package package;
+        public ChangeInformation? change_information;
+        public Cancellable? cancellable;
+    }
+
+    public class InstallPackageArgs : JobArgs {
         public Package package;
         public ChangeInformation? change_information;
         public Cancellable? cancellable;
