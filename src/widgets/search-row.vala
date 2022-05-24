@@ -44,8 +44,10 @@ namespace Catalogue {
                 Signals.get_default ().explore_leaflet_open (package);
             });
 
-            // Set the parent element to be unselectable lol
-            ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
+            this.realize.connect (() => {
+                // Set the parent element to be unselectable lol
+                ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
+            });
         }
 
         public string get_app_name () {
