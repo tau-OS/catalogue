@@ -38,9 +38,11 @@
             this.close ();
         }
 
-        public AddRepositoryDialog (Flatpak.Remote remote) {
+        public AddRepositoryDialog () {
             Object ();
+        }
 
+        public void add_remote (Flatpak.Remote remote) {
             global_remote = remote;
 
             title = "%s - %s".printf(remote.get_title (), remote.get_url ());

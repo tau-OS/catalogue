@@ -95,6 +95,8 @@ namespace Catalogue {
             }
         }
 
+        public signal void open_dialog ();
+
         protected override void activate () {
             resource_base_path = "/co/tauos/Catalogue";
 
@@ -135,22 +137,24 @@ namespace Catalogue {
                                 return;
                             }
                         } else {
-                            try {
-                                var uri = File.new_for_uri (flatpak_helper.parse_flatpak_ref (file, "RuntimeRepo"));
-                                var bytes = uri.load_bytes (null, null);
-                                var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo<Bytes> (bytes, "Title", true), bytes);
-                                var win = this.active_window;
-                                if (win == null) {
-                                    error ("Cannot find main window");
+                            var dialog = new Catalogue.AddRepositoryDialog ();
+                            ThreadService.run_in_thread.begin<void> (() => {
+                                try {
+                                    var uri = File.new_for_uri (flatpak_helper.parse_flatpak_ref (file, "RuntimeRepo"));
+                                    var bytes = uri.load_bytes (null, null);
+                                    var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo<Bytes> (bytes, "Title", true), bytes);
+                                    dialog.add_remote (remote);
+                                    open_dialog ();
+                                } catch (KeyFileError e) {
+                                    warning (e.message);
+                                } catch (Error e) {
+                                    warning (e.message);
                                 }
-                                var dialog = new Catalogue.AddRepositoryDialog (remote);
-                                dialog.set_transient_for (win);
+                            });
+
+                            open_dialog.connect (() => {
                                 dialog.present ();
-                            } catch (KeyFileError e) {
-                                warning (e.message);
-                            } catch (Error e) {
-                                warning (e.message);
-                            }
+                            });
                         }
                     } catch (KeyFileError e) {
                         warning (e.message);
@@ -166,7 +170,8 @@ namespace Catalogue {
                             if (win == null) {
                                 error ("Cannot find main window");
                             }
-                            var dialog = new Catalogue.AddRepositoryDialog (remote);
+                            var dialog = new Catalogue.AddRepositoryDialog ();
+                            dialog.add_remote (remote);
                             dialog.set_transient_for (win);
                             dialog.present ();
                         } else {
