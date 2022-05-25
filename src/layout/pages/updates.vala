@@ -75,6 +75,8 @@ namespace Catalogue {
 
             refresh_cancellable.reset ();
 
+            reset_apps.begin ();
+
             unowned Core.Client client = Core.Client.get_default ();
             yield client.refresh_updates (force);
 
@@ -119,6 +121,12 @@ namespace Catalogue {
                     });
                     listbox.append (row);
                 }
+            }
+        }
+
+        public async void reset_apps () {
+            foreach (var widget in new Utils ().get_all_widgets_in_child (listbox)) {
+                listbox.remove (widget);
             }
         }
 

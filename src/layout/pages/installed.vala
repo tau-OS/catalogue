@@ -21,10 +21,10 @@ namespace Catalogue {
     public class WindowInstalled : Adw.Bin {
         [GtkChild]
         private unowned Gtk.Stack stack;
-        //  [GtkChild]
-        //  private unowned Gtk.ListBox in_progress_listbox;
         [GtkChild]
         private unowned Gtk.ListBox apps_listbox;
+        [GtkChild]
+        private unowned Gtk.ProgressBar progress_bar;
 
         private Cancellable refresh_cancellable;
 
@@ -37,12 +37,6 @@ namespace Catalogue {
 
             stack.set_visible_child_name ("refreshing_installed");
 
-            //  WILL BE USED WHEN UPDATES WORK LOL
-            //  in_progress_listbox.append (new Adw.ActionRow ());
-
-            //  // wish there was a signal on row add
-            //  in_progress_listbox.set_visible (true);
-
             try {
                 new Thread<void>.try ("thread", () => {get_apps.begin ();});
             } catch (Error e) {
@@ -51,6 +45,31 @@ namespace Catalogue {
 
             apps_listbox.set_sort_func ((row1, row2) => {
                 return ((Catalogue.InstalledRow) row1.get_first_child ()).get_app_name ().collate (((Catalogue.InstalledRow) row2.get_first_child ()).get_app_name ());
+            });
+
+            Signals.get_default ().updates_progress_bar_change.connect ((package, is_finished) => {
+                Idle.add (() => {
+                    if (is_finished) {
+                        progress_bar.set_visible (false);
+                        return GLib.Source.REMOVE;
+                    } else {
+                        if (progress_bar.get_visible () != true) {
+                            progress_bar.set_visible (true);
+                        }
+                        progress_bar.fraction = package.progress;
+                        return GLib.Source.REMOVE;
+                    }
+                });
+            });
+
+            var client = Core.Client.get_default ();
+            client.installed_apps_changed.connect (() => {
+                stack.set_visible_child_name ("refreshing_installed");
+                try {
+                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
+                } catch (Error e) {
+                    warning (e.message);
+                }
             });
         }
 
@@ -61,13 +80,21 @@ namespace Catalogue {
 
             refresh_cancellable.reset ();
 
+            yield reset_apps ();
+
             unowned Core.Client client = Core.Client.get_default ();
 
             var installed_apps = yield client.get_installed_applications (refresh_cancellable);
 
             if (!refresh_cancellable.is_cancelled ()) {
                 foreach (var package in installed_apps) {
-                    apps_listbox.append (new Catalogue.InstalledRow (package));
+                    var row = new Catalogue.InstalledRow (package);
+                    row.action_complete.connect ((source, was_successful) => {
+                        if (was_successful) {
+                            remove_row ((Gtk.ListBoxRow) source.get_parent ());
+                        }
+                    });
+                    apps_listbox.append (row);
                 }
 
                 if (installed_apps.is_empty) {
@@ -78,6 +105,24 @@ namespace Catalogue {
             }
 
             refresh_mutex.unlock ();
+        }
+
+        public async void reset_apps () {
+            foreach (var widget in new Utils ().get_all_widgets_in_child (apps_listbox)) {
+                apps_listbox.remove (widget);
+            }
+        }
+
+        public void remove_row (Gtk.ListBoxRow row) {
+            apps_listbox.remove (row);
+            if (apps_listbox.get_first_child ().get_type () != typeof (Gtk.ListBoxRow)) {
+                stack.set_visible_child_name ("refreshing_installed");
+                try {
+                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
+                } catch (Error e) {
+                    warning (e.message);
+                }
+            }
         }
     }
 }
