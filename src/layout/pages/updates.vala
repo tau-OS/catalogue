@@ -38,11 +38,9 @@ namespace Catalogue {
 
             stack.set_visible_child_name ("refreshing_updates");
 
-            try {
-                new Thread<void>.try ("thread", () => {get_apps.begin (true);});
-            } catch (Error e) {
-                warning (e.message);
-            }
+            this.realize.connect (() => {
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (); });
+            });
 
             Signals.get_default ().updates_progress_bar_change.connect ((package, is_finished) => {
                 Idle.add (() => {
@@ -62,11 +60,7 @@ namespace Catalogue {
             var client = Core.Client.get_default ();
             client.installed_apps_changed.connect (() => {
                 stack.set_visible_child_name ("refreshing_updates");
-                try {
-                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
-                } catch (Error e) {
-                    warning (e.message);
-                }
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
             });
         }
 
@@ -78,50 +72,53 @@ namespace Catalogue {
             reset_apps.begin ();
 
             unowned Core.Client client = Core.Client.get_default ();
-            yield client.refresh_updates (force);
 
-            var installed_apps = yield client.get_installed_applications (refresh_cancellable);
-
-            if (!refresh_cancellable.is_cancelled ()) {
-                bool does_need_update = false;
-                foreach (var package in installed_apps) {
-                    var needs_update = package.state == Core.Package.State.UPDATE_AVAILABLE;
-
-                    if (needs_update) {
-                        does_need_update = true;
-                        var row = new Catalogue.InstalledRow (package);
-                        row.action_complete.connect ((source, was_successful) => {
-                            if (was_successful) {
-                                remove_row ((Gtk.ListBoxRow) source.get_parent ());
+            ThreadService.run_in_thread.begin<void> (() => {
+                client.refresh_updates.begin (force);
+                client.get_installed_applications.begin (refresh_cancellable, (obj, packages) => {
+                    var installed_apps = client.get_installed_applications.end (packages);
+                    if (!refresh_cancellable.is_cancelled ()) {
+                        bool does_need_update = false;
+                        foreach (var package in installed_apps) {
+                            var needs_update = package.state == Core.Package.State.UPDATE_AVAILABLE;
+        
+                            if (needs_update) {
+                                does_need_update = true;
+                                var row = new Catalogue.InstalledRow (package);
+                                row.action_complete.connect ((source, was_successful) => {
+                                    if (was_successful) {
+                                        remove_row ((Gtk.ListBoxRow) source.get_parent ());
+                                    }
+                                });
+                                listbox.append (row);
                             }
-                        });
-                        listbox.append (row);
-                    }
-                }
-
-                if (does_need_update) {
-                    stack.set_visible_child_name ("updates_available");
-                } else {
-                    var time = new DateTime.from_unix_local (client.settings.get_int64 ("last-update-check-time")).format ("%X");
-                    if (time != null) {
-                        status_page_up_to_date.set_description ("Last checked: %s".printf (time));
-                    }
-                    stack.set_visible_child_name ("up_to_date");
-                }
-                
-                // Handle runtime updates package
-                var runtime_updates = Core.UpdateManager.get_default ().runtime_updates;
-                if (runtime_updates.state ==Core.Package.State.UPDATE_AVAILABLE) {
-                    stack.set_visible_child_name ("updates_available");
-                    var row = new Catalogue.InstalledRow (runtime_updates);
-                    row.action_complete.connect ((source, was_successful) => {
-                        if (was_successful) {
-                            remove_row ((Gtk.ListBoxRow) source.get_parent ());
                         }
-                    });
-                    listbox.append (row);
-                }
-            }
+        
+                        if (does_need_update) {
+                            stack.set_visible_child_name ("updates_available");
+                        } else {
+                            var time = new DateTime.from_unix_local (client.settings.get_int64 ("last-update-check-time")).format ("%X");
+                            if (time != null) {
+                                status_page_up_to_date.set_description ("Last checked: %s".printf (time));
+                            }
+                            stack.set_visible_child_name ("up_to_date");
+                        }
+                        
+                        // Handle runtime updates package
+                        var runtime_updates = Core.UpdateManager.get_default ().runtime_updates;
+                        if (runtime_updates.state ==Core.Package.State.UPDATE_AVAILABLE) {
+                            stack.set_visible_child_name ("updates_available");
+                            var row = new Catalogue.InstalledRow (runtime_updates);
+                            row.action_complete.connect ((source, was_successful) => {
+                                if (was_successful) {
+                                    remove_row ((Gtk.ListBoxRow) source.get_parent ());
+                                }
+                            });
+                            listbox.append (row);
+                        }
+                    }
+                });
+            });
         }
 
         public async void reset_apps () {
@@ -134,11 +131,7 @@ namespace Catalogue {
             listbox.remove (row);
             if (listbox.get_first_child ().get_type () != typeof (Gtk.ListBoxRow)) {
                 stack.set_visible_child_name ("refreshing_updates");
-                try {
-                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
-                } catch (Error e) {
-                    warning (e.message);
-                }
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
             }
         }
     }

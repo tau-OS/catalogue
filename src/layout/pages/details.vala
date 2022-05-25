@@ -47,12 +47,16 @@ namespace Catalogue {
                 }
             });
 
-            app_header_container.set_child (new Catalogue.AppHeader (package));
-            app_screenshots_container.set_child (new Catalogue.AppScreenshots (package));
-            app_details_container.set_child (new Catalogue.AppDetails (package));
-            app_context_container.set_child (new Catalogue.AppContextBar (package));
-            app_version_history_container.set_child (new Catalogue.AppVersionHistory (package));
-            app_links_container.set_child (new Catalogue.AppLinks (package));
+            this.realize.connect (() => {
+                ThreadService.run_in_thread.begin<void> (() => {
+                    app_header_container.set_child (new Catalogue.AppHeader (package));
+                    app_screenshots_container.set_child (new Catalogue.AppScreenshots (package));
+                    app_details_container.set_child (new Catalogue.AppDetails (package));
+                    app_context_container.set_child (new Catalogue.AppContextBar (package));
+                    app_version_history_container.set_child (new Catalogue.AppVersionHistory (package));
+                    app_links_container.set_child (new Catalogue.AppLinks (package));
+                });
+            });
         }
 
         private void progress_bar_change (Core.Package package, bool is_finished) {

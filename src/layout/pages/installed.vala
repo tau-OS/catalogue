@@ -37,11 +37,9 @@ namespace Catalogue {
 
             stack.set_visible_child_name ("refreshing_installed");
 
-            try {
-                new Thread<void>.try ("thread", () => {get_apps.begin ();});
-            } catch (Error e) {
-                warning (e.message);
-            }
+            this.realize.connect (() => {
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (); });
+            });
 
             apps_listbox.set_sort_func ((row1, row2) => {
                 return ((Catalogue.InstalledRow) row1.get_first_child ()).get_app_name ().collate (((Catalogue.InstalledRow) row2.get_first_child ()).get_app_name ());
@@ -65,11 +63,7 @@ namespace Catalogue {
             var client = Core.Client.get_default ();
             client.installed_apps_changed.connect (() => {
                 stack.set_visible_child_name ("refreshing_installed");
-                try {
-                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
-                } catch (Error e) {
-                    warning (e.message);
-                }
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (); });
             });
         }
 
@@ -84,25 +78,28 @@ namespace Catalogue {
 
             unowned Core.Client client = Core.Client.get_default ();
 
-            var installed_apps = yield client.get_installed_applications (refresh_cancellable);
-
-            if (!refresh_cancellable.is_cancelled ()) {
-                foreach (var package in installed_apps) {
-                    var row = new Catalogue.InstalledRow (package);
-                    row.action_complete.connect ((source, was_successful) => {
-                        if (was_successful) {
-                            remove_row ((Gtk.ListBoxRow) source.get_parent ());
+            ThreadService.run_in_thread.begin<void> (() => {
+                client.get_installed_applications.begin (refresh_cancellable, (obj, packages) => {
+                    var installed_apps = client.get_installed_applications.end (packages);
+                    if (!refresh_cancellable.is_cancelled ()) {
+                        foreach (var package in installed_apps) {
+                            var row = new Catalogue.InstalledRow (package);
+                            row.action_complete.connect ((source, was_successful) => {
+                                if (was_successful) {
+                                    remove_row ((Gtk.ListBoxRow) source.get_parent ());
+                                }
+                            });
+                            apps_listbox.append (row);
                         }
-                    });
-                    apps_listbox.append (row);
-                }
-
-                if (installed_apps.is_empty) {
-                    stack.set_visible_child_name ("no_installed");
-                } else {
-                    stack.set_visible_child_name ("installed_packages");
-                }
-            }
+        
+                        if (installed_apps.is_empty) {
+                            stack.set_visible_child_name ("no_installed");
+                        } else {
+                            stack.set_visible_child_name ("installed_packages");
+                        }
+                    }
+                });
+            });
 
             refresh_mutex.unlock ();
         }
@@ -117,11 +114,7 @@ namespace Catalogue {
             apps_listbox.remove (row);
             if (apps_listbox.get_first_child ().get_type () != typeof (Gtk.ListBoxRow)) {
                 stack.set_visible_child_name ("refreshing_installed");
-                try {
-                    new Thread<void>.try ("thread", () => {get_apps.begin ();});
-                } catch (Error e) {
-                    warning (e.message);
-                }
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (); });
             }
         }
     }

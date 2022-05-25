@@ -101,10 +101,10 @@ namespace Catalogue {
             base.startup ();
 
             this.main_window = new Catalogue.Window (this);
+            this.main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
+            active_window?.present ();
 
             client.update_cache.begin ();
-            this.main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
-
             if (details_id != null) {
                 var package = client.get_package_for_component_id (details_id);
                 if (package == null) {
@@ -180,8 +180,6 @@ namespace Catalogue {
                     print ("i have no idea wtf this is");
                 }
             }
-
-            active_window?.present ();
         }
 
         private void on_about_action () {

@@ -68,11 +68,7 @@
 
             this.realize.connect (() => {
                 if (category != null) {
-                    try {
-                        new Thread<void>.try ("thread", () => {fill_row.begin (category);});
-                    } catch (Error e) {
-                        warning (e.message);
-                    }
+                    ThreadService.run_in_thread.begin<void> (() => { fill_row.begin (category); });
                 }
             });
         }
