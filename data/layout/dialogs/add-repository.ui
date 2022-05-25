@@ -20,7 +20,7 @@
                 </child>
                 <child>
                     <object class="GtkLabel" id="header">
-                        <property name="label">You are about to add the following repository:</property>
+                        <property name="label">Add Flatpak Repository?</property>
                         <property name="halign">center</property>
                         <property name="xalign">0.5</property>
                         <property name="vexpand">False</property>
@@ -29,6 +29,20 @@
                         <property name="justify">center</property>
                         <style>
                             <class name="title-2" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Adding a Flatpak repository allows you to find and install more apps.</property>
+                        <property name="halign">center</property>
+                        <property name="xalign">0.5</property>
+                        <property name="vexpand">False</property>
+                        <property name="wrap">true</property>
+                        <property name="margin-top">24</property>
+                        <property name="justify">center</property>
+                        <style>
+                            <class name="title-3" />
                         </style>
                     </object>
                 </child>
@@ -42,15 +56,17 @@
                                 <property name="orientation">vertical</property>
                                 <property name="spacing">6</property>
                                 <property name="margin-top">24</property>
-                                <property name="halign">center</property>
                                 <style>
                                     <class name="card" />
+                                    <class name="content-block" />
                                 </style>
                                 <child>
                                     <object class="GtkLabel" id="title_label">
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">32</property>
                                         <property name="margin-top">6</property>
                                         <property name="label">Catalogue</property>
-                                        <property name="halign">center</property>
+                                        <property name="halign">start</property>
                                         <property name="xalign">0.5</property>
                                         <property name="vexpand">False</property>
                                         <property name="ellipsize">end</property>
@@ -62,28 +78,14 @@
                                 </child>
                                 <child>
                                     <object class="GtkLabel" id="description_label">
-                                        <property name="margin-start">6</property>
-                                        <property name="margin-end">6</property>
-                                        <property name="label">Central repository for Catalogue</property>
-                                        <property name="justify">center</property>
-                                        <property name="halign">center</property>
-                                        <property name="ellipsize">end</property>
-                                        <property name="lines">1</property>
-                                        <property name="wrap">true</property>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkLabel" id="url_label">
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">32</property>
                                         <property name="margin-bottom">6</property>
-                                        <property name="label">https://repo.tauos.co/catalogue/</property>
-                                        <property name="justify">center</property>
-                                        <property name="halign">center</property>
+                                        <property name="label">Central repository for Catalogue</property>
+                                        <property name="halign">start</property>
                                         <property name="ellipsize">end</property>
                                         <property name="lines">1</property>
                                         <property name="wrap">true</property>
-                                        <style>
-                                            <class name="caption" />
-                                        </style>
                                     </object>
                                 </child>
                             </object>

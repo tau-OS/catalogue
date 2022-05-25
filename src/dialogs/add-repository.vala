@@ -23,8 +23,6 @@
         private unowned Gtk.Label title_label;
         [GtkChild]
         private unowned Gtk.Label description_label;
-        [GtkChild]
-        private unowned Gtk.Label url_label;
 
         public Flatpak.Remote global_remote;
 
@@ -45,9 +43,10 @@
 
             global_remote = remote;
 
-            title_label.set_label (remote.get_title ());
+            title = "%s - %s".printf(remote.get_title (), remote.get_url ());
+
+            title_label.set_label (title);
             description_label.set_label (remote.get_description ());
-            url_label.set_label (remote.get_url ());
         }
     }
 }
