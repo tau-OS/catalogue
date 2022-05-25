@@ -1280,6 +1280,11 @@ namespace Catalogue.Core {
                 installation = user_installation;
             }
 
+            // TODO verify a key exists :)
+            if (!remote.get_gpg_verify ()) {
+                remote.set_gpg_verify (true);
+            }
+
             try {
                 return installation.add_remote (remote, false, cancellable);
             } catch (Error e) {
@@ -1300,6 +1305,26 @@ namespace Catalogue.Core {
 
             foreach (var remote in user_remotes) {
                 if (remote.get_url () == url) {
+                    return true;
+                }
+            }
+
+            warning ("Remote URL not found in installation");
+            return false;
+        }
+
+        public bool does_remote_name_exist (string name, Cancellable cancellable) {
+            var system_remotes = get_remotes (true, cancellable);
+            var user_remotes = get_remotes (false, cancellable);
+
+            foreach (var remote in system_remotes) {
+                if (remote.get_name () == name) {
+                    return true;
+                }
+            }
+
+            foreach (var remote in user_remotes) {
+                if (remote.get_name () == name) {
                     return true;
                 }
             }

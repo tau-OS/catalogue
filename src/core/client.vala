@@ -84,6 +84,10 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().does_remote_url_exist (url, cancellable);
         }
 
+        public bool does_remote_name_exist (string name) {
+            return FlatpakBackend.get_default ().does_remote_name_exist (name, cancellable);
+        }
+
         public bool create_remote (Flatpak.Remote remote) {
             return FlatpakBackend.get_default ().create_remote (remote, true, cancellable);
         }
