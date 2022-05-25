@@ -74,9 +74,14 @@ namespace Catalogue {
             unowned Core.Client client = Core.Client.get_default ();
 
             ThreadService.run_in_thread.begin<void> (() => {
-                client.refresh_updates.begin (force);
+                // TODO figure out why this is lagging everything to hell
+                client.refresh_updates.begin (force, (obj, res) => {
+                    client.refresh_updates.end (res);
+                });
+                
                 client.get_installed_applications.begin (refresh_cancellable, (obj, packages) => {
                     var installed_apps = client.get_installed_applications.end (packages);
+
                     if (!refresh_cancellable.is_cancelled ()) {
                         bool does_need_update = false;
                         foreach (var package in installed_apps) {
