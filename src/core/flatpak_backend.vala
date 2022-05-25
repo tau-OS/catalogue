@@ -76,6 +76,9 @@ namespace Catalogue.Core {
                     case Job.Type.INSTALL_PACKAGE:
                         install_package_internal (job);
                         break;
+                    case Job.Type.UNINSTALL_PACKAGE:
+                        uninstall_package_internal (job);
+                        break;
                     default:
                         assert_not_reached ();
                 }
@@ -814,6 +817,7 @@ namespace Catalogue.Core {
                 critical ("Error creating transaction for Flatpak install: %s", e.message);
                 job.result = Value (typeof (bool));
                 job.result.set_boolean (false);
+                job.error = e;
                 job.results_ready ();
                 return;
             }
@@ -824,6 +828,7 @@ namespace Catalogue.Core {
                 critical ("Error adding application transaction for Flatpak install: %s", e.message);
                 job.result = Value (typeof (bool));
                 job.result.set_boolean (false);
+                job.error = e;
                 job.results_ready ();
                 return;
             }
@@ -835,6 +840,130 @@ namespace Catalogue.Core {
                     return -1;
                 }
             });
+
+            transaction.new_operation.connect ((operation, progress) => {
+                current_operation++;
+    
+                progress.changed.connect (() => {
+                    if (cancellable.is_cancelled ()) {
+                        return;
+                    }
+    
+                    // Calculate the progress contribution of the previous operations not including the current, hence -1
+                    double existing_progress = (double)(current_operation - 1) / (double)total_operations;
+                    double this_op_progress = (double)progress.get_progress () / 100.0f / (double)total_operations;
+                    change_information.callback (true, "Installing", existing_progress + this_op_progress, ChangeInformation.Status.RUNNING);
+                });
+            });
+
+            bool success = false;
+
+            transaction.operation_error.connect ((operation, e, detail) => {
+                warning ("Flatpak installation failed: %s (detail: %d)", e.message, detail);
+                if (e is GLib.IOError.CANCELLED) {
+                    change_information.callback (false, "Cancelling", 1.0f, ChangeInformation.Status.CANCELLED);
+                    success = true;
+                    // The user hit cancel, don't go any further
+                    return false;
+                } else {
+                    // Only cancel the transaction if this is fatal
+                    var should_continue = detail == Flatpak.TransactionErrorDetails.NON_FATAL;
+                    if (!should_continue) {
+                        job.error = e;
+                    }
+
+                    return should_continue;
+                }
+            });
+
+            transaction.ready.connect (() => {
+                total_operations = transaction.get_operations ().length ();
+                return true;
+            });
+
+            current_operation = 0;
+
+            try {
+                success = transaction.run (cancellable);
+            } catch (Error e) {
+                if (e is GLib.IOError.CANCELLED) {
+                    change_information.callback (false, "Cancelling", 1.0f, ChangeInformation.Status.CANCELLED);
+                    success = true;
+                } else {
+                    success = false;
+                    // Don't overwrite any previous errors as the first is probably most important
+                    if (job.error != null) {
+                        job.error = e;
+                    }
+                }
+            }
+
+            job.result = Value (typeof (bool));
+            job.result.set_boolean (success);
+            job.results_ready ();
+            return;
+        }
+
+        private void uninstall_package_internal (Job job) {
+            unowned var args = (UninstallPackageArgs)job.args;
+            unowned var package = args.package;
+            unowned var fp_package = package as FlatpakPackage;
+            unowned ChangeInformation change_information = args.change_information;
+            unowned var cancellable = args.cancellable;
+            Flatpak.Transaction transaction;
+            Flatpak.Ref flatpak_ref;
+
+            var bundle = package.component.get_bundle (AppStream.BundleKind.FLATPAK);
+            if (bundle == null) {
+                job.result = Value (typeof (bool));
+                job.result.set_boolean (false);
+                job.results_ready ();
+                return;
+            }
+
+            try {
+                flatpak_ref = Flatpak.Ref.parse (bundle.get_id ());
+            } catch (Error e) {
+                critical ("Error parsing Flatpak ref for removal: %s", e.message);
+                job.result = Value (typeof (bool));
+                job.result.set_boolean (false);
+                job.error = e;
+                job.results_ready ();
+                return;
+            }
+
+            if (fp_package == null || fp_package.installation == null) {
+                critical ("Error getting Flatpak installation");
+                job.result = Value (typeof (bool));
+                job.result.set_boolean (false);
+                job.results_ready ();
+                return;
+            }
+
+            try {
+                transaction = new Flatpak.Transaction.for_installation (fp_package.installation, cancellable);
+                transaction.add_default_dependency_sources ();
+            } catch (Error e) {
+                critical ("Error creating transaction for Flatpak removal: %s", e.message);
+                job.result = Value (typeof (bool));
+                job.result.set_boolean (false);
+                job.error = e;
+                job.results_ready ();
+                return;
+            }
+            
+            try {
+                transaction.add_uninstall (bundle.get_id ());
+            } catch (Error e) {
+                critical ("Error adding application transaction for Flatpak removal: %s", e.message);
+                job.result = Value (typeof (bool));
+                job.result.set_boolean (false);
+                job.error = e;
+                job.results_ready ();
+                return;
+            }
+
+            transaction.set_no_pull (true);
 
             transaction.new_operation.connect ((operation, progress) => {
                 current_operation++;
@@ -1024,6 +1153,20 @@ namespace Catalogue.Core {
             job_args.cancellable = cancellable;
 
             var job = yield launch_job (Job.Type.INSTALL_PACKAGE, job_args);
+            if (job.error != null) {
+                throw job.error;
+            }
+
+            return job.result.get_boolean ();
+        }
+
+        public async bool uninstall_package (Package package, ChangeInformation? change_information, Cancellable? cancellable) throws GLib.Error {
+            var job_args = new UninstallPackageArgs ();
+            job_args.package = package;
+            job_args.change_information = change_information;
+            job_args.cancellable = cancellable;
+
+            var job = yield launch_job (Job.Type.UNINSTALL_PACKAGE, job_args);
             if (job.error != null) {
                 throw job.error;
             }

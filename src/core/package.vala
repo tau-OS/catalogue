@@ -33,7 +33,8 @@ namespace Catalogue.Core {
             NOT_INSTALLED,
             INSTALLED,
             INSTALLING,
-            UPDATING
+            UPDATING,
+            UNINSTALLING
         }
 
         public const string RUNTIME_UPDATES_ID = "xxx-runtime-updates";
@@ -220,6 +221,9 @@ namespace Catalogue.Core {
 
             var success = yield perform_operation (State.INSTALLING, State.INSTALLED, State.NOT_INSTALLED);
             if (success) {
+                var client = Client.get_default ();
+                client.installed_apps_changed ();
+
                 string title = "Package %s Installed".printf (this.get_name ());
                 var application = GLib.Application.get_default ();
                 var notification = new Notification (title);
@@ -231,6 +235,31 @@ namespace Catalogue.Core {
             }
 
             return success;
+        }
+
+        public async bool uninstall () throws GLib.Error {
+            if (state != State.INSTALLED && state != State.UPDATE_AVAILABLE) {
+                return false;
+            }
+
+            var success = yield perform_operation (State.UNINSTALLING, State.NOT_INSTALLED, state);
+            if (success) {
+                var client = Client.get_default ();
+                client.installed_apps_changed ();
+
+                string title = "Package %s Removed".printf (this.get_name ());
+                var application = GLib.Application.get_default ();
+                var notification = new Notification (title);
+                // TODO this is a dumb AF icon to use
+                notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
+
+                application.send_notification ("catalouge.successful_install", notification);
+                debug ("Package %s Removed", this.get_name ());
+            }
+
+            return success;
+
+            //  TODO add better error handling bitches
         }
 
         private async bool perform_operation (State performing, State after_success, State after_fail) throws GLib.Error {
@@ -274,6 +303,11 @@ namespace Catalogue.Core {
                 case State.INSTALLING:
                     var success = yield FlatpakBackend.get_default ().install_package (this, change_information, action_cancellable);
                     _installed = success;
+                    update_state ();
+                    return success;
+                case State.UNINSTALLING:
+                    var success = yield FlatpakBackend.get_default ().uninstall_package (this, change_information, action_cancellable);
+                    _installed = !success;
                     update_state ();
                     return success;
                 default:
