@@ -122,7 +122,10 @@ namespace Catalogue {
                 if (flatpak_helper.get_reference_type (file) == FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REF) {
                     try {
                         // Verify that remote exists
-                        if (client.does_remote_url_exist (flatpak_helper.parse_flatpak_ref (file, "Url"))) {
+                        if (
+                            client.does_remote_url_exist (flatpak_helper.parse_flatpak_ref (file, "Url")) ||
+                            (flatpak_helper.does_key_exist (file, FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REF, "SuggestRemoteName") && client.does_remote_name_exist (flatpak_helper.parse_flatpak_ref (file, "SuggestRemoteName")))
+                        ) {
                             var app = flatpak_helper.parse_flatpak_ref (file, "Name");
                             var package = client.get_package_for_component_id (app);
                             if (package != null) {
@@ -132,11 +135,10 @@ namespace Catalogue {
                                 return;
                             }
                         } else {
-                            print ("Remote not added, TODO add remote\n");
                             try {
                                 var uri = File.new_for_uri (flatpak_helper.parse_flatpak_ref (file, "RuntimeRepo"));
                                 var bytes = uri.load_bytes (null, null);
-                                var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo (uri, "Title"), bytes);
+                                var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo<Bytes> (bytes, "Title", true), bytes);
                                 var win = this.active_window;
                                 if (win == null) {
                                     error ("Cannot find main window");
@@ -159,7 +161,7 @@ namespace Catalogue {
                         // Verify that remote does not exist
                         if (!client.does_remote_url_exist (flatpak_helper.parse_flatpak_repo (file, "Url"))) {
                             var bytes = file.load_bytes (null, null);
-                            var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo (file, "Title"), bytes);
+                            var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo<File> (file, "Title"), bytes);
                             var win = this.active_window;
                             if (win == null) {
                                 error ("Cannot find main window");
@@ -168,7 +170,7 @@ namespace Catalogue {
                             dialog.set_transient_for (win);
                             dialog.present ();
                         } else {
-                            warning ("Remote %s already exists".printf (flatpak_helper.parse_flatpak_repo(file, "Title")));
+                            warning ("Remote %s already exists".printf (flatpak_helper.parse_flatpak_repo<File> (file, "Title")));
                         }
                     } catch (KeyFileError e) {
                         warning (e.message);
