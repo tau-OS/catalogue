@@ -46,11 +46,16 @@ namespace Catalogue {
             }
         }
 
-        public string parse_flatpak_repo (File filename, string key) throws KeyFileError {
+        public string parse_flatpak_repo<T> (T file, string key, bool is_bytes = false) throws KeyFileError {
             KeyFile parsed_file = new KeyFile ();
 
             try {
-                parsed_file.load_from_file (filename.get_path (), KeyFileFlags.NONE);
+                if (!is_bytes) {
+                    parsed_file.load_from_file (((File) file).get_path (), KeyFileFlags.NONE);
+                } else {
+                    parsed_file.load_from_bytes ((Bytes) file, KeyFileFlags.NONE);
+                }
+                
             } catch (KeyFileError e) {
                 warning (e.message);
             } catch (FileError e) {
@@ -71,6 +76,35 @@ namespace Catalogue {
             }
         }
 
+        public bool does_key_exist (File filename, REFERENCE_TYPE type, string key) throws KeyFileError {
+            KeyFile parsed_file = new KeyFile ();
+
+            try {
+                parsed_file.load_from_file (filename.get_path (), KeyFileFlags.NONE);
+            } catch (KeyFileError e) {
+                warning (e.message);
+                throw e;
+            } catch (FileError e) {
+                warning (e.message);
+            }
+
+            if (type == FLATPAK_REPO) {
+                if (parsed_file.has_key ("Flatpak Repo", key)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else if (type == FLATPAK_REF) {
+                if (parsed_file.has_key ("Flatpak Ref", key)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
         public string parse_flatpak_ref (File filename, string key) throws KeyFileError {
             KeyFile parsed_file = new KeyFile ();
 
@@ -78,6 +112,7 @@ namespace Catalogue {
                 parsed_file.load_from_file (filename.get_path (), KeyFileFlags.NONE);
             } catch (KeyFileError e) {
                 warning (e.message);
+                throw e;
             } catch (FileError e) {
                 warning (e.message);
             }
