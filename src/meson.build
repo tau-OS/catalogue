@@ -30,7 +30,8 @@ main_sources = [
     'objects/signals.vala',
     'objects/categories.vala',
     'helpers/content_rating.vala',
-    'helpers/flatpak_ref.vala'
+    'helpers/flatpak_ref.vala',
+    'services/thread_service.vala'
 ]
 
 daemon_sources = [
