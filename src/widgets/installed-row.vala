@@ -65,7 +65,14 @@
             });
 
             delete_button.clicked.connect (() => {
-                delete_clicked.begin (package);
+                var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+                var dialog = new Catalogue.UninstallWarningDialog (package);
+                dialog.set_transient_for (win);
+                dialog.present ();
+
+                dialog.do_uninstall.connect (() => {
+                    delete_clicked.begin (package);
+                });
             });
 
             package.change_information.progress_changed.connect (() => {
@@ -109,6 +116,7 @@
             // TODO this should still be sensetive but should stop the transaction
             delete_button.set_sensitive (false);
             progress_spinner.set_visible (true);
+
             try {
                 var success = yield package.uninstall ();
                 if (success) {

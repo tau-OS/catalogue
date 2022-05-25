@@ -76,7 +76,14 @@ namespace Catalogue {
                         action_button.disconnect (handler_id);
                     }
                     handler_id = action_button.clicked.connect (() => {
-                        remove_clicked.begin (app);
+                        var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+                        var dialog = new Catalogue.UninstallWarningDialog (app);
+                        dialog.set_transient_for (win);
+                        dialog.present ();
+
+                        dialog.do_uninstall.connect (() => {
+                            remove_clicked.begin (app); 
+                        });
                     });
                 }
             } else {

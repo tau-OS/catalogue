@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueUninstallWarningDialog" parent="GtkWindow">
+        <property name="modal">true</property>
+        <property name="default-height">400</property>
+        <property name="default-width">300</property>
+        <property name="decorated">false</property>
+        <!-- fucking internal child -->
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="vexpand">true</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="icon-name">emblem-important-symbolic</property>
+                        <property name="margin-top">24</property>
+                        <property name="pixel-size">64</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel" id="header">
+                        <property name="label">Uninstall App?</property>
+                        <property name="halign">center</property>
+                        <property name="xalign">0.5</property>
+                        <property name="vexpand">False</property>
+                        <property name="ellipsize">end</property>
+                        <property name="wrap">true</property>
+                        <property name="margin-top">24</property>
+                        <style>
+                            <class name="title-2" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Are you sure you want to delete this app?</property>
+                        <property name="halign">center</property>
+                        <property name="xalign">0.5</property>
+                        <property name="vexpand">False</property>
+                        <property name="wrap">true</property>
+                        <property name="margin-top">24</property>
+                        <property name="justify">center</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="valign">end</property>
+                        <property name="vexpand">true</property>
+                        <property name="margin-start">24</property>
+                        <property name="margin-end">24</property>
+                        <property name="margin-bottom">24</property>
+                        <child>
+                            <object class="GtkButton" id="button_cancel">
+                                <property name="label">Cancel</property>
+                                <property name="hexpand">true</property>
+                                <property name="halign">start</property>
+                                <signal name="clicked" handler="on_close" />
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton" id="button_ok">
+                                <property name="label">Uninstall</property>
+                                <property name="hexpand">true</property>
+                                <property name="halign">end</property>
+                                <style>
+                                    <class name="destructive-action" />
+                                </style>
+                                <signal name="clicked" handler="on_uninstall" />
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
