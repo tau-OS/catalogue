@@ -38,12 +38,23 @@ namespace ThreadService {
 
     unowned ThreadPool<Worker> _get_thread_pool () throws ThreadError {
         return _once.once (() => {
-            return new ThreadPool<Worker>.with_owned_data (worker => worker.run (), 1, false);
+            ThreadPool<Worker>? pool = null;
+            try {
+                pool = new ThreadPool<Worker>.with_owned_data (worker => worker.run (), 1, false);
+            } catch (ThreadError e) {
+                critical ("Error creating ThreadPool");
+            }
+            return pool;
         });
     }
 
-    async G run_in_thread<G> (owned ThreadFunc<G> func) throws Error {
-        unowned var thread_pool = _get_thread_pool ();
+    async G run_in_thread<G> (owned ThreadFunc<G> func) throws Error, ThreadError {
+        unowned ThreadPool<Worker> thread_pool;
+        try {
+            thread_pool = _get_thread_pool ();
+        } catch (ThreadError e) {
+            throw e;
+        }
 
         G result = null;
         Error? error = null;
