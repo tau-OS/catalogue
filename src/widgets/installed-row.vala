@@ -64,6 +64,10 @@
                 update_clicked.begin (package);
             });
 
+            delete_button.clicked.connect (() => {
+                delete_clicked.begin (package);
+            });
+
             package.change_information.progress_changed.connect (() => {
                 Signals.get_default ().updates_progress_bar_change (package, false);
             });
@@ -89,6 +93,24 @@
             progress_spinner.set_visible (true);
             try {
                 var success = yield package.update ();
+                if (success) {
+                    action_complete (this, true);
+                }
+            } catch (Error e) {
+                if (!(e is GLib.IOError.CANCELLED)) {
+                    critical (e.message);
+                }
+            }
+        }
+
+        private async void delete_clicked (Core.Package package) {
+            info_button.set_sensitive (false);
+            update_button.set_sensitive (false);
+            // TODO this should still be sensetive but should stop the transaction
+            delete_button.set_sensitive (false);
+            progress_spinner.set_visible (true);
+            try {
+                var success = yield package.uninstall ();
                 if (success) {
                     action_complete (this, true);
                 }

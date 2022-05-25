@@ -29,6 +29,8 @@ namespace Catalogue {
         private unowned Gtk.Button action_button;
         [GtkChild]
         private unowned Gtk.Spinner progress_spinner;
+
+        public ulong handler_id;
             
         public AppHeader (Core.Package app) {
             Object ();
@@ -60,18 +62,31 @@ namespace Catalogue {
                     action_button.set_label ("Update");
                     action_button.get_style_context ().add_class ("suggested-action");
 
-                    action_button.clicked.connect (() => {
+                    if (handler_id != 0) {
+                        action_button.disconnect (handler_id);
+                    }
+                    handler_id = action_button.clicked.connect (() => {
                         update_clicked.begin (app);
                     });
                 } else {
                     action_button.set_label ("Remove");
                     action_button.get_style_context ().add_class ("destructive-action");
+
+                    if (handler_id != 0) {
+                        action_button.disconnect (handler_id);
+                    }
+                    handler_id = action_button.clicked.connect (() => {
+                        remove_clicked.begin (app);
+                    });
                 }
             } else {
                 action_button.set_label ("Install");
                 action_button.get_style_context ().add_class ("suggested-action");
 
-                action_button.clicked.connect (() => {
+                if (handler_id != 0) {
+                    action_button.disconnect (handler_id);
+                }
+                handler_id = action_button.clicked.connect (() => {
                     install_clicked.begin (app);
                 });
             }
@@ -97,6 +112,20 @@ namespace Catalogue {
             progress_spinner.set_visible (true);
             try {
                 yield package.install ();
+                get_state (package);
+            } catch (Error e) {
+                if (!(e is GLib.IOError.CANCELLED)) {
+                    critical (e.message);
+                }
+            }
+        }
+
+        private async void remove_clicked (Core.Package package) {
+            // TODO this should still be sensetive but should stop the transaction
+            action_button.set_sensitive (false);
+            progress_spinner.set_visible (true);
+            try {
+                yield package.uninstall ();
                 get_state (package);
             } catch (Error e) {
                 if (!(e is GLib.IOError.CANCELLED)) {
