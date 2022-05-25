@@ -117,7 +117,6 @@ namespace Catalogue {
             if (filename != null) {
                 var flatpak_helper = new FlatpakRefHelper ();
                 File file = File.new_for_path (filename);
-                print ("File passed as %s", filename);
 
                 // TODO this should support branches
                 if (flatpak_helper.get_reference_type (file) == FlatpakRefHelper.REFERENCE_TYPE.FLATPAK_REF) {
