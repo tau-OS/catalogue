@@ -18,7 +18,7 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/Dialogs/add-repository.ui")]
-    public class AddRepositoryDialog : Gtk.Dialog {
+    public class AddRepositoryDialog : Gtk.Window {
         [GtkChild]
         private unowned Gtk.Label title_label;
         [GtkChild]
@@ -26,24 +26,28 @@
         [GtkChild]
         private unowned Gtk.Label url_label;
 
+        public Flatpak.Remote global_remote;
+
+        [GtkCallback]
+        public void on_close () {
+            this.close ();
+        }
+
+        [GtkCallback]
+        public void on_add () {
+            var client = Core.Client.get_default ();
+            client.create_remote (global_remote);
+            this.close ();
+        }
+
         public AddRepositoryDialog (Flatpak.Remote remote) {
             Object ();
+
+            global_remote = remote;
 
             title_label.set_label (remote.get_title ());
             description_label.set_label (remote.get_description ());
             url_label.set_label (remote.get_url ());
-
-            this.response.connect ((response_id)=> {
-                if (response_id == Gtk.ResponseType.OK) {
-                    var client = Core.Client.get_default ();
-                    client.create_remote (remote);
-                    this.close ();
-                }
-
-                if (response_id == Gtk.ResponseType.CANCEL) {
-                    this.close ();
-                }
-            });
         }
     }
 }
