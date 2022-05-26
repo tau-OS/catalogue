@@ -31,6 +31,8 @@ namespace Catalogue {
 
         private Cancellable refresh_cancellable;
 
+        private Gee.List<InstalledRow> rows = new Gee.ArrayList<InstalledRow> ();
+
         public WindowUpdates () {
             Object ();
 
@@ -95,6 +97,7 @@ namespace Catalogue {
                                         remove_row ((Gtk.ListBoxRow) source.get_parent ());
                                     }
                                 });
+                                rows.add(row);
                                 listbox.append (row);
                             }
                         }
@@ -119,6 +122,7 @@ namespace Catalogue {
                                     remove_row ((Gtk.ListBoxRow) source.get_parent ());
                                 }
                             });
+                            rows.add(row);
                             listbox.append (row);
                         }
                     }
@@ -137,6 +141,17 @@ namespace Catalogue {
             if (listbox.get_first_child ().get_type () != typeof (Gtk.ListBoxRow)) {
                 stack.set_visible_child_name ("refreshing_updates");
                 ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
+            }
+        }
+
+        [GtkCallback]
+        public void update_all_packages () {
+            foreach (var row in rows) {
+                if (row == rows.last ()) {
+                    row.enable_updates.begin (false);
+                } else {
+                    row.enable_updates.begin ();
+                }
             }
         }
     }

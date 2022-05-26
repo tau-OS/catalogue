@@ -194,20 +194,22 @@ namespace Catalogue.Core {
             }
         }
 
-        public async bool update () throws GLib.Error {
+        public async bool update (bool is_grouped = false) throws GLib.Error {
             if (state != State.UPDATE_AVAILABLE) {
                 return false;
             }
 
             var success = yield perform_operation (State.UPDATING, State.INSTALLED, State.UPDATE_AVAILABLE);
-            if (success) {
-                string title = "Package %s Updated".printf (this.get_name ());
-                var application = GLib.Application.get_default ();
-                var notification = new Notification (title);
-                // TODO this is a dumb AF icon to use
-                notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
+            if (success && !is_grouped) {
+                if (!is_grouped) {
+                    string title = !is_grouped ? "Package %s Updated".printf (this.get_name ()) : "Packages Updated";
+                    var application = GLib.Application.get_default ();
+                    var notification = new Notification (title);
+                    // TODO this is a dumb AF icon to use
+                    notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
-                application.send_notification ("catalouge.successful_install", notification);
+                    application.send_notification ("catalouge.successful_install", notification);
+                }
                 debug ("Package %s Updated", this.get_name ());
             }
 

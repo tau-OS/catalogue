@@ -83,6 +83,18 @@
                 if (status == Core.ChangeInformation.Status.FINISHED) {
                     progress_spinner.set_visible (false);
                     Signals.get_default ().updates_progress_bar_change (package, true);
+
+                    if (package.update_available) {
+                        update_button.set_visible (true);
+                    } else {
+                        delete_button.set_visible (true);
+                    }
+                }
+                if (status == Core.ChangeInformation.Status.RUNNING) {
+                    info_button.set_sensitive (false);
+                    update_button.set_sensitive (false);
+                    delete_button.set_sensitive (false);
+                    progress_spinner.set_visible (true);
                 }
             });
 
@@ -131,6 +143,24 @@
 
         public string get_app_name () {
             return app.get_name ();
+        }
+
+        public async void enable_updates (bool is_grouped = true) {
+            info_button.set_sensitive (false);
+            update_button.set_sensitive (false);
+            // TODO this should still be sensetive but should stop the transaction
+            delete_button.set_sensitive (false);
+            progress_spinner.set_visible (true);
+            try {
+                var success = yield app.update (is_grouped);
+                if (success) {
+                    action_complete (this, true);
+                }
+            } catch (Error e) {
+                if (!(e is GLib.IOError.CANCELLED)) {
+                    critical (e.message);
+                }
+            }
         }
     }
 }
