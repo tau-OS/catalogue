@@ -92,30 +92,6 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().create_remote (remote, true, cancellable);
         }
 
-        //  public async void refresh_updates () {
-        //      yield update_notification_mutex.lock ();
-
-        //      bool was_empty = updates_number == 0U;
-        //      updates_number = yield UpdateManager.get_default ().get_updates (null);
-
-        //      var application = GLib.Application.get_default ();
-        //      if (was_empty && updates_number != 0U) {
-        //          string title = ngettext ("Update Available", "Updates Available", updates_number);
-        //          string body = ngettext ("%u update is available for your system", "%u updates are available for your system", updates_number).printf (updates_number);
-                
-        //          var notification = new Notification (title);
-        //          notification.set_body (body);
-        //          notification.set_icon (new ThemedIcon ("software-update-available"));
-
-        //          application.send_notification ("catalouge.updates", notification);
-        //      } else {
-        //          application.withdraw_notification ("catalogue.updates");
-        //      }
-
-        //      update_notification_mutex.unlock ();
-        //      installed_apps_changed ();
-        //  }
-
         public async void refresh_updates (bool force = false) {
             yield update_notification_mutex.lock ();
             cancellable.reset ();
@@ -151,7 +127,11 @@ namespace Catalogue.Core {
                     refresh_in_progress = true;
                     try {
                         bool was_empty = updates_number == 0U;
-                        updates_number = yield UpdateManager.get_default ().get_updates (null);
+                        ThreadService.run_in_thread.begin<void> (() => {
+                            UpdateManager.get_default ().get_updates.begin (null, (obj, res) => {
+                                updates_number = UpdateManager.get_default ().get_updates.end (res);
+                            });
+                        });
 
                         var application = GLib.Application.get_default ();
                         if (was_empty && updates_number != 0U) {
