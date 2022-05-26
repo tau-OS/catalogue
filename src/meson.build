@@ -31,7 +31,6 @@ main_sources = [
     'objects/categories.vala',
     'helpers/content_rating.vala',
     'helpers/flatpak_ref.vala',
-    'services/thread_service.vala'
 ]
 
 daemon_sources = [
@@ -48,7 +47,8 @@ core_sources = [
     'core/screenshot_cache.vala',
     'core/change_information.vala',
     'core/update_manager.vala',
-    'async_mutex.vala'
+    'async_mutex.vala',
+    'services/thread_service.vala'
 ]
 
 config_file = configure_file(
