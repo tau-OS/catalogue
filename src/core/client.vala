@@ -141,13 +141,11 @@ namespace Catalogue.Core {
                                     notification.set_icon (new ThemedIcon ("software-update-available"));
 
                                     application.send_notification ("catalouge.updates", notification);
-
-                                    installed_apps_changed ();
                                 } else {
                                     application.withdraw_notification ("catalogue.updates");
                                 }
-
                                 seconds_since_last_refresh = 0;
+                                installed_apps_changed ();
                             });
                         });
                     } finally {
@@ -155,6 +153,7 @@ namespace Catalogue.Core {
                     }
                 } else {
                     critical ("No Network Available");
+                    installed_apps_changed ();
                 }
             } else {
                 debug ("Too soon to refresh and not forced");
@@ -164,7 +163,7 @@ namespace Catalogue.Core {
             var next_refresh = SECONDS_BETWEEN_REFRESHES - (uint)seconds_since_last_refresh;
             debug ("Setting a timeout for a refresh in %f minutes", next_refresh / 60.0f);
             last_refresh_update = new DateTime.now_utc ();
-                            settings.set_int64 ("last-update-check-time", last_refresh_update.to_unix ());
+            settings.set_int64 ("last-update-check-time", last_refresh_update.to_unix ());
             refresh_updates_timeout_id = GLib.Timeout.add_seconds (next_refresh, () => {
                 refresh_updates_timeout_id = 0;
                 refresh_updates.begin (true);
