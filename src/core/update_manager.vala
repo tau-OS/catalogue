@@ -40,10 +40,18 @@ namespace Catalogue.Core {
             uint count = 0;
 
             // Clear all apps marked as updatable
-            var installed_packages = yield FlatpakBackend.get_default ().get_installed_applications ();
-            foreach (var package in installed_packages) {
-                package.change_information.clear_update_info ();
-                package.update_state ();
+            try {
+                yield ThreadService.run_in_thread<void> (() => {
+                    FlatpakBackend.get_default ().get_installed_applications.begin (null, (obj, res) => {
+                        var installed_packages = FlatpakBackend.get_default ().get_installed_applications.end (res);
+                        foreach (var package in installed_packages) {
+                            package.change_information.clear_update_info ();
+                            package.update_state ();
+                        }
+                    });
+                });
+            } catch (Error e) {
+                warning ("Unable to get Flatpak installed applications: %s", e.message);
             }
 
             uint runtime_count = 0;
@@ -66,7 +74,15 @@ namespace Catalogue.Core {
                     package.change_information.updatable_packages.@set (client, update);
                     package.update_state ();
                     try {
-                       package.change_information.size = yield client.get_download_size (package, null, true);
+                        yield ThreadService.run_in_thread<void> (() => {
+                            client.get_download_size.begin (package, null, true, (obj, res) => {
+                                try {
+                                    package.change_information.size = client.get_download_size.end (res);
+                                } catch (GLib.Error e) {
+                                    warning ("Unable to get Flatpak download size: %s", e.message);
+                                }
+                            });
+                        });
                     } catch (Error e) {
                         warning ("Unable to get flatpak download size: %s", e.message);
                     }
@@ -96,7 +112,16 @@ namespace Catalogue.Core {
 
                     uint64 dl_size = 0;
                     try {
-                        dl_size = yield client.get_download_size_by_id (update, null, true);
+                        yield ThreadService.run_in_thread<void> (() => {
+                            client.get_download_size_by_id.begin (update, null, true, null, (obj, res) => {
+                                try {
+                                    dl_size = client.get_download_size_by_id.end (res);
+                                } catch (GLib.Error e) {
+                                    warning ("Unable to get Flatpak download size: %s", e.message);
+                                }
+                            });
+                        });
+                        
                     } catch (Error e) {
                         warning ("Unable to get flatpak download size: %s", e.message);
                     }

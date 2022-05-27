@@ -41,7 +41,7 @@ namespace Catalogue {
             stack.set_visible_child_name ("refreshing_updates");
 
             this.realize.connect (() => {
-                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (); });
+                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
             });
 
             Signals.get_default ().updates_progress_bar_change.connect ((package, is_finished) => {
@@ -58,12 +58,13 @@ namespace Catalogue {
                     }
                 });
             });
-            
-            var client = Core.Client.get_default ();
-            client.installed_apps_changed.connect (() => {
-                stack.set_visible_child_name ("refreshing_updates");
-                ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
-            });
+
+            //  TODO make this work
+            //  var client = Core.Client.get_default ();
+            //  client.installed_apps_changed.connect (() => {
+            //      stack.set_visible_child_name ("refreshing_updates");
+            //      ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
+            //  });
         }
 
         public async void get_apps (bool force = false) {
@@ -75,12 +76,7 @@ namespace Catalogue {
 
             unowned Core.Client client = Core.Client.get_default ();
 
-            ThreadService.run_in_thread.begin<void> (() => {
-                // TODO figure out why this is lagging everything to hell
-                client.refresh_updates.begin (force, (obj, res) => {
-                    client.refresh_updates.end (res);
-                });
-                
+            client.installed_apps_changed.connect (() => {
                 client.get_installed_applications.begin (refresh_cancellable, (obj, packages) => {
                     var installed_apps = client.get_installed_applications.end (packages);
 
@@ -126,6 +122,13 @@ namespace Catalogue {
                             listbox.append (row);
                         }
                     }
+                });
+            });
+
+            ThreadService.run_in_thread.begin<void> (() => {
+                // TODO figure out why this is lagging everything to hell
+                client.refresh_updates.begin (force, (obj, res) => {
+                    client.refresh_updates.end (res);
                 });
             });
         }
