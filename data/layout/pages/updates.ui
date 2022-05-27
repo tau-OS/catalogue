@@ -86,7 +86,7 @@
                                                                 <style>
                                                                     <class name="section" />
                                                                 </style>
-                                                                <child type="end">
+                                                                <child type="header-suffix">
                                                                     <object class="GtkButton">
                                                                         <property name="label">Update All</property>
                                                                         <signal name="clicked" handler="update_all_packages" />
