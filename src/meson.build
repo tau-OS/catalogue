@@ -64,9 +64,7 @@ deps = [
     dependency('gee-0.8'),
     dependency('flatpak'),
     dependency('appstream', version: '>=0.12.10'),
-    dependency('libxml-2.0'),
-    dependency('polkit-gobject-1'),
-    meson.get_compiler('vala').find_library('posix')
+    dependency('libxml-2.0')
 ]
 
 gnome = import('gnome')

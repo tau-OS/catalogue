@@ -28,6 +28,8 @@ namespace Catalogue {
         private unowned Gtk.ListBox listbox;
         [GtkChild]
         private unowned Gtk.ProgressBar progress_bar;
+        [GtkChild]
+        private unowned Gtk.Button update_all;
 
         private Cancellable refresh_cancellable;
 
@@ -149,6 +151,7 @@ namespace Catalogue {
 
         [GtkCallback]
         public void update_all_packages () {
+            update_all.set_sensitive (false);
             foreach (var row in rows) {
                 if (row == rows.last ()) {
                     row.enable_updates.begin (false);
