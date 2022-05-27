@@ -7,6 +7,7 @@
     <file alias="Dialogs/add-repository.ui">layout/dialogs/add-repository.ui</file>
     <file alias="Dialogs/version-history.ui">layout/dialogs/version-history.ui</file>
     <file alias="Dialogs/uninstall-warning.ui">layout/dialogs/uninstall-warning.ui</file>
+    <file alias="Dialogs/failure.ui">layout/dialogs/failure.ui</file>
 
     <file alias="explore.ui">layout/pages/explore.ui</file>
     <file alias="installed.ui">layout/pages/installed.ui</file>

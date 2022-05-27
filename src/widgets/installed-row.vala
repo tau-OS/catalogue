@@ -136,6 +136,7 @@
                 }
             } catch (Error e) {
                 if (!(e is GLib.IOError.CANCELLED)) {
+                    new FailureDialog (FailureDialog.FailType.UNINSTALL, package).present ();
                     critical (e.message);
                 }
             }
