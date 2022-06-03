@@ -18,7 +18,7 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/app-tile.ui")]
-    public class AppTile : Gtk.Button {
+    public class AppTile : Adw.ActionRow {
         [GtkChild]
         private unowned Gtk.Image image;
         [GtkChild]
@@ -27,6 +27,8 @@
         private unowned Gtk.Label description_label;
         [GtkChild]
         private unowned Gtk.Label price_label;
+        [GtkChild]
+        private unowned Gtk.Button button;
         
         public AppTile (Core.Package package) {
             Object ();
@@ -36,9 +38,13 @@
             price_label.set_label ("Free");
             image.set_from_gicon (package.get_icon (64, 64));
 
-            this.clicked.connect (() => {
+            button.clicked.connect (() => {
                 Signals.get_default ().explore_leaflet_open (package);
             });
+        }
+
+        public void click () {
+            button.clicked ();
         }
     }
 }
