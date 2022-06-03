@@ -71,6 +71,10 @@
                     ThreadService.run_in_thread.begin<void> (() => { fill_row.begin (category); });
                 }
             });
+            
+            row_box.child_activated.connect ((child) => {
+                ((AppTile) child.get_child ()).click ();
+            });
         }
     }
 }
