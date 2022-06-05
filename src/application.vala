@@ -54,6 +54,7 @@ namespace Catalogue {
             typeof (Catalogue.WindowExplore).ensure ();
             typeof (Catalogue.WindowInstalled).ensure ();
             typeof (Catalogue.WindowUpdates).ensure ();
+            typeof (Catalogue.Carousel).ensure ();
 
             client = Core.Client.get_default ();
             client.cache_update_finished.connect (() => {

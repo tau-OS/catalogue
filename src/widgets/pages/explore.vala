@@ -22,8 +22,6 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
-        private unowned Gtk.Box featured_box;
-        [GtkChild]
         private unowned Gtk.FlowBox featured_flowbox;
         [GtkChild]
         private unowned Gtk.Box accessories_box;
@@ -37,8 +35,6 @@ namespace Catalogue {
         private unowned Gtk.Box create_box;
         [GtkChild]
         private unowned Gtk.Box work_box;
-
-        private Catalogue.Carousel carousel;
 
         private Catalogue.FeaturedRow featured_row_test;
 
@@ -56,11 +52,7 @@ namespace Catalogue {
             Object ();
         }
 
-        construct {
-            carousel = new Catalogue.Carousel ();
-            // Carousel should always be the top element in the featured page
-            featured_box.prepend (carousel);
-            
+        construct {            
             var categories = new Catalogue.Categories ().get_default ();
 
             var categories_list = new AppStream.Category[] {};

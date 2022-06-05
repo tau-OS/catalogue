@@ -23,7 +23,7 @@
                                         <property name="maximum-size">1000</property>
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
-                                            <object class="GtkBox" id="featured_box">
+                                            <object class="GtkBox">
                                                 <property name="halign">center</property>
                                                 <property name="hexpand">False</property>
                                                 <property name="orientation">vertical</property>
@@ -32,6 +32,9 @@
                                                 <property name="margin-start">12</property>
                                                 <property name="margin-end">12</property>
                                                 <property name="valign">start</property>
+                                                <child>
+                                                    <object class="CatalogueCarousel" />
+                                                </child>
                                                 <child>
                                                     <object class="GtkFlowBox" id="featured_flowbox">
                                                         <property name="max-children-per-line">3</property>

@@ -38,7 +38,9 @@ namespace Catalogue {
 
         public Carousel () {
             Object ();
-            
+        }
+
+        construct {
             next_button.clicked.connect(() => {
                 move_relative_page(1);
             });
