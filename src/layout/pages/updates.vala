@@ -37,7 +37,9 @@ namespace Catalogue {
 
         public WindowUpdates () {
             Object ();
+        }
 
+        construct {
             refresh_cancellable = new Cancellable ();
 
             stack.set_visible_child_name ("refreshing_updates");

@@ -42,9 +42,6 @@ namespace Catalogue {
         [GtkChild]
         private unowned Adw.Bin search_page;
 
-        private Catalogue.WindowExplore explore { get; set; default = new Catalogue.WindowExplore (); }
-        private Catalogue.WindowInstalled installed;
-        private Catalogue.WindowUpdates updates;
         private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
 
         private bool should_button_be_shown;
@@ -88,6 +85,7 @@ namespace Catalogue {
             bool query_valid = query.length >= VALID_QUERY_LENGTH;
         
             if (query_valid) {
+                var explore = (Catalogue.WindowExplore) header_stack.get_child_by_name ("explore");
                 search_view.search (query, explore.get_active_category ());
             }
         }
@@ -143,9 +141,6 @@ namespace Catalogue {
             
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
             default_theme.add_resource_path ("/co/tauos/Catalogue");
-
-            installed = new Catalogue.WindowInstalled ();
-            updates = new Catalogue.WindowUpdates ();
             
             should_button_be_shown = false;
 
@@ -174,18 +169,6 @@ namespace Catalogue {
                     should_button_be_shown = false;
                 }
             });
-
-            header_stack.add_titled (explore, "explore", "Explore");
-            var stack_explore = header_stack.get_page (explore);
-            ((!) stack_explore).icon_name = "explore-symbolic";
-
-            header_stack.add_titled (installed, "installed", "Installed");
-            var stack_installed = header_stack.get_page (installed);
-            ((!) stack_installed).icon_name = "folder-download-symbolic";
-
-            header_stack.add_titled (updates, "updates", "Updates");
-            var stack_updates = header_stack.get_page (updates);
-            ((!) stack_updates).icon_name = "emblem-synchronizing-symbolic";
 
             header_stack.notify["visible-child"].connect (() => {
                 // Disable search

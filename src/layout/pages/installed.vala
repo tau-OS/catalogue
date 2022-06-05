@@ -32,7 +32,9 @@ namespace Catalogue {
 
         public WindowInstalled () {
             Object ();
+        }
 
+        construct {
             refresh_cancellable = new Cancellable ();
 
             stack.set_visible_child_name ("refreshing_installed");

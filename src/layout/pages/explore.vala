@@ -54,7 +54,9 @@ namespace Catalogue {
 
         public WindowExplore () {
             Object ();
+        }
 
+        construct {
             carousel = new Catalogue.Carousel ();
             // Carousel should always be the top element in the featured page
             featured_box.prepend (carousel);

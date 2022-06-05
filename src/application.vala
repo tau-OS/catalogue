@@ -51,6 +51,10 @@ namespace Catalogue {
             add_main_option_entries (options);
             set_accels_for_action ("app.quit", {"<primary>q"});
 
+            typeof (Catalogue.WindowExplore).ensure ();
+            typeof (Catalogue.WindowInstalled).ensure ();
+            typeof (Catalogue.WindowUpdates).ensure ();
+
             client = Core.Client.get_default ();
             client.cache_update_finished.connect (() => {
                 //  if (error) {

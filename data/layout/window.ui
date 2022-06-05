@@ -146,6 +146,36 @@
                                                         <child>
                                                             <object class="AdwViewStack" id="header_stack">
                                                                 <property name="vexpand">True</property>
+                                                                <child>
+                                                                    <object class="AdwViewStackPage">
+                                                                        <property name="name">explore</property>
+                                                                        <property name="title">Explore</property>
+                                                                        <property name="icon-name">explore-symbolic</property>
+                                                                        <property name="child">
+                                                                            <object class="CatalogueWindowExplore" />
+                                                                        </property>
+                                                                    </object>
+                                                                </child>
+                                                                <child>
+                                                                    <object class="AdwViewStackPage">
+                                                                        <property name="name">installed</property>
+                                                                        <property name="title">Installed</property>
+                                                                        <property name="icon-name">folder-download-symbolic</property>
+                                                                        <property name="child">
+                                                                            <object class="CatalogueWindowInstalled" />
+                                                                        </property>
+                                                                    </object>
+                                                                </child>
+                                                                <child>
+                                                                    <object class="AdwViewStackPage">
+                                                                        <property name="name">updates</property>
+                                                                        <property name="title">Updates</property>
+                                                                        <property name="icon-name">emblem-synchronizing-symbolic</property>
+                                                                        <property name="child">
+                                                                            <object class="CatalogueWindowUpdates" />
+                                                                        </property>
+                                                                    </object>
+                                                                </child>
                                                             </object>
                                                         </child>
                                                         <child>
