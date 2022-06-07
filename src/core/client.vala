@@ -68,6 +68,10 @@ namespace Catalogue.Core {
             return FlatpakBackend.get_default ().get_applications_for_category (category);
         }
 
+        public Gee.Collection<Package> get_new_updated_packages () {
+            return FlatpakBackend.get_default ().get_new_updated_packages ();
+        }
+
         public Gee.Collection<Package> search_applications (string query, AppStream.Category? category) {
             return FlatpakBackend.get_default ().search_applications (query, category);
         }

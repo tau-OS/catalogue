@@ -122,6 +122,12 @@ namespace Catalogue.Core {
             }
         }
 
+        public bool is_plugin {
+            get {
+                return component.get_kind () == AppStream.ComponentKind.ADDON;
+            }
+        }
+
         public string origin_description {
             owned get {
                 var fp_package = this as FlatpakPackage;

@@ -267,6 +267,42 @@ namespace Catalogue.Core {
             return installed_apps;
         }
 
+        public Gee.Collection<Package> get_new_updated_packages () {
+            var apps = new Gee.TreeSet<Package> (compare_packages_by_release_date);
+
+            foreach (var package in package_list.values) {
+                if (!package.is_plugin) {
+                    apps.add (package);
+                }
+            }
+
+            return apps;
+        }
+
+        private int compare_packages_by_release_date (Package p1, Package p2) {
+            if (((FlatpakPackage) p1).installation != ((FlatpakPackage) p2).installation) {
+                return ((FlatpakPackage) p1).installation == user_installation ? -1 : 1;
+            }
+
+            uint64 p1_timestamp = 0;
+            uint64 p2_timestamp = 0;
+
+            var p1_newest_release = p1.get_newest_release ();
+            if (p1_newest_release != null) {
+                p1_timestamp = p1_newest_release.get_timestamp ();
+            }
+
+            var p2_newest_release = p2.get_newest_release ();
+            if (p2_newest_release != null) {
+                p2_timestamp = p2_newest_release.get_timestamp ();
+            }
+
+            var p1_datetime = new DateTime.from_unix_utc ((int64) p1_timestamp);
+            var p2_datetime = new DateTime.from_unix_utc ((int64) p2_timestamp);
+
+            return p2_datetime.compare (p1_datetime);
+        }
+
         public Gee.Collection<Package> get_applications_for_category (AppStream.Category category) {
             unowned GLib.GenericArray<AppStream.Component> components = category.get_components ();
             // Clear out any cached components that could be from other backends
