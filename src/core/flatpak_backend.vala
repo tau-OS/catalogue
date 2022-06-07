@@ -267,11 +267,11 @@ namespace Catalogue.Core {
             return installed_apps;
         }
 
-        public Gee.Collection<Package> get_new_updated_packages () {
+        public Gee.Collection<Package> get_new_updated_packages (uint size = 20) {
             var apps = new Gee.TreeSet<Package> (compare_packages_by_release_date);
 
             foreach (var package in package_list.values) {
-                if (!package.is_plugin) {
+                if (!package.is_plugin && apps.size < size) {
                     apps.add (package);
                 }
             }
