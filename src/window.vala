@@ -50,10 +50,10 @@ namespace Catalogue {
 
         [GtkCallback]
         public void back_clicked_cb () {
-            leaflet.set_transition_type (Adw.LeafletTransitionType.UNDER);
+            leaflet.set_transition_type (Adw.LeafletTransitionType.OVER);
             leaflet.navigate (Adw.NavigationDirection.FORWARD);
             Signals.get_default ().window_do_back_button_clicked (true);
-            leaflet.set_transition_type (Adw.LeafletTransitionType.OVER);
+            leaflet.set_transition_type (Adw.LeafletTransitionType.UNDER);
         }
 
         [GtkCallback]

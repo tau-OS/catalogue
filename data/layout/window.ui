@@ -7,7 +7,7 @@
         <property name="title" translatable="yes">Catalogue</property>
         <child>
             <object class="AdwLeaflet" id="leaflet">
-                <property name="transition-type">over</property>
+                <property name="transition-type">under</property>
                 <property name="fold_threshold_policy">natural</property>
                 <property name="can_unfold">false</property>
                 <child>
