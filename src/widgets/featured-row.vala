@@ -37,6 +37,12 @@
             this.title = title;
         }
 
+        construct {
+            row_box.child_activated.connect ((child) => {
+                ((AppTile) child.get_child ()).click ();
+            });
+        }
+
         public void add_widgets (Gee.Collection<Catalogue.Core.Package> packages) {
             foreach (var package in packages) {
                 var app_tile = new Catalogue.AppTile (package);
