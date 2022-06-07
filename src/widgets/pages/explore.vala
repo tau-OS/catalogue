@@ -24,6 +24,8 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.FlowBox featured_flowbox;
         [GtkChild]
+        private unowned Catalogue.FeaturedRow new_updated;
+        [GtkChild]
         private unowned Gtk.Box accessories_box;
         [GtkChild]
         private unowned Gtk.Box internet_box;
@@ -96,6 +98,9 @@ namespace Catalogue {
             
             //  featured_row_test = new Catalogue.FeaturedRow ("Test Row");
             //  featured_box.append (featured_row_test);
+
+            var client = Core.Client.get_default ();
+            new_updated.add_widgets (client.get_new_updated_packages (6));
 
             var accessories_row = new Catalogue.CategoryRow (categories.accessories);
             var internet_row = new Catalogue.CategoryRow (categories.internet);
