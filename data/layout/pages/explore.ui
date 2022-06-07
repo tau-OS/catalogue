@@ -32,6 +32,7 @@
                                                 <property name="margin-start">12</property>
                                                 <property name="margin-end">12</property>
                                                 <property name="valign">start</property>
+                                                <property name="spacing">12</property>
                                                 <child>
                                                     <object class="CatalogueCarousel" />
                                                 </child>
@@ -41,6 +42,11 @@
                                                         <property name="row-spacing">5</property>
                                                         <property name="column-spacing">5</property>
                                                         <property name="selection-mode">none</property>
+                                                    </object>
+                                                </child>
+                                                <child>
+                                                    <object class="CatalogueFeaturedRow" id="new_updated">
+                                                        <property name="title">New and Updated Apps</property>
                                                     </object>
                                                 </child>
                                             </object>
