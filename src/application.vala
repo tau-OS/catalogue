@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     public class Application : Adw.Application {
-        public Catalogue.Window main_window { get; set; }
+        public static Catalogue.Window main_window { get; set; }
 
         private Core.Client client;
 
@@ -108,8 +108,8 @@ namespace Catalogue {
 
             base.startup ();
 
-            this.main_window = new Catalogue.Window (this);
-            this.main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
+            main_window = new Catalogue.Window (this);
+            main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
             active_window?.present ();
 
             client.update_cache.begin ();

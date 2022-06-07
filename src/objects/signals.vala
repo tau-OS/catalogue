@@ -27,8 +27,6 @@ public class Signals : GLib.Object {
     }
 
     public signal void window_do_back_button_clicked (bool is_leaflet);
-    public signal void window_show_back_button ();
-    public signal void window_hide_back_button ();
     public signal void explore_leaflet_open (Catalogue.Core.Package package);
 
     public signal void updates_progress_bar_change (Catalogue.Core.Package package, bool is_finished);

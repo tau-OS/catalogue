@@ -38,8 +38,6 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Box work_box;
 
-        private Catalogue.FeaturedRow featured_row_test;
-
         public AppStream.Category? active_category;
 
         public AppStream.Category? get_active_category () {
@@ -75,7 +73,7 @@ namespace Catalogue {
                 tile.clicked.connect (() => {
                     active_category = entry;
                     stack.set_visible_child_name (name.down ());
-                    Signals.get_default ().window_show_back_button ();
+                    Application.main_window.show_back_button ();
                 });
                 
                 featured_flowbox.append (tile);
@@ -90,7 +88,7 @@ namespace Catalogue {
                 }
 
                 if (stack.get_visible_child_name () == "featured") {
-                    Signals.get_default ().window_hide_back_button ();
+                    Application.main_window.hide_back_button ();
                 }
             });
 

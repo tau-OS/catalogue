@@ -159,28 +159,29 @@ namespace Catalogue {
                 leaflet_contents.append (new Catalogue.WindowDetails (package));
             });
 
-            Signals.get_default ().window_show_back_button.connect (() => {
-                main_back_button.set_visible (true);
-                should_button_be_shown = true;
-            });
-            Signals.get_default ().window_hide_back_button.connect (() => {
-                main_back_button.set_visible (false);
-                if (header_stack.get_visible_child_name () == "explore") {
-                    should_button_be_shown = false;
-                }
-            });
-
             header_stack.notify["visible-child"].connect (() => {
                 // Disable search
                 search_button.set_active (false);
                 if (header_stack.get_visible_child_name () == "explore" && should_button_be_shown == true) {
-                    Signals.get_default ().window_show_back_button ();
+                    show_back_button ();
                 } else {
-                    Signals.get_default ().window_hide_back_button ();
+                    hide_back_button ();
                 }
             });
 
             this.show ();
+        }
+
+        public void hide_back_button () {
+            main_back_button.set_visible (false);
+            if (header_stack.get_visible_child_name () == "explore") {
+                should_button_be_shown = false;
+            }
+        }
+
+        public void show_back_button () {
+            main_back_button.set_visible (true);
+            should_button_be_shown = true;
         }
     }
 }
