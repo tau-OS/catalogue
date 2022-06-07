@@ -2,24 +2,18 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueFeaturedRow" parent="AdwBin">
-        <property name="halign">center</property>
-        <property name="hexpand">True</property>
-        <property name="margin-top">24</property>
-        <property name="margin-bottom">36</property>
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
-        <property name="valign">start</property>
-
         <child>
             <object class="AdwPreferencesGroup" id="row_container">
                 <property name="title">Category Title</property>
                 <child>
                     <object class="GtkFlowBox" id="row_box">
                         <property name="homogeneous">True</property>
-                        <property name="column-spacing">14</property>
-                        <property name="row-spacing">14</property>
+                        <property name="row-spacing">5</property>
+                        <property name="column-spacing">5</property>
+                        <property name="selection-mode">none</property>
                         <property name="valign">start</property>
                         <property name="hexpand">True</property>
+                        <property name="min-children-per-line">2</property>
                     </object>
                 </child>
             </object>

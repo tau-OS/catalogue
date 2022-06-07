@@ -24,18 +24,25 @@
         [GtkChild]
         private unowned Gtk.FlowBox row_box;
 
-        // TODO pass GtkWidgets for the flowbox
-        public FeaturedRow (string title) {
-            Object ();
+        public string title {
+            get {
+                return row_container.get_title ();
+            }
+            set {
+                row_container.set_title (value);
+            }
+        }
 
-            row_container.set_title (title);
+        public FeaturedRow(string title) {
+            this.title = title;
+        }
 
-            //  for (var i = 0; i < 10; i++) {
-            //      var app_tile = new Catalogue.AppTile ("UwU", "This is a test app", "$1.99");
+        public void add_widgets (Gee.Collection<Catalogue.Core.Package> packages) {
+            foreach (var package in packages) {
+                var app_tile = new Catalogue.AppTile (package);
 
-            //      // this  needs to be updated lol
-            //      row_box.append (app_tile);
-            //  }
+                row_box.append (app_tile);
+            }
         }
     }
 }
