@@ -32,6 +32,7 @@ main_sources = [
     'objects/categories.vala',
     'helpers/content_rating.vala',
     'helpers/flatpak_ref.vala',
+    'helpers/catalogue_xml.vala'
 ]
 
 daemon_sources = [
