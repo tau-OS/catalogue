@@ -34,6 +34,7 @@
     <file>gtk/help-overlay.ui</file>
 
     <file alias="catalogue.css">styles/catalogue.css</file>
+    <file alias="style-dark.css">styles/catalogue-dark.css</file>
 
     <file alias="test-icon.png">images/128x128.png</file>
     <file alias="up-to-date.svg">images/up-to-date.svg</file>
