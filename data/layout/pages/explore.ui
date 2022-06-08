@@ -45,6 +45,11 @@
                                                     </object>
                                                 </child>
                                                 <child>
+                                                    <object class="CatalogueFeaturedRow" id="editors_choice">
+                                                        <property name="title">Editor's Choice</property>
+                                                    </object>
+                                                </child>
+                                                <child>
                                                     <object class="CatalogueFeaturedRow" id="new_updated">
                                                         <property name="title">New and Updated Apps</property>
                                                     </object>
