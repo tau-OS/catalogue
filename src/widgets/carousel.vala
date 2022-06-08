@@ -37,8 +37,8 @@ namespace Catalogue {
         }
 
         private void fill_carousel () {
-            GLib.File xml = File.new_for_uri (@"$(Config.API_URL)/client/carousel");
-            foreach (var package in new CatalogueClient ().get_packages (xml)) {
+            GLib.File data = File.new_for_uri (@"$(Config.API_URL)/client/carousel");
+            foreach (var package in new CatalogueClient ().get_packages (data)) {
                 var tile = new Catalogue.CarouselTile (package);
                 carousel.append (tile);
             }
