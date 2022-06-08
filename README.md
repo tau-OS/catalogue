@@ -14,6 +14,7 @@ You'll need the following dependencies:
 - `valac`
 - `gtk4`
 - `libadwaita-1`
+- `libhelium-1`
 - `gee-0.8`
 - `flatpak`
 - `appstream`

@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    public class Application : Adw.Application {
+    public class Application : He.Application {
         public static Catalogue.Window main_window { get; set; }
 
         private Core.Client client;

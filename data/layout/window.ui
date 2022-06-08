@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <requires lib="gtk" version="4.0" />
-    <template class="CatalogueWindow" parent="AdwApplicationWindow">
+    <template class="CatalogueWindow" parent="HeApplicationWindow">
         <property name="default-width">900</property>
         <property name="default-height">700</property>
         <property name="title" translatable="yes">Catalogue</property>

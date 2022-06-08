@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/window.ui")]
-    public class Window : Adw.ApplicationWindow {
+    public class Window : He.ApplicationWindow {
         [GtkChild]
         public unowned Gtk.Stack leaflet_stack;
         [GtkChild]
@@ -90,7 +90,7 @@ namespace Catalogue {
             }
         }
 
-        public Window (Adw.Application app) {
+        public Window (He.Application app) {
             Object (application: app);
 
             search_page.set_child (search_view);
@@ -104,12 +104,12 @@ namespace Catalogue {
                     main_back_clicked_cb ();
                 }
             });
-            add_action (go_back);
+            this.get_application ().add_action (go_back);
 
             // i hate accelerators
             var focus_search = new SimpleAction ("focus-search", null);
             focus_search.activate.connect (() => search_button.set_active (!search_button.active));
-            add_action (focus_search);
+            this.get_application ().add_action (focus_search);
 
             app.set_accels_for_action ("win.go-back", {"<Alt>Left", "Back"});
             app.set_accels_for_action ("win.focus-search", {"<Ctrl>f"});

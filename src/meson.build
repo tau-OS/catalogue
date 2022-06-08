@@ -61,6 +61,7 @@ config_file = configure_file(
 
 deps = [
     dependency('gtk4'),
+    dependency('libhelium-1'),
     dependency('libadwaita-1'),
     dependency('gee-0.8'),
     dependency('flatpak'),
