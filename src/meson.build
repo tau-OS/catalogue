@@ -32,7 +32,7 @@ main_sources = [
     'objects/categories.vala',
     'helpers/content_rating.vala',
     'helpers/flatpak_ref.vala',
-    'helpers/catalogue_xml.vala'
+    'helpers/catalogue_client.vala'
 ]
 
 daemon_sources = [
@@ -65,7 +65,8 @@ deps = [
     dependency('gee-0.8'),
     dependency('flatpak'),
     dependency('appstream', version: '>=0.12.10'),
-    dependency('libxml-2.0')
+    dependency('libxml-2.0'),
+    dependency('json-glib-1.0')
 ]
 
 gnome = import('gnome')
