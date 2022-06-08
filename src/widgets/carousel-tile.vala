@@ -19,13 +19,23 @@
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/carousel-tile.ui")]
     public class CarouselTile : Gtk.Button {
+        [GtkChild]
+        private unowned Gtk.Label title;
+        [GtkChild]
+        private unowned Gtk.Label subtitle;
+        [GtkChild]
+        private unowned Gtk.Image image;
         
-        public CarouselTile () {
+        public CarouselTile (Core.Package package) {
             Object ();
 
-            //  this.clicked.connect (() => {
-            //      Signals.get_default ().explore_leaflet_open ();
-            //  });
+            title.set_label (package.get_name ());
+            subtitle.set_label (package.get_summary ());
+            image.set_from_gicon (package.get_icon (64, 64));
+
+            this.clicked.connect (() => {
+                Signals.get_default ().explore_leaflet_open (package);
+            });
         }
     }
 }

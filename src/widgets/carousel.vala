@@ -38,17 +38,10 @@ namespace Catalogue {
 
         private void fill_carousel () {
             GLib.File xml = File.new_for_uri (@"$(Config.API_URL)/client/carousel");
-            try {
-                if (new CatalogueRemoteXML ().get_xml_type (xml) == CatalogueRemoteXML.TYPE.CAROUSEL) {
-                    foreach (var package in new CatalogueRemoteXML ().get_packages (xml)) {
-                        var tile = new Catalogue.CarouselTile ();
-                        carousel.append (tile);
-                    }
-                }
-            } catch (Catalogue.XMLError e) {
-                print ("%s\n", e.message);
+            foreach (var package in new CatalogueClient ().get_packages (xml)) {
+                var tile = new Catalogue.CarouselTile (package);
+                carousel.append (tile);
             }
-            
         }
 
         public Carousel () {
