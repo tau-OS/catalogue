@@ -34,7 +34,7 @@ namespace Catalogue {
             image.set_from_gicon (package.get_icon (64, 64));
 
             this.clicked.connect (() => {
-                Signals.get_default ().explore_leaflet_open (package);
+                Application.main_window.view_package_details (package);
             });
         }
     }

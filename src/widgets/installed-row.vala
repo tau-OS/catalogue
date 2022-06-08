@@ -57,7 +57,7 @@
             }
 
             info_button.clicked.connect (() => {
-                Signals.get_default ().explore_leaflet_open (package);
+                Application.main_window.view_package_details (package);
             });
 
             update_button.clicked.connect (() => {

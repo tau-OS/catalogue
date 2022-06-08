@@ -90,7 +90,7 @@ namespace Catalogue {
 
             var package = client.get_package_for_component_id (link);
             if (package != null) {
-                Signals.get_default ().explore_leaflet_open (package);
+                main_window.view_package_details (package);
             } else {
                 info (_("Specified link '%s' could not be found").printf (link));
                 return;
@@ -118,7 +118,7 @@ namespace Catalogue {
                 if (package == null) {
                     critical ("No package by the ID %s could be found", details_id);
                 } else {
-                    Signals.get_default ().explore_leaflet_open (package);
+                    main_window.view_package_details (package);
                 }
             }
 
@@ -137,7 +137,7 @@ namespace Catalogue {
                             var app = flatpak_helper.parse_flatpak_ref (file, "Name");
                             var package = client.get_package_for_component_id (app);
                             if (package != null) {
-                                Signals.get_default ().explore_leaflet_open (package);
+                                main_window.view_package_details (package);
                             } else {
                                 info ("Package '%s' could not be found".printf (app));
                                 return;

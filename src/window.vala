@@ -42,6 +42,20 @@ namespace Catalogue {
         [GtkChild]
         private unowned Adw.Bin search_page;
 
+        public void view_package_details (Core.Package package) {
+            leaflet_stack.set_visible_child_name ("leaflet_contents");
+            leaflet.navigate (Adw.NavigationDirection.BACK);
+            back_button.set_visible (true);
+            // Add details page to leaflet
+            var widget_list = new Utils ().get_all_widgets_in_child (leaflet_contents);
+
+            foreach (var widget in widget_list) {
+                leaflet_contents.remove (widget);
+            }
+            
+            leaflet_contents.append (new Catalogue.WindowDetails (package));
+        }
+
         private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
 
         private bool should_button_be_shown;
@@ -145,20 +159,6 @@ namespace Catalogue {
             should_button_be_shown = false;
 
             // Handle Rows
-            Signals.get_default ().explore_leaflet_open.connect ((package) => {
-                leaflet_stack.set_visible_child_name ("leaflet_contents");
-                leaflet.navigate (Adw.NavigationDirection.BACK);
-                back_button.set_visible (true);
-                // Add details page to leaflet
-                var widget_list = new Utils ().get_all_widgets_in_child (leaflet_contents);
-
-                foreach (var widget in widget_list) {
-                    leaflet_contents.remove (widget);
-                }
-                
-                leaflet_contents.append (new Catalogue.WindowDetails (package));
-            });
-
             header_stack.notify["visible-child"].connect (() => {
                 // Disable search
                 search_button.set_active (false);
