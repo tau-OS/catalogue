@@ -1,1 +1,2 @@
 option('development', type: 'boolean', value: false, description: 'If this is a development build')
+option('api_url', type: 'string', value: 'http://0.0.0.0:8000', description: 'The Catalogue API url')

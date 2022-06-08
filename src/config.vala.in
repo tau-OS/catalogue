@@ -5,4 +5,5 @@ namespace Config {
     public const string APP_SETTINGS = @APP_SETTINGS@;
     public const string LOCALEDIR = @LOCALEDIR@;
     public const string GETTEXT_PACKAGE = @GETTEXT_PACKAGE@;
+    public const string API_URL = @API_URL@;
 }

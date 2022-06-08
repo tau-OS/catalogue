@@ -36,6 +36,21 @@ namespace Catalogue {
             carousel.scroll_to (page_widget, true);
         }
 
+        private void fill_carousel () {
+            GLib.File xml = File.new_for_uri (@"$(Config.API_URL)/client/carousel");
+            try {
+                if (new CatalogueRemoteXML ().get_xml_type (xml) == CatalogueRemoteXML.TYPE.CAROUSEL) {
+                    foreach (var package in new CatalogueRemoteXML ().get_packages (xml)) {
+                        var tile = new Catalogue.CarouselTile ();
+                        carousel.append (tile);
+                    }
+                }
+            } catch (Catalogue.XMLError e) {
+                print ("%s\n", e.message);
+            }
+            
+        }
+
         public Carousel () {
             Object ();
         }
@@ -49,9 +64,9 @@ namespace Catalogue {
                 move_relative_page(-1);
             });
 
-            carousel.append (new Catalogue.CarouselTile ());
-            carousel.append (new Catalogue.CarouselTile ());
-            carousel.append (new Catalogue.CarouselTile ());
+            ThreadService.run_in_thread.begin<void> (() => {
+               fill_carousel ();
+            });
         }
     }
 }
