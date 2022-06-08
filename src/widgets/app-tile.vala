@@ -18,33 +18,27 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/app-tile.ui")]
-    public class AppTile : Adw.ActionRow {
+    public class AppTile : He.MiniContentBlock {
         [GtkChild]
-        private unowned Gtk.Image image;
-        [GtkChild]
-        private unowned Gtk.Label title_label;
-        [GtkChild]
-        private unowned Gtk.Label description_label;
-        [GtkChild]
-        private unowned Gtk.Label price_label;
-        [GtkChild]
-        private unowned Gtk.Button button;
-        
+        private unowned He.FillButton price;
+
         public AppTile (Core.Package package) {
             Object ();
 
-            title_label.set_label (package.get_name ());
-            description_label.set_label (package.get_summary ());
-            price_label.set_label ("Free");
-            image.set_from_gicon (package.get_icon (64, 64));
+            this.set_title (package.get_name ());
+            this.set_subtitle (package.get_summary ());
 
-            button.clicked.connect (() => {
+            price.set_label ("Free");
+            this.set_gicon (package.get_icon (64, 64));
+            //  image.set_from_gicon (package.get_icon (64, 64));
+
+            price.clicked.connect (() => {
                 Signals.get_default ().explore_leaflet_open (package);
             });
         }
 
         public void click () {
-            button.clicked ();
+            price.clicked ();
         }
     }
 }
