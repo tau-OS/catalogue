@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <requires lib="gtk" version="4.0" />
-    <template class="CatalogueWindowInstalled" parent="AdwBin">
+    <template class="CatalogueWindowInstalled" parent="GtkBox">
         <child>
             <object class="GtkStack" id="stack">
                 <child>
