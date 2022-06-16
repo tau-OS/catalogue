@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/explore.ui")]
-    public class WindowExplore : Adw.Bin {
+    public class WindowExplore : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
