@@ -70,12 +70,6 @@
                         <property name="spacing">0</property>
                         <child>
                             <object class="AdwHeaderBar" id="header_bar">
-                                <property name="title-widget">
-                                    <object class="AdwViewSwitcherTitle" id="switcher_title">
-                                        <property name="stack">header_stack</property>
-                                        <property name="title" bind-source="CatalogueWindow" bind-property="title" bind-flags="sync-create" />
-                                    </object>
-                                </property>
                                 <child type="start">
                                     <object class="GtkButton" id="main_back_button">
                                         <property name="valign">center</property>
@@ -144,30 +138,33 @@
                                                     <object class="GtkBox">
                                                         <property name="orientation">vertical</property>
                                                         <child>
-                                                            <object class="AdwViewStack" id="header_stack">
+                                                            <object class="HeViewSwitcher">
+                                                                <property name="stack">header_stack</property>
+                                                            </object>
+                                                        </child>
+                                                        <child>
+                                                            <object class="GtkStack" id="header_stack">
                                                                 <property name="vexpand">True</property>
                                                                 <child>
-                                                                    <object class="AdwViewStackPage">
+                                                                    <object class="GtkStackPage">
                                                                         <property name="name">explore</property>
                                                                         <property name="title">Explore</property>
-                                                                        <property name="icon-name">explore-symbolic</property>
                                                                         <property name="child">
                                                                             <object class="CatalogueWindowExplore" />
                                                                         </property>
                                                                     </object>
                                                                 </child>
                                                                 <child>
-                                                                    <object class="AdwViewStackPage">
+                                                                    <object class="GtkStackPage">
                                                                         <property name="name">installed</property>
                                                                         <property name="title">Installed</property>
-                                                                        <property name="icon-name">folder-download-symbolic</property>
                                                                         <property name="child">
                                                                             <object class="CatalogueWindowInstalled" />
                                                                         </property>
                                                                     </object>
                                                                 </child>
                                                                 <child>
-                                                                    <object class="AdwViewStackPage">
+                                                                    <object class="GtkStackPage">
                                                                         <property name="name">updates</property>
                                                                         <property name="title">Updates</property>
                                                                         <property name="icon-name">emblem-synchronizing-symbolic</property>
@@ -176,12 +173,6 @@
                                                                         </property>
                                                                     </object>
                                                                 </child>
-                                                            </object>
-                                                        </child>
-                                                        <child>
-                                                            <object class="AdwViewSwitcherBar" id="switcher_bar">
-                                                                <property name="stack">header_stack</property>
-                                                                <property name="reveal" bind-source="switcher_title" bind-property="title-visible" bind-flags="sync-create" />
                                                             </object>
                                                         </child>
                                                     </object>

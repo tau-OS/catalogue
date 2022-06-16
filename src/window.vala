@@ -24,7 +24,7 @@ namespace Catalogue {
         [GtkChild]
         public unowned Gtk.Stack main_stack;
         [GtkChild]
-        private unowned Adw.ViewStack header_stack;
+        private unowned Gtk.Stack header_stack;
         [GtkChild]
         private unowned Gtk.Button back_button;
         [GtkChild]
