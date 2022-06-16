@@ -19,7 +19,7 @@
 // TODO automatically handle refreshing updates lol
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/updates.ui")]
-    public class WindowUpdates : Adw.Bin {
+    public class WindowUpdates : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]

@@ -2,7 +2,7 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <!-- <property name="icon-name">emblem-synchronizing-symbolic</property> -->
-    <template class="CatalogueWindowUpdates" parent="AdwBin">
+    <template class="CatalogueWindowUpdates" parent="GtkBox">
         <child>
             <object class="GtkStack" id="stack">
                 <child>
