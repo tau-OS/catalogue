@@ -25,11 +25,11 @@
         public AppTile (Core.Package package) {
             Object ();
 
-            this.set_title (package.get_name ());
-            this.set_subtitle (package.get_summary ());
+            this.title = package.get_name ();
+            this.subtitle = package.get_summary ();
 
             price.set_label ("Free");
-            this.set_gicon (package.get_icon (64, 64));
+            this.gicon = package.get_icon (64, 64);
 
             price.clicked.connect (() => {
                 Application.main_window.view_package_details (package);
