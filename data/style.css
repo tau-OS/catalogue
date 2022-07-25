@@ -1,0 +1,170 @@
+/* style.css
+ *
+ * Copyright 2022 Fyra Labs
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.stack-remove-sidebar {
+    border-right: none;
+}
+
+.image1 {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.content-block {
+    padding: 12px 6px;
+    border-radius: 12px;
+    margin: 6px 0;
+}
+
+.grid-content-block {
+    margin: 0px;
+    padding: 0px;
+}
+
+.featured-tile {
+    background: @view_bg_color;
+}
+
+.context-tile {
+    border: 1px solid @borders;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 24px 12px 24px 12px;
+    outline-offset: 6px;
+    transition-property: outline, outline-offset, background-image;
+    border-bottom: none;
+    border-right: none;
+    border-top: none;
+}
+
+.context-tile.keyboard-activating,
+.context-tile:active {
+    background-image: image(alpha(currentColor, .08));
+}
+
+.context-tile:hover {
+    background-image: image(alpha(currentColor, .03));
+}
+
+.context-tile:focus:focus-visible {
+    outline-offset: -1px;
+}
+
+.context-bar.horizontal box:first-child .context-tile:first-child,
+.context-bar.vertical .context-tile:first-child {
+    border-left: none;
+}
+
+.context-tile-lozenge {
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 999px;
+    padding: 6px 12px;
+    min-width: 18px;
+    /* 40px minus the left and right padding */
+    min-height: 24px;
+    /* 40px minus the top and bottom padding */
+}
+
+.context-tile-lozenge.wide-image image {
+    /* GtkImage always renders image square, so if we want an image which
+	 * is wide, but still the same height as all the others, we have to
+	 * use this hack to make it zero-height and vertically centred. The
+	 * vertical size group ensures that it does still actually have a
+	 * height. */
+    margin-top: -24px;
+    margin-bottom: -24px;
+}
+
+.context-tile-lozenge.grey {
+    color: alpha(@window_fg_color, .75);
+    background-color: alpha(@window_fg_color, .15);
+}
+
+.context-tile-lozenge.green,
+.context-tile-lozenge.details-rating-0 {
+    color: @green_5;
+    background-color: alpha(@green_3, .25);
+}
+
+.context-tile-lozenge.blue,
+.context-tile-lozenge.details-rating-5 {
+    color: @blue_4;
+    background-color: alpha(@blue_3, .25);
+}
+
+.context-tile-lozenge.yellow,
+.context-tile-lozenge.details-rating-12 {
+    color: #ae7b03;
+    background: alpha(@yellow_5, .25);
+}
+
+.context-tile-lozenge.details-rating-15 {
+    color: @orange_5;
+    background-color: alpha(@orange_4, .25);
+}
+
+
+.context-tile-lozenge.red,
+.context-tile-lozenge.details-rating-18 {
+    color: @red_4;
+    background-color: alpha(@red_2, .25);
+}
+
+.context-tile-lozenge image {
+    -gtk-icon-style: symbolic;
+}
+
+/* Category Tile coloring */
+.tile-accessories {
+    background-color: #F8D8E2;
+    color: #90183D;
+}
+
+.tile-internet {
+    background-color: #EDF6FE;
+    color: #0453A4;
+}
+
+.tile-develop {
+    background-color: #FFF6E1;
+    color: #A87801;
+}
+
+.tile-games {
+    background-color: #E5E1FF;
+    color: #1B07A2;
+}
+
+.tile-create {
+    background-color: #FFF6EF;
+    color: #A24806;
+}
+
+.tile-work {
+    background-color: #EDF8F5;
+    color: #2E7A68;
+}
+
+.skeleton {
+    border-radius: 12px;
+    background-color: #f0f0f2;
+    color: #f0f0f2;
+}

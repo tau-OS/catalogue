@@ -1,11 +1,11 @@
-scalable_dir = join_paths('hicolor', 'scalable', 'apps')
+icondir = catalogue_datadir / 'icons' / 'hicolor'
+
 install_data(
-  scalable_dir / ('@0@.svg').format(application_id),
-  install_dir: catalogue_datadir / 'icons' / scalable_dir
+  '@0@.svg'.format(application_id),
+  install_dir: icondir / 'scalable' / 'apps',
 )
 
-symbolic_dir = join_paths('hicolor', 'symbolic', 'apps')
 install_data(
-  symbolic_dir / 'co.tauos.Catalogue-symbolic.svg',
-  install_dir: catalogue_datadir / 'icons' / symbolic_dir
+  '@0@-symbolic.svg'.format(application_id),
+  install_dir: icondir / 'symbolic' / 'apps',
 )

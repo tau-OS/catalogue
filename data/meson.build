@@ -9,9 +9,19 @@ desktop_file = i18n.merge_file(
   install_dir: catalogue_datadir / 'applications'
 )
 
+local_desktop_file = i18n.merge_file(
+        input: 'co.tauos.Catalogue.local.desktop.in',
+       output: 'co.tauos.Catalogue.local.desktop',
+         type: 'desktop',
+       po_dir: '../po',
+      install: true,
+  install_dir: catalogue_datadir / 'applications'
+)
+
 desktop_utils = find_program('desktop-file-validate', required: false)
 if desktop_utils.found()
   test('Validate desktop file', desktop_utils, args: [desktop_file])
+  test('Validate desktop file', desktop_utils, args: [local_desktop_file])
 endif
 
 appdata_conf = configuration_data()
@@ -26,6 +36,12 @@ appstream_file = i18n.merge_file (
   po_dir: '../po',
   install: true,
   install_dir: catalogue_datadir / 'metainfo'
+)
+configure_file(
+    input: application_id + '.search-provider.ini.in',
+    output: application_id + '.search-provider.ini',
+    configuration: appdata_conf,
+    install_dir: catalogue_datadir / 'gnome-shell' / 'search-providers'
 )
 
 appstream_util = find_program('appstream-util', required: false)
