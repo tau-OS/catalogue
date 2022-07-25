@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+	<id>@appid@</id>
+	<name>Catalogue</name>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0-or-later</project_license>
+	<summary>A nice way to manage the software on your system.</summary>
+  <description>
+    <p>A nice way to manage the software on your system.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://via.placeholder.com/900</image>
+      <caption>Featured category</caption>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <!-- Set the type to "stable" for first release -->
+    <release date="2022-05-10" version="0.1.0" type="unstable">
+      <description>
+        <!-- This should match the changelog in the specfile -->
+        <p>This is an unstable release with the following changes:</p>
+        <ul>
+          <li>
+           Initial release
+          </li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <content_rating type="oars-1.0" />
+  <launchable type="desktop-id">@appid@.desktop</launchable>
+  <url type="homepage">https://tauos.co</url>
+  <developer_name>Jamie Murphy</developer_name>
+</component>
