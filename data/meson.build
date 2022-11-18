@@ -56,8 +56,7 @@ install_data(
 
 install_data(
     meson.project_name() + '.service',
-    # Unfortunately there's not a good directory variable
-    install_dir: join_paths(get_option('sysconfdir'), 'systemd', 'system', 'multi-user.target.wants')
+    install_dir: join_paths(get_option('prefix'), get_option('libdir'), 'systemd', 'system', 'multi-user.target.wants')
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
