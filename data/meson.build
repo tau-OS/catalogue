@@ -54,10 +54,14 @@ install_data(
   	install_dir: join_paths(get_option('datadir'), 'glib-2.0/schemas')
 )
 
-install_data(
-    meson.project_name() + '.service',
-    install_dir: join_paths(get_option('prefix'), get_option('libdir'), 'systemd', 'system', 'multi-user.target.wants')
-)
+systemd = dependency('systemd', required: false)
+
+if systemd.found()
+    install_data(
+        meson.project_name() + '.service',
+        install_dir: join_paths(systemd.get_pkgconfig_variable('systemdsystemunitdir'), 'multi-user.target.wants')
+    )
+endif
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
 if compile_schemas.found()
