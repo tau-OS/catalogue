@@ -20,7 +20,7 @@ namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/carousel.ui")]
     public class Carousel : Gtk.Box {
         [GtkChild]
-        private unowned Adw.Carousel carousel;
+        private unowned Bis.Carousel carousel;
         [GtkChild]
         private unowned Gtk.Button previous_button;
         [GtkChild]

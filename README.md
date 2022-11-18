@@ -18,7 +18,7 @@ You'll need the following dependencies:
 - `meson`
 - `valac`
 - `gtk4`
-- `libadwaita-1`
+- `libbismuth-1`
 - `libhelium-1`
 - `gee-0.8`
 - `flatpak`

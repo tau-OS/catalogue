@@ -18,18 +18,18 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/featured-row.ui")]
-    public class FeaturedRow : Adw.Bin {
+    public class FeaturedRow : He.Bin {
         [GtkChild]
-        private unowned Adw.PreferencesGroup row_container;
+        private unowned He.ContentList row_container;
         [GtkChild]
         private unowned Gtk.FlowBox row_box;
 
         public string title {
             get {
-                return row_container.get_title ();
+                return row_container.title;
             }
             set {
-                row_container.set_title (value);
+                row_container.title = (value);
             }
         }
 

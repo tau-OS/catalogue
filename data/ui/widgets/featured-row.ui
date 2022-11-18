@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueFeaturedRow" parent="HeBin">
+        <child>
+            <object class="HeContentList" id="row_container">
+                <property name="title">Category Title</property>
+                <child>
+                    <object class="GtkFlowBox" id="row_box">
+                        <property name="homogeneous">True</property>
+                        <property name="row-spacing">5</property>
+                        <property name="column-spacing">5</property>
+                        <property name="selection-mode">none</property>
+                        <property name="valign">start</property>
+                        <property name="hexpand">True</property>
+                        <property name="min-children-per-line">2</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

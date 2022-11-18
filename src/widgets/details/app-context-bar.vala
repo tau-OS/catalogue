@@ -18,7 +18,7 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-context-bar.ui")]
-    public class AppContextBar : Adw.Bin {
+    public class AppContextBar : He.Bin {
         [GtkChild]
         private unowned Gtk.Label storage_tile_lozenge_content;
         [GtkChild]
@@ -50,7 +50,7 @@
 
         [GtkCallback]
         public void open_oars_dialog () {
-            var window = new Adw.Window () {
+            var window = new He.Window () {
                 modal = true
             };
             window.set_transient_for (((Window)new Utils ().find_ancestor_of_type<Window>(this)));

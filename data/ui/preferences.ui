@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <requires lib="libadwaita" version="1.0" />
+    <template class="CataloguePreferences" parent="HeWindow">
+        <property name="can-navigate-back">True</property>
+
+        <child>
+            <object class="HePreferencesPage">
+                <property name="icon_name">preferences-system-symbolic</property>
+                <property name="title">_Preferences</property>
+                <property name="use-underline">True</property>
+                <child>
+                    <object class="HeContentList">
+                        <property name="title" translatable="yes">Software Repositories</property>
+                        <child>
+                            <object class="GtkListBox" id="repositories_listbox">
+                                <style>
+                                    <class name="boxed-list" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+
+    </template>
+</interface>

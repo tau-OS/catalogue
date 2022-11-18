@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueWindowSearch" parent="HeBin">
+        <child>
+            <object class="GtkScrolledWindow" id="scrolledwindow_search">
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">never</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <property name="vexpand">True</property>
+                <style>
+                    <class name="list-page" />
+                </style>
+                <child>
+                    <object class="BisClamp">
+                        <property name="maximum-size">600</property>
+                        <property name="tightening-threshold">600</property>
+                        <property name="child">
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">12</property>
+                                <property name="margin-top">24</property>
+                                <property name="margin-bottom">20</property>
+
+                                <child>
+                                    <object class="GtkListBox" id="apps_listbox">
+                                        <style>
+                                            <class name="boxed-list" />
+                                        </style>
+                                    </object>
+                                </child>
+                            </object>
+                        </property>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/search.ui")]
-    public class WindowSearch : Adw.Bin {
+    public class WindowSearch : He.Bin {
         [GtkChild]
         public unowned Gtk.ListBox apps_listbox;
 

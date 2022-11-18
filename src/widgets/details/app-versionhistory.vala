@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory.ui")]
-    public class AppVersionHistory : Adw.Bin {
+    public class AppVersionHistory : He.Bin {
         [GtkChild]
         private unowned Gtk.ListBox list_box_version_history;
         [GtkChild]

@@ -23,7 +23,7 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
-        private unowned Adw.StatusPage status_page_up_to_date;
+        private unowned He.EmptyPage status_page_up_to_date;
         [GtkChild]
         private unowned Gtk.ListBox listbox;
         [GtkChild]
@@ -107,7 +107,7 @@ namespace Catalogue {
                         } else {
                             var time = new DateTime.from_unix_local (client.settings.get_int64 ("last-update-check-time")).format ("%X");
                             if (time != null) {
-                                status_page_up_to_date.set_description ("Last checked: %s".printf (time));
+                                status_page_up_to_date.description = ("Last checked: %s".printf (time));
                             }
                             stack.set_visible_child_name ("up_to_date");
                         }

@@ -59,10 +59,11 @@ config_file = configure_file(
     configuration: conf
 )
 
+libbismuth_dep = meson.get_compiler('c').find_library('libbismuth', required: false)
 deps = [
     dependency('gtk4'),
     dependency('libhelium-1'),
-    dependency('libadwaita-1'),
+    dependency('libbismuth-1', fallback: [ 'libbismuth', 'libbismuth_dep' ], version: '>=1.0.0'),
     dependency('gee-0.8'),
     dependency('flatpak'),
     dependency('appstream', version: '>=0.12.10'),

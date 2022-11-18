@@ -18,7 +18,7 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/preferences.ui")]
-    public class Preferences : Adw.PreferencesWindow {
+    public class Preferences : He.Window {
         [GtkChild]
         private unowned Gtk.ListBox repositories_listbox;
 
@@ -31,10 +31,9 @@
             foreach (var remote in system_repos) {
                 var url = new Utils ().get_uri_hostname (remote.get_url ());
 
-                var row = new Adw.ActionRow () {
+                var row = new He.ContentBlock ("","","", null, null) {
                     title = remote.get_title (),
-                    subtitle = "%s • %s".printf (url, "System Installation"),
-                    selectable = false
+                    subtitle = "%s • %s".printf (url, "System Installation")
                 };
 
                 var toggle = new Gtk.Switch () {
@@ -50,17 +49,16 @@
                     return false;
                 });
 
-                row.add_suffix (toggle);
+                row.child = (toggle);
                 repositories_listbox.append (row);
             }
 
             foreach (var remote in user_repos) {
                 var url = new Utils ().get_uri_hostname (remote.get_url ());
 
-                var row = new Adw.ActionRow () {
+                var row = new He.ContentBlock ("","","", null, null) {
                     title = remote.get_title (),
-                    subtitle = "%s • %s".printf (url, "Per-User Installation"),
-                    selectable = false
+                    subtitle = "%s • %s".printf (url, "Per-User Installation")
                 };
 
                 var toggle = new Gtk.Switch () {
@@ -76,7 +74,7 @@
                     return false;
                 });
 
-                row.add_suffix (toggle);
+                row.child = (toggle);
                 repositories_listbox.append (row);
             }
         }

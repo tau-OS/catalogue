@@ -22,7 +22,7 @@
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
-        private unowned Adw.Carousel carousel;
+        private unowned Bis.Carousel carousel;
         [GtkChild]
         private unowned Gtk.Button button_next;
         [GtkChild]
@@ -36,12 +36,12 @@
         GenericArray<AppStream.Screenshot> screenshots;
         public signal void screenshot_downloaded ();
 
-        private void navigate (Adw.NavigationDirection direction) {
+        private void navigate (Bis.NavigationDirection direction) {
             var current_page = carousel.get_position ();
             var pages = carousel.get_n_pages ();
             int page_delta;
 
-            if (direction == Adw.NavigationDirection.BACK) {
+            if (direction == Bis.NavigationDirection.BACK) {
                 page_delta = -1;
             } else {
                 page_delta = 1;
@@ -87,11 +87,11 @@
             });
 
             button_previous.clicked.connect (() => {
-                navigate (Adw.NavigationDirection.BACK);
+                navigate (Bis.NavigationDirection.BACK);
             });
 
             button_next.clicked.connect (() => {
-                navigate (Adw.NavigationDirection.FORWARD);
+                navigate (Bis.NavigationDirection.FORWARD);
             });
 
             load_screenshots ();

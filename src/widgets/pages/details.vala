@@ -18,19 +18,19 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details.ui")]
-    public class WindowDetails : Adw.Bin {
+    public class WindowDetails : He.Bin {
         [GtkChild]
-        private unowned Adw.Bin app_header_container;
+        private unowned He.Bin app_header_container;
         [GtkChild]
-        private unowned Adw.Bin app_screenshots_container;
+        private unowned He.Bin app_screenshots_container;
         [GtkChild]
-        private unowned Adw.Bin app_details_container;
+        private unowned He.Bin app_details_container;
         [GtkChild]
-        private unowned Adw.Bin app_context_container;
+        private unowned He.Bin app_context_container;
         [GtkChild]
-        private unowned Adw.Bin app_version_history_container;
+        private unowned He.Bin app_version_history_container;
         [GtkChild]
-        private unowned Adw.Bin app_links_container;
+        private unowned He.Bin app_links_container;
         [GtkChild]
         private unowned Gtk.ProgressBar progress_bar;
 
@@ -49,12 +49,12 @@ namespace Catalogue {
 
             this.realize.connect (() => {
                 ThreadService.run_in_thread.begin<void> (() => {
-                    app_header_container.set_child (new Catalogue.AppHeader (package));
-                    app_screenshots_container.set_child (new Catalogue.AppScreenshots (package));
-                    app_details_container.set_child (new Catalogue.AppDetails (package));
-                    app_context_container.set_child (new Catalogue.AppContextBar (package));
-                    app_version_history_container.set_child (new Catalogue.AppVersionHistory (package));
-                    app_links_container.set_child (new Catalogue.AppLinks (package));
+                    app_header_container.child = new Catalogue.AppHeader (package);
+                    app_screenshots_container.child = new Catalogue.AppScreenshots (package);
+                    app_details_container.child = new Catalogue.AppDetails (package);
+                    app_context_container.child = new Catalogue.AppContextBar (package);
+                    app_version_history_container.child = new Catalogue.AppVersionHistory (package);
+                    app_links_container.child = new Catalogue.AppLinks (package);
                 });
             });
         }

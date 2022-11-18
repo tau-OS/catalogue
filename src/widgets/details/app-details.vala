@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-details.ui")]
-    public class AppDetails : Adw.Bin {
+    public class AppDetails : He.Bin {
         [GtkChild]
         private unowned Gtk.Label application_details_summary;
         [GtkChild]

@@ -18,7 +18,7 @@
 
  namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/installed-row.ui")]
-    public class InstalledRow : Adw.Bin {
+    public class InstalledRow : He.Bin {
         [GtkChild]
         private unowned Gtk.Label app_name;
         [GtkChild]

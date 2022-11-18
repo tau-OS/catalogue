@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueCarousel" parent="GtkBox">
+        <property name="halign">fill</property>
+        <property name="valign">fill</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">12</property>
+        <!-- <child>
+      <object class="GtkEventControllerKey">
+        <signal name="key-pressed" handler="key_pressed_cb"/>
+      </object>
+    </child> -->
+        <child>
+            <object class="GtkOverlay" id="overlay">
+                <property name="halign">fill</property>
+                <property name="valign">fill</property>
+                <child>
+                    <object class="BisCarousel" id="carousel">
+                        <style>
+                            <class name="card" />
+                        </style>
+                    </object>
+                </child>
+                <child type="overlay">
+                    <object class="GtkBox">
+                      <property name="halign">end</property>
+                      <property name="valign">end</property>
+                      <property name="margin-bottom">18</property>
+                      <property name="margin-end">18</property>
+                      <property name="spacing">12</property>
+                        <child>
+                            <object class="GtkButton" id="previous_button">
+                                <property name="use-underline">1</property>
+                                <property name="width-request">50</property>
+                                <property name="height-request">50</property>
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <style>
+                                    <class name="circular" />
+                                    <class name="image-button" />
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton" id="next_button">
+                                <property name="use-underline">1</property>
+                                <property name="width-request">50</property>
+                                <property name="height-request">50</property>
+                                <property name="icon_name">go-next-symbolic</property>
+                                <style>
+                                    <class name="circular" />
+                                    <class name="image-button" />
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="BisCarouselIndicatorDots" id="lines">
+                <property name="carousel">carousel</property>
+            </object>
+        </child>
+    </template>
+</interface>

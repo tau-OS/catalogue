@@ -67,7 +67,7 @@ namespace Catalogue {
                 //      print ("TODO add error dialog");
                 //  }
 
-                main_window.leaflet_forward ();
+                main_window.album_forward ();
             });
         }
 
@@ -107,13 +107,22 @@ namespace Catalogue {
 
         public signal void open_dialog ();
 
-        protected override void activate () {
+        protected override void startup () {
+            Gdk.RGBA accent_color = { 0 };
+            accent_color.parse("#8c56bf");
+            default_accent_color = He.Color.from_gdk_rgba(accent_color);
+    
             resource_base_path = "/co/tauos/Catalogue";
-
+    
             base.startup ();
+    
+            Bis.init ();
 
             main_window = new Catalogue.Window (this);
-            main_window.leaflet_stack.set_visible_child_name ("refreshing_cache");
+            main_window.album_stack.set_visible_child_name ("refreshing_cache");
+        }
+
+        protected override void activate () {
             active_window?.present ();
 
             client.update_cache.begin ();

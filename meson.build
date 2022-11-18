@@ -1,5 +1,5 @@
 project(
-    'catalogue', ['c', 'vala'],
+    'co.tauos.Catalogue', ['c', 'vala'],
     version: '0.1.0',
     meson_version: '>= 0.59.0',
     default_options: [ 'warning_level=2', ],
@@ -8,7 +8,7 @@ project(
 application_id = 'co.tauos.Catalogue'
 
 if get_option('development')
-  app_id = 'co.tauos.Catalogue.Devel'
+  app_id = 'co.tauos.Catalogue'
   name_suffix = ' (Development)'
 else
   app_id = 'co.tauos.Catalogue'

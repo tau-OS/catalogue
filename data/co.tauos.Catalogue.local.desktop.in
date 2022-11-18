@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Software Install
 Comment=Install selected software on the system
-Exec=catalogue --filename %f
+Exec=co.tauos.Catalogue --filename %f
 Icon=system-software-install
 Terminal=false
 Type=Application

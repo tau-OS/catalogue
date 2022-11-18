@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAppDetails" parent="HeBin">
+        <child>
+            <object class="BisClamp">
+                <property name="maximum-size">860</property>
+                <property name="tightening-threshold">576</property>
+                <property name="margin-start">12</property>
+                <property name="margin-end">12</property>
+                <child>
+                    <object class="GtkBox" id="application_details">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">12</property>
+                        <child>
+                            <object class="GtkLabel" id="application_details_summary">
+                                <property name="halign">fill</property>
+                                <property name="valign">start</property>
+                                <property name="hexpand">True</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">60</property>
+                                <property name="label">This is an example header</property>
+                                <style>
+                                    <class name="title-2" />
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="application_details_description">
+                                <property name="halign">start</property>
+                                <property name="hexpand">True</property>
+                                <property name="valign">start</property>
+                                <property name="vexpand">False</property>
+                                <property name="wrap">True</property>
+                                <property name="max-width-chars">40</property>
+                                <property name="margin_bottom">14</property>
+                                <property name="label">Ut modi totam iste facere qui sequi. Fuga rem blanditiis reprehenderit expedita. Id illo quod amet. Earum nesciunt optio voluptatum molestias aut facilis similique iusto.</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

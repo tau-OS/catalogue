@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <requires lib="gtk" version="4.0" />
+    <template class="CatalogueAddRepositoryDialog" parent="GtkWindow">
+        <property name="modal">true</property>
+        <property name="default-height">300</property>
+        <property name="default-width">400</property>
+        <property name="decorated">false</property>
+        <!-- fucking internal child -->
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="vexpand">true</property>
+                <child>
+                    <object class="GtkImage">
+                        <property name="icon-name">dialog-information-symbolic</property>
+                        <property name="margin-top">24</property>
+                        <property name="pixel-size">64</property>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel" id="header">
+                        <property name="label">Add Flatpak Repository?</property>
+                        <property name="halign">center</property>
+                        <property name="xalign">0.5</property>
+                        <property name="vexpand">False</property>
+                        <property name="wrap">true</property>
+                        <property name="margin-top">24</property>
+                        <property name="justify">center</property>
+                        <style>
+                            <class name="title-2" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Adding a Flatpak repository allows you to find and install more apps.</property>
+                        <property name="halign">center</property>
+                        <property name="xalign">0.5</property>
+                        <property name="vexpand">False</property>
+                        <property name="wrap">true</property>
+                        <property name="margin-top">24</property>
+                        <property name="justify">center</property>
+                        <style>
+                            <class name="title-3" />
+                        </style>
+                    </object>
+                </child>
+                <child>
+                    <object class="BisClamp">
+                        <property name="hexpand">True</property>
+                        <property name="maximum_size">400</property>
+                        <property name="tightening_threshold">500</property>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">6</property>
+                                <property name="margin-top">24</property>
+                                <style>
+                                    <class name="card" />
+                                    <class name="content-block" />
+                                </style>
+                                <child>
+                                    <object class="GtkLabel" id="title_label">
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">32</property>
+                                        <property name="margin-top">6</property>
+                                        <property name="label">Catalogue</property>
+                                        <property name="halign">start</property>
+                                        <property name="xalign">0.5</property>
+                                        <property name="vexpand">False</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="wrap">true</property>
+                                        <style>
+                                            <class name="title-4" />
+                                        </style>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel" id="description_label">
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">32</property>
+                                        <property name="margin-bottom">6</property>
+                                        <property name="label">Central repository for Catalogue</property>
+                                        <property name="halign">start</property>
+                                        <property name="ellipsize">end</property>
+                                        <property name="lines">1</property>
+                                        <property name="wrap">true</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="valign">end</property>
+                        <property name="vexpand">true</property>
+                        <property name="margin-start">24</property>
+                        <property name="margin-end">24</property>
+                        <property name="margin-bottom">24</property>
+                        <property name="margin-top">24</property>
+                        <child>
+                            <object class="GtkButton" id="button_cancel">
+                                <property name="label">Cancel</property>
+                                <property name="hexpand">true</property>
+                                <property name="halign">start</property>
+                                <signal name="clicked" handler="on_close" />
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkButton" id="button_ok">
+                                <property name="label">Add Repo</property>
+                                <property name="hexpand">true</property>
+                                <property name="halign">end</property>
+                                <style>
+                                    <class name="suggested-action" />
+                                </style>
+                                <signal name="clicked" handler="on_add" />
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

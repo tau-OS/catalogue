@@ -20,7 +20,7 @@ namespace Catalogue {
     [GtkTemplate (ui = "/co/tauos/Catalogue/window.ui")]
     public class Window : He.ApplicationWindow {
         [GtkChild]
-        public unowned Gtk.Stack leaflet_stack;
+        public unowned Gtk.Stack album_stack;
         [GtkChild]
         public unowned Gtk.Stack main_stack;
         [GtkChild]
@@ -30,9 +30,9 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Button main_back_button;
         [GtkChild]
-        unowned Adw.Leaflet leaflet;
+        unowned Bis.Album album;
         [GtkChild]
-        private unowned Gtk.Box leaflet_contents;
+        private unowned Gtk.Box album_contents;
         [GtkChild]
         private unowned Gtk.SearchBar search_bar;
         [GtkChild]
@@ -40,20 +40,20 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.ToggleButton search_button;
         [GtkChild]
-        private unowned Adw.Bin search_page;
+        private unowned He.Bin search_page;
 
         public void view_package_details (Core.Package package) {
-            leaflet_stack.set_visible_child_name ("leaflet_contents");
-            leaflet.navigate (Adw.NavigationDirection.BACK);
+            album_stack.set_visible_child_name ("album_contents");
+            album.navigate (Bis.NavigationDirection.BACK);
             back_button.set_visible (true);
-            // Add details page to leaflet
-            var widget_list = new Utils ().get_all_widgets_in_child (leaflet_contents);
+            // Add details page to album
+            var widget_list = new Utils ().get_all_widgets_in_child (album_contents);
 
             foreach (var widget in widget_list) {
-                leaflet_contents.remove (widget);
+                album_contents.remove (widget);
             }
             
-            leaflet_contents.append (new Catalogue.WindowDetails (package));
+            album_contents.append (new Catalogue.WindowDetails (package));
         }
 
         private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
@@ -64,10 +64,10 @@ namespace Catalogue {
 
         [GtkCallback]
         public void back_clicked_cb () {
-            leaflet.set_transition_type (Adw.LeafletTransitionType.OVER);
-            leaflet.navigate (Adw.NavigationDirection.FORWARD);
+            album.set_transition_type (Bis.AlbumTransitionType.OVER);
+            album.navigate (Bis.NavigationDirection.FORWARD);
             Signals.get_default ().window_do_back_button_clicked (true);
-            leaflet.set_transition_type (Adw.LeafletTransitionType.UNDER);
+            album.set_transition_type (Bis.AlbumTransitionType.UNDER);
         }
 
         [GtkCallback]
@@ -90,8 +90,8 @@ namespace Catalogue {
             }
         }
 
-        public void leaflet_forward () {
-            leaflet.navigate (Adw.NavigationDirection.FORWARD);
+        public void album_forward () {
+            album.navigate (Bis.NavigationDirection.FORWARD);
         }
 
         private void trigger_search () {
@@ -107,12 +107,12 @@ namespace Catalogue {
         public Window (He.Application app) {
             Object (application: app);
 
-            search_page.set_child (search_view);
+            search_page.child = (search_view);
 
             var go_back = new SimpleAction ("go-back", null);
 
             go_back.activate.connect (() => {
-                if (leaflet.get_visible_child ().get_name () == "leaflet_secondary") {
+                if (album.get_visible_child ().get_name () == "album_secondary") {
                     back_clicked_cb ();
                 } else {
                     main_back_clicked_cb ();
@@ -144,14 +144,6 @@ namespace Catalogue {
             entry_search.add_controller (key_press_event);
 
             entry_search.search_changed.connect (() => trigger_search ());
-
-            var provider = new Gtk.CssProvider ();
-            provider.load_from_resource ("/co/tauos/Catalogue/catalogue.css");
-            Gtk.StyleContext.add_provider_for_display (
-                Gdk.Display.get_default (),
-                provider,
-                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
             
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
             default_theme.add_resource_path ("/co/tauos/Catalogue");

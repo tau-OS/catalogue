@@ -81,8 +81,8 @@ namespace Catalogue {
                 featured_flowbox.append (tile);
             }
 
-            Signals.get_default ().window_do_back_button_clicked.connect ((is_leaflet) => {
-                if (!is_leaflet) {
+            Signals.get_default ().window_do_back_button_clicked.connect ((is_album) => {
+                if (!is_album) {
                     active_category = null;
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_RIGHT);
                     stack.set_visible_child_name ("featured");

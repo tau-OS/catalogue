@@ -26,7 +26,7 @@ public class Signals : GLib.Object {
         return _signals;
     }
 
-    public signal void window_do_back_button_clicked (bool is_leaflet);
+    public signal void window_do_back_button_clicked (bool is_album);
 
     public signal void updates_progress_bar_change (Catalogue.Core.Package package, bool is_finished);
 }
