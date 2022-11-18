@@ -13,6 +13,7 @@
         "--device=all",
         "--filesystem=host",
         "--filesystem=~/.var/app/",
+        "--filesystem=xdg-run/gvfsd",
         "--filesystem=xdg-data/flatpak:ro"
     ],
     "desktop-file-name-suffix" : " (Development)",
@@ -491,7 +492,7 @@
             ]
         },
         {
-            "name" : "Catalogue",
+            "name" : "catalogue",
             "builddir" : true,
             "buildsystem" : "meson",
             "config-opts" : [

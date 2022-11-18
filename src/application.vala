@@ -119,7 +119,6 @@ namespace Catalogue {
             Bis.init ();
 
             main_window = new Catalogue.Window (this);
-            main_window.album_stack.set_visible_child_name ("refreshing_cache");
         }
 
         protected override void activate () {

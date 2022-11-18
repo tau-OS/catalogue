@@ -214,7 +214,7 @@ namespace Catalogue.Core {
                     // TODO this is a dumb AF icon to use
                     notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
-                    application.send_notification ("catalouge.successful_install", notification);
+                    application.send_notification ("catalogue.successful_install", notification);
                 }
                 debug ("Package %s Updated", this.get_name ());
             }
@@ -238,7 +238,7 @@ namespace Catalogue.Core {
                 // TODO this is a dumb AF icon to use
                 notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
-                application.send_notification ("catalouge.successful_install", notification);
+                application.send_notification ("catalogue.successful_install", notification);
                 debug ("Package %s Installed", this.get_name ());
             }
 
@@ -261,7 +261,7 @@ namespace Catalogue.Core {
                 // TODO this is a dumb AF icon to use
                 notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
-                application.send_notification ("catalouge.successful_install", notification);
+                application.send_notification ("catalogue.successful_install", notification);
                 debug ("Package %s Removed", this.get_name ());
             }
 

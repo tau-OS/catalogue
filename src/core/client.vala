@@ -144,7 +144,7 @@ namespace Catalogue.Core {
                                     notification.set_body (body);
                                     notification.set_icon (new ThemedIcon ("software-update-available"));
 
-                                    application.send_notification ("catalouge.updates", notification);
+                                    application.send_notification ("catalogue.updates", notification);
                                 } else {
                                     application.withdraw_notification ("catalogue.updates");
                                 }
