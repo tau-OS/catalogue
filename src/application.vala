@@ -39,6 +39,10 @@ namespace Catalogue {
             { "quit", quit }
         };
 
+        public Application () {
+            Object (application_id: Config.APP_ID);
+        }
+
         construct {
             application_id = Config.APP_ID;
             flags = ApplicationFlags.FLAGS_NONE;
