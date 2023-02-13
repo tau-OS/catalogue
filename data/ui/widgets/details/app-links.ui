@@ -50,32 +50,6 @@
                                 </child>
                                 <child>
                                     <object class="GtkFlowBoxChild">
-                                        <property name="visible" bind-source="donate_row" bind-property="visible" bind-flags="sync-create" />
-                                        <child>
-                                            <object class="GtkListBox">
-                                                <property name="selection-mode">none</property>
-                                                <style>
-                                                    <class name="content-list"/>
-                                                </style>
-                                                <child>
-                                                    <object class="HeMiniContentBlock" id="donate_row">
-                                                        <property name="visible">false</property>
-                                                        <property name="icon">money-symbolic</property>
-                                                        <property name="title" translatable="yes">Donate</property>
-                                                        <property name="subtitle">tauos.co</property>
-                                                        <child>
-                                                            <object class="GtkImage">
-                                                                <property name="icon-name">external-link-symbolic</property>
-                                                            </object>
-                                                        </child>
-                                                    </object>
-                                                </child>
-                                            </object>
-                                        </child>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkFlowBoxChild">
                                         <property name="visible" bind-source="translate_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
                                             <object class="GtkListBox">

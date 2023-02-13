@@ -20,15 +20,13 @@
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/details/app-links.ui")]
     public class AppLinks : He.Bin {
         [GtkChild]
-        private unowned He.ContentBlock project_website_row;
+        private unowned He.MiniContentBlock project_website_row;
         [GtkChild]
-        private unowned He.ContentBlock donate_row;
+        private unowned He.MiniContentBlock translate_row;
         [GtkChild]
-        private unowned He.ContentBlock translate_row;
+        private unowned He.MiniContentBlock report_an_issue_row;
         [GtkChild]
-        private unowned He.ContentBlock report_an_issue_row;
-        [GtkChild]
-        private unowned He.ContentBlock help_row;
+        private unowned He.MiniContentBlock help_row;
 
         public AppLinks (Core.Package package) {
             Object ();
@@ -38,13 +36,6 @@
                 project_website_row.set_name (homepage_url);
                 project_website_row.subtitle = (new Utils ().get_uri_hostname (homepage_url));
                 project_website_row.set_visible (true);
-            }
-
-            var donate_url = package.component.get_url (AppStream.UrlKind.DONATION);
-            if (donate_url != null) {
-                donate_row.set_name (donate_url);
-                donate_row.subtitle = (new Utils ().get_uri_hostname (donate_url));
-                donate_row.set_visible (true);
             }
 
             var translate_url = package.component.get_url (AppStream.UrlKind.TRANSLATE);

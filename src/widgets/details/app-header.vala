@@ -26,7 +26,9 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Label developer_name_label;
         [GtkChild]
-        private unowned Gtk.Button action_button;
+        private unowned He.PillButton action_button;
+        [GtkChild]
+        private unowned He.PillButton donate_action_button;
         [GtkChild]
         private unowned Gtk.Spinner progress_spinner;
 
@@ -49,6 +51,11 @@ namespace Catalogue {
                     progress_spinner.set_visible (false);
                 }
             });
+
+            var donate_url = app.component.get_url (AppStream.UrlKind.DONATION);
+            if (donate_url != null) {
+                donate_action_button.set_visible (true);
+            }
 
             get_state (app);
         }

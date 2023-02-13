@@ -104,6 +104,16 @@
                                                             </object>
                                                         </child>
                                                         <child>
+                                                            <object class="HePillButton" id="donate_action_button">
+                                                                <property name="visible">false</property>
+                                                                <property name="name">logo</property>
+                                                                <property name="label" translatable="true">Donate</property>
+                                                                <style>
+                                                                    <class name="list-button" />
+                                                                </style>
+                                                            </object>
+                                                        </child>
+                                                        <child>
                                                             <object class="HePillButton" id="action_button">
                                                                 <property name="name">logo</property>
                                                                 <property name="width-request">50</property>
