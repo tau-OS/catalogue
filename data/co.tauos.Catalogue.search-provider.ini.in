@@ -1,5 +1,0 @@
-[Shell Search Provider]
-DesktopId=co.tauos.Catalogue.desktop
-BusName=@APP_ID@
-ObjectPath=/co/tauos/Catalogue/SearchProvider
-Version=2

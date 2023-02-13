@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/search-row.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/search-row.ui")]
     public class SearchRow : He.Bin {
         [GtkChild]
         private unowned Gtk.Label app_name;

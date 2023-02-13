@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/featured-row.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/featured-row.ui")]
     public class FeaturedRow : He.Bin {
         [GtkChild]
         private unowned He.ContentList row_container;

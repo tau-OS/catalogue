@@ -3,7 +3,7 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppHeader" parent="HeBin">
         <child>
-            <object class="BisClamp">
+            <object class="BisLatch">
                 <property name="maximum-size">860</property>
                 <property name="tightening-threshold">576</property>
                 <property name="margin-start">12</property>
@@ -14,7 +14,7 @@
                         <property name="spacing">10</property>
                         <child>
                             <object class="GtkImage" id="application_details_icon">
-                                <property name="resource">/co/tauos/Catalogue/test-icon.png</property>
+                                <property name="resource">/com/fyralabs/Catalogue/test-icon.png</property>
                                 <property name="halign">start</property>
                                 <property name="pixel_size">128</property>
                                 <style>

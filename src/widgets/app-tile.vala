@@ -17,10 +17,10 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/app-tile.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/app-tile.ui")]
     public class AppTile : He.MiniContentBlock {
         [GtkChild]
-        private unowned He.FillButton price;
+        private unowned He.PillButton price;
 
         public AppTile (Core.Package package) {
             Object ();

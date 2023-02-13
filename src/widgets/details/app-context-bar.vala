@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-context-bar.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/details/app-context-bar.ui")]
     public class AppContextBar : He.Bin {
         [GtkChild]
         private unowned Gtk.Label storage_tile_lozenge_content;

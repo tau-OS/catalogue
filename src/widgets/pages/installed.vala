@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/installed.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/installed.ui")]
     public class WindowInstalled : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Stack stack;

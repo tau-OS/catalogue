@@ -8,7 +8,7 @@
                     <object class="GtkStackPage">
                         <property name="name">refreshing_installed</property>
                         <property name="child">
-                            <object class="HeEmptyPage">
+                            <object class="HeEmptyPage" id="loading_page">
                                 <property name="vexpand">true</property>
                                 <property name="title">Loading installed applications...</property>
                                 <child>
@@ -24,22 +24,10 @@
                     <object class="GtkStackPage">
                         <property name="name">no_installed</property>
                         <property name="child">
-                            <!-- 
-                                FIXME: HeEmptyPage does not support images, it only supports GdkPaintables and icons.
-                                We use a child element with a GtkImage for now
-                            -->
-                            <object class="HeEmptyPage">
+                            <object class="HeEmptyPage" id="no_installed_page">
                                 <property name="title">No Installed Apps</property>
                                 <property name="description">It's pretty lonely over here...</property>
-                                <property name="child">
-                                    <object class="GtkImage">
-                                        <property name="pixel-size">300</property>
-                                        <property name="resource">/co/tauos/Catalogue/no-installed-apps.svg</property>
-                                        <style>
-                                            <class name="icon" />
-                                        </style>
-                                    </object>
-                                </property>
+                                <property name="resource">/com/fyralabs/Catalogue/no-installed-apps.svg</property>
                             </object>
                         </property>
                     </object>
@@ -63,39 +51,28 @@
                                     <object class="GtkScrolledWindow" id="scrolledwindow_install">
                                         <property name="can_focus">True</property>
                                         <property name="hscrollbar_policy">never</property>
-                                        <property name="vscrollbar_policy">automatic</property>
                                         <property name="vexpand">True</property>
-                                        <style>
-                                            <class name="list-page" />
-                                        </style>
                                         <child>
-                                            <object class="BisClamp">
+                                            <object class="BisLatch">
                                                 <property name="maximum-size">600</property>
                                                 <property name="tightening-threshold">600</property>
-                                                <property name="child">
+                                                <child>
                                                     <object class="GtkBox">
                                                         <property name="orientation">vertical</property>
                                                         <property name="spacing">12</property>
                                                         <property name="margin-top">24</property>
                                                         <property name="margin-bottom">20</property>
-
                                                         <child>
                                                             <object class="HeContentList" id="apps">
                                                                 <property name="title" translatable="yes">Applications</property>
-                                                                <style>
-                                                                    <class name="section" />
-                                                                </style>
                                                                 <child>
                                                                     <object class="GtkListBox" id="apps_listbox">
-                                                                        <style>
-                                                                            <class name="boxed-list" />
-                                                                        </style>
                                                                     </object>
                                                                 </child>
                                                             </object>
                                                         </child>
                                                     </object>
-                                                </property>
+                                                </child>
                                             </object>
                                         </child>
                                     </object>

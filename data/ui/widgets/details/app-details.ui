@@ -3,7 +3,7 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppDetails" parent="HeBin">
         <child>
-            <object class="BisClamp">
+            <object class="BisLatch">
                 <property name="maximum-size">860</property>
                 <property name="tightening-threshold">576</property>
                 <property name="margin-start">12</property>

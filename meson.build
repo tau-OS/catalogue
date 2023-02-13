@@ -1,17 +1,17 @@
 project(
-    'co.tauos.Catalogue', ['c', 'vala'],
+    'com.fyralabs.Catalogue', ['c', 'vala'],
     version: '0.1.0',
     meson_version: '>= 0.59.0',
     default_options: [ 'warning_level=2', ],
 )
 
-application_id = 'co.tauos.Catalogue'
+application_id = 'com.fyralabs.Catalogue'
 
 if get_option('development')
-  app_id = 'co.tauos.Catalogue'
+  app_id = 'com.fyralabs.Catalogue'
   name_suffix = ' (Development)'
 else
-  app_id = 'co.tauos.Catalogue'
+  app_id = 'com.fyralabs.Catalogue'
   name_suffix = ''
 endif
 

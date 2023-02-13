@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <requires lib="gtk" version="4.0" />
-    <template class="CatalogueUninstallWarningDialog" parent="GtkWindow">
+    <template class="CatalogueUninstallWarningDialog" parent="HeWindow">
         <property name="modal">true</property>
         <property name="default-height">400</property>
         <property name="default-width">300</property>
-        <property name="decorated">false</property>
-        <!-- fucking internal child -->
         <child>
             <object class="GtkBox">
                 <property name="orientation">vertical</property>
                 <property name="vexpand">true</property>
+                <style>
+                    <class name="dialog-content" />
+                </style>
                 <child>
                     <object class="GtkImage">
                         <property name="icon-name">emblem-important-symbolic</property>

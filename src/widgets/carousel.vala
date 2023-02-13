@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/carousel.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/carousel.ui")]
     public class Carousel : Gtk.Box {
         [GtkChild]
         private unowned Bis.Carousel carousel;

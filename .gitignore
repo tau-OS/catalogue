@@ -3,3 +3,5 @@ build/
 .vscode
 anda-build/
 .flatpak/
+builddir/
+_build/

@@ -27,17 +27,6 @@
 	margin-right: 6px;
 }
 
-.content-block {
-    padding: 12px 6px;
-    border-radius: 12px;
-    margin: 6px 0;
-}
-
-.grid-content-block {
-    margin: 0px;
-    padding: 0px;
-}
-
 .featured-tile {
     background: @view_bg_color;
 }
@@ -157,4 +146,14 @@
     border-radius: 12px;
     background-color: #f0f0f2;
     color: #f0f0f2;
+}
+
+.search box {
+	background:none;
+	box-shadow: none;
+}
+
+.search entry {
+	border-radius: 999px;
+	min-width: 300px;
 }

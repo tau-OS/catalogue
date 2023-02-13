@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/category-tile.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/category-tile.ui")]
     public class CategoryTile : Gtk.Button {
         [GtkChild]
         private unowned Gtk.Label category_label;

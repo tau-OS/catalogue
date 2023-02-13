@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/category-row.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/category-row.ui")]
     public class CategoryRow : He.Bin {
         [GtkChild]
         private unowned Gtk.Stack stack;

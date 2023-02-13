@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/skeleton-tile.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/skeleton-tile.ui")]
     public class SkeletonTile : He.ContentBlock {
         [GtkChild]
         private unowned Gtk.Label title_label;

@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/window.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/window.ui")]
     public class Window : He.ApplicationWindow {
         [GtkChild]
         public unowned Gtk.Stack album_stack;
@@ -26,9 +26,9 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Stack header_stack;
         [GtkChild]
-        private unowned Gtk.Button back_button;
+        public unowned He.AppBar header_bar;
         [GtkChild]
-        private unowned Gtk.Button main_back_button;
+        public unowned He.AppBar header_bar2;
         [GtkChild]
         unowned Bis.Album album;
         [GtkChild]
@@ -41,11 +41,13 @@ namespace Catalogue {
         private unowned Gtk.ToggleButton search_button;
         [GtkChild]
         private unowned He.Bin search_page;
+        [GtkChild]
+        private unowned He.EmptyPage refresh_page;
 
         public void view_package_details (Core.Package package) {
             album_stack.set_visible_child_name ("album_contents");
             album.navigate (Bis.NavigationDirection.BACK);
-            back_button.set_visible (true);
+            header_bar.show_back = (true);
             // Add details page to album
             var widget_list = new Utils ().get_all_widgets_in_child (album_contents);
 
@@ -58,11 +60,8 @@ namespace Catalogue {
 
         private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
 
-        private bool should_button_be_shown;
-
         private const int VALID_QUERY_LENGTH = 3;
 
-        [GtkCallback]
         public void back_clicked_cb () {
             album.set_transition_type (Bis.AlbumTransitionType.OVER);
             album.navigate (Bis.NavigationDirection.FORWARD);
@@ -70,7 +69,6 @@ namespace Catalogue {
             album.set_transition_type (Bis.AlbumTransitionType.UNDER);
         }
 
-        [GtkCallback]
         public void main_back_clicked_cb () {
             Signals.get_default ().window_do_back_button_clicked (false);
         }
@@ -79,13 +77,12 @@ namespace Catalogue {
         public void search_bar_search_mode_enabled_changed_cb (Object source, GLib.ParamSpec pspec) {
             var child = main_stack.get_visible_child_name ();
 
-            // I want to provide transitions but until I nail the timing, nah
             if (child != "search_shell") {
                 search_view.reset ();
-                //  main_stack.set_transition_type (Gtk.StackTransitionType.OVER_DOWN);
+                main_stack.set_transition_type (Gtk.StackTransitionType.OVER_DOWN);
                 main_stack.set_visible_child_name ("search_shell");
             } else {
-                //  main_stack.set_transition_type (Gtk.StackTransitionType.UNDER_DOWN);
+                main_stack.set_transition_type (Gtk.StackTransitionType.UNDER_DOWN);
                 main_stack.set_visible_child_name ("main_shell");
             }
         }
@@ -108,24 +105,21 @@ namespace Catalogue {
             Object (application: app);
 
             search_page.child = (search_view);
+            refresh_page.action_button.visible = false;
 
-            var go_back = new SimpleAction ("go-back", null);
-
-            go_back.activate.connect (() => {
-                if (album.get_visible_child ().get_name () == "album_secondary") {
-                    back_clicked_cb ();
-                } else {
-                    main_back_clicked_cb ();
-                }
+            header_bar.back_button.clicked.connect (() => {
+                main_back_clicked_cb ();
             });
-            this.get_application ().add_action (go_back);
+            header_bar2.back_button.clicked.connect (() => {
+                back_clicked_cb ();
+                hide_back_button ();
+            });
 
             // i hate accelerators
             var focus_search = new SimpleAction ("focus-search", null);
             focus_search.activate.connect (() => search_button.set_active (!search_button.active));
             this.get_application ().add_action (focus_search);
 
-            app.set_accels_for_action ("win.go-back", {"<Alt>Left", "Back"});
             app.set_accels_for_action ("win.focus-search", {"<Ctrl>f"});
 
             search_bar.connect_entry ((Gtk.Editable) entry_search);
@@ -146,34 +140,37 @@ namespace Catalogue {
             entry_search.search_changed.connect (() => trigger_search ());
             
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
-            default_theme.add_resource_path ("/co/tauos/Catalogue");
-            
-            should_button_be_shown = false;
+            default_theme.add_resource_path ("/com/fyralabs/Catalogue");
 
             // Handle Rows
             header_stack.notify["visible-child"].connect (() => {
                 // Disable search
                 search_button.set_active (false);
-                if (header_stack.get_visible_child_name () == "explore" && should_button_be_shown == true) {
-                    show_back_button ();
-                } else {
+                if (header_stack.get_visible_child_name () == "explore") {
                     hide_back_button ();
+                } else {
+                    show_back_button ();
                 }
             });
 
+            set_default_size (910, 640);
             this.show ();
         }
 
+        public void hide_main_back_button () {
+            header_bar.show_back = (false);
+        }
+
         public void hide_back_button () {
-            main_back_button.set_visible (false);
-            if (header_stack.get_visible_child_name () == "explore") {
-                should_button_be_shown = false;
-            }
+            header_bar2.show_back = (false);
+        }
+
+        public void show_main_back_button () {
+            header_bar.show_back = (true);
         }
 
         public void show_back_button () {
-            main_back_button.set_visible (true);
-            should_button_be_shown = true;
+            header_bar2.show_back = (true);
         }
     }
 }

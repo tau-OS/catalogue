@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/Dialogs/add-repository.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/add-repository.ui")]
     public class AddRepositoryDialog : Gtk.Window {
         [GtkChild]
         private unowned Gtk.Label title_label;

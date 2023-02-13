@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <requires lib="gtk" version="4.0" />
-    <template class="CatalogueVersionHistoryDialog" parent="GtkDialog">
+    <template class="CatalogueVersionHistoryDialog" parent="HeWindow">
         <property name="modal">true</property>
         <property name="title">Version History</property>
         <property name="default-height">550</property>
         <property name="default-width">860</property>
-        <property name="margin-top">10</property>
-        <!-- fucking internal child -->
-        <child internal-child="content_area">
-            <object class="HeBin">
-                <property name="margin-top">12</property>
-                <property name="margin-bottom">12</property>
+        <child>
+            <object class="GtkBox">
+                <style>
+                    <class name="dialog-content" />
+                </style>
                 <child>
                     <object class="GtkScrolledWindow">
                         <property name="can_focus">True</property>
@@ -22,7 +21,7 @@
                             <class name="list-page" />
                         </style>
                         <child>
-                            <object class="BisClamp">
+                            <object class="BisLatch">
                                 <property name="maximum-size">860</property>
                                 <property name="tightening-threshold">576</property>
 
@@ -47,7 +46,7 @@
                                                         <property name="margin_bottom">12</property>
                                                         <child>
                                                             <object class="GtkImage">
-                                                                <property name="resource">/co/tauos/Catalogue/ghost.svg</property>
+                                                                <property name="resource">/com/fyralabs/Catalogue/ghost.svg</property>
                                                                 <property name="margin_end">6</property>
                                                             </object>
                                                         </child>

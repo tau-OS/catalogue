@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Catalogue
 Comment=Browse and manage apps
-Exec=co.tauos.Catalogue
-Icon=co.tauos.Catalogue
+Exec=com.fyralabs.Catalogue
+Icon=com.fyralabs.Catalogue
 Keywords=install;uninstall;remove;catalogue;store;apps;software;
 Terminal=false
 Type=Application

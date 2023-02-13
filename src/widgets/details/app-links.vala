@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-links.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/details/app-links.ui")]
     public class AppLinks : He.Bin {
         [GtkChild]
         private unowned He.ContentBlock project_website_row;

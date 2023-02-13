@@ -46,7 +46,7 @@
                                 <property name="use-underline">1</property>
                                 <property name="width-request">50</property>
                                 <property name="height-request">50</property>
-                                <property name="icon_name">go-next-symbolic</property>
+                                <property name="icon-name">go-next-symbolic</property>
                                 <style>
                                     <class name="circular" />
                                     <class name="image-button" />

@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/Dialogs/uninstall-warning.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/uninstall-warning.ui")]
     public class UninstallWarningDialog : Gtk.Window {
         [GtkChild]
         private unowned Gtk.Label header;

@@ -9,7 +9,7 @@
                     <object class="GtkStackPage">
                         <property name="name">refreshing_updates</property>
                         <property name="child">
-                            <object class="HeEmptyPage">
+                            <object class="HeEmptyPage" id="refreshing_page">
                                 <property name="vexpand">true</property>
                                 <property name="title">Loading updates...</property>
                                 <child>
@@ -25,22 +25,10 @@
                     <object class="GtkStackPage">
                         <property name="name">up_to_date</property>
                         <property name="child">
-                            <!-- 
-                                FIXME: HeEmptyPage does not support images, it only supports GdkPaintables and icons.
-                                We use a child element with a GtkImage for now
-                            -->
                             <object class="HeEmptyPage" id="status_page_up_to_date">
                                 <property name="title">Up to Date</property>
                                 <property name="description">Last checked: 25:69</property>
-                                <property name="child">
-                                    <object class="GtkImage">
-                                        <property name="pixel-size">300</property>
-                                        <property name="resource">/co/tauos/Catalogue/up-to-date.svg</property>
-                                        <style>
-                                            <class name="icon" />
-                                        </style>
-                                    </object>
-                                </property>
+                                <property name="resource">/com/fyralabs/Catalogue/up-to-date.svg</property>
                             </object>
                         </property>
                     </object>
@@ -70,7 +58,7 @@
                                             <class name="list-page" />
                                         </style>
                                         <child>
-                                            <object class="BisClamp">
+                                            <object class="BisLatch">
                                                 <property name="maximum-size">600</property>
                                                 <property name="tightening-threshold">600</property>
                                                 <property name="child">

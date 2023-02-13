@@ -5,7 +5,6 @@
         <property name="margin-top">10</property>
         <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
-
         <child>
             <object class="GtkStack" id="stack">
                 <child>
@@ -15,8 +14,6 @@
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <property name="spacing">6</property>
-                                <!-- Arbitrary size chosen to tile together at 16:9;
-                                         see https://blogs.gnome.org/hughsie/2014/07/02/blurry-screenshots-in-gnome-software/ -->
                                 <property name="height_request">423</property>
                                 <property name="hexpand">True</property>
                                 <property name="halign">fill</property>
@@ -75,7 +72,6 @@
                                                         <property name="margin-end">9</property>
                                                         <property name="icon-name">go-previous-symbolic</property>
                                                         <accessibility>
-                                                            <!-- Translators: This is the accessible description for a button to go to the previous screenshot in the screenshot carousel. -->
                                                             <property name="label" translatable="yes">Previous Screenshot</property>
                                                         </accessibility>
                                                         <style>
@@ -102,7 +98,6 @@
                                                         <property name="margin-end">9</property>
                                                         <property name="icon-name">go-next-symbolic</property>
                                                         <accessibility>
-                                                            <!-- Translators: This is the accessible description for a button to go to the next screenshot in the screenshot carousel. -->
                                                             <property name="label" translatable="yes">Next Screenshot</property>
                                                         </accessibility>
                                                         <style>

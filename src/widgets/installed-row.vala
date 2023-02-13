@@ -17,14 +17,10 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/installed-row.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/installed-row.ui")]
     public class InstalledRow : He.Bin {
         [GtkChild]
-        private unowned Gtk.Label app_name;
-        [GtkChild]
-        private unowned Gtk.Label app_version;
-        [GtkChild]
-        private unowned Gtk.Image image;
+        private unowned He.ContentBlock lbrow;
         [GtkChild]
         private unowned Gtk.Button info_button;
         [GtkChild]
@@ -44,12 +40,10 @@
 
             app = package;
 
-            app_name.set_label (app.get_name ());
-            app_version.set_label (app.get_version ());
+            lbrow.title = (app.get_name ());
+            lbrow.subtitle = (app.get_version ());
+            lbrow.gicon = (app.get_icon (64, 64));
 
-            image.set_from_gicon (app.get_icon (64, 64));
-
-            // TODO show both?
             if (package.update_available) {
                 update_button.set_visible (true);
             } else {

@@ -3,21 +3,28 @@
     <requires lib="gtk" version="4.0" />
     <requires lib="libadwaita" version="1.0" />
     <template class="CataloguePreferences" parent="HeWindow">
-        <property name="can-navigate-back">True</property>
-
         <child>
-            <object class="HePreferencesPage">
-                <property name="icon_name">preferences-system-symbolic</property>
-                <property name="title">_Preferences</property>
-                <property name="use-underline">True</property>
+            <object class="HeSettingsPage">
+                <property name="title">Preferences</property>
+                <property name="margin-top">6</property>
+                <property name="margin-bottom">24</property>
+                <property name="margin-start">24</property>
+                <property name="margin-end">24</property>
                 <child>
-                    <object class="HeContentList">
-                        <property name="title" translatable="yes">Software Repositories</property>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
                         <child>
-                            <object class="GtkListBox" id="repositories_listbox">
+                            <object class="GtkLabel">
+                                <property name="label" translatable="yes">Customize Your Repositories</property>
+                                <property name="halign">start</property>
                                 <style>
-                                    <class name="boxed-list" />
+                                    <class name="view-title"/>
                                 </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="HeSettingsList" id="repositories_listbox">
+                                <property name="title" translatable="yes">Software Repositories</property>
                             </object>
                         </child>
                     </object>

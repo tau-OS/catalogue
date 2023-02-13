@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-header.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/details/app-header.ui")]
     public class AppHeader : He.Bin {
         [GtkChild]
         private unowned Gtk.Image application_details_icon;

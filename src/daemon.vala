@@ -36,7 +36,7 @@ namespace Daemon {
             base.dbus_register (connection, object_path);
 
             try {
-                search_provider_id = connection.register_object ("/co/tauos/Catalogue/SearchProvider", search_provider);
+                search_provider_id = connection.register_object ("/com/fyralabs/Catalogue/SearchProvider", search_provider);
             } catch (Error e) {
                 warning (e.message);
             }

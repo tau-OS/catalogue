@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/details.ui")]
     public class WindowDetails : He.Bin {
         [GtkChild]
         private unowned He.Bin app_header_container;
@@ -49,12 +49,12 @@ namespace Catalogue {
 
             this.realize.connect (() => {
                 ThreadService.run_in_thread.begin<void> (() => {
-                    app_header_container.child = new Catalogue.AppHeader (package);
-                    app_screenshots_container.child = new Catalogue.AppScreenshots (package);
-                    app_details_container.child = new Catalogue.AppDetails (package);
-                    app_context_container.child = new Catalogue.AppContextBar (package);
-                    app_version_history_container.child = new Catalogue.AppVersionHistory (package);
-                    app_links_container.child = new Catalogue.AppLinks (package);
+                    app_header_container.child = (new Catalogue.AppHeader (package));
+                    app_screenshots_container.child = (new Catalogue.AppScreenshots (package));
+                    app_details_container.child = (new Catalogue.AppDetails (package));
+                    app_context_container.child = (new Catalogue.AppContextBar (package));
+                    app_version_history_container.child = (new Catalogue.AppVersionHistory (package));
+                    app_links_container.child = (new Catalogue.AppLinks (package));
                 });
             });
         }

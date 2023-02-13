@@ -17,13 +17,16 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/preferences.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/preferences.ui")]
     public class Preferences : He.Window {
         [GtkChild]
-        private unowned Gtk.ListBox repositories_listbox;
+        private unowned He.SettingsList repositories_listbox;
 
         public Preferences () {
             Object ();
+
+            modal = true;
+            has_title = true;
                 
             var system_repos = Core.Client.get_default ().get_remotes (true);
             var user_repos = Core.Client.get_default ().get_remotes (false);
@@ -31,7 +34,7 @@
             foreach (var remote in system_repos) {
                 var url = new Utils ().get_uri_hostname (remote.get_url ());
 
-                var row = new He.ContentBlock ("","","", null, null) {
+                var row = new He.SettingsRow () {
                     title = remote.get_title (),
                     subtitle = "%s • %s".printf (url, "System Installation")
                 };
@@ -49,14 +52,14 @@
                     return false;
                 });
 
-                row.child = (toggle);
-                repositories_listbox.append (row);
+                row.primary_button = (He.Button)(toggle);
+                repositories_listbox.add (row);
             }
 
             foreach (var remote in user_repos) {
                 var url = new Utils ().get_uri_hostname (remote.get_url ());
 
-                var row = new He.ContentBlock ("","","", null, null) {
+                var row = new He.SettingsRow () {
                     title = remote.get_title (),
                     subtitle = "%s • %s".printf (url, "Per-User Installation")
                 };
@@ -74,8 +77,8 @@
                     return false;
                 });
 
-                row.child = (toggle);
-                repositories_listbox.append (row);
+                row.primary_button = (He.Button)(toggle);
+                repositories_listbox.add (row);
             }
         }
     }

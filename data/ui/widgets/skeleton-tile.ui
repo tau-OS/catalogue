@@ -18,7 +18,7 @@
                 <property name="spacing">6</property>
                 <child>
                     <object class="GtkImage" id="image">
-                        <property name="resource">/co/tauos/Catalogue/test-icon.png</property>
+                        <property name="resource">/com/fyralabs/Catalogue/test-icon.png</property>
                         <property name="name">logo</property>
                         <property name="pixel-size">48</property>
                         <property name="halign">start</property>
@@ -39,7 +39,7 @@
                                 <property name="ellipsize">end</property>
                                 <property name="wrap">true</property>
                                 <style>
-                                    <class name="title-4" />
+                                    <class name="cb-title" />
                                 </style>
                             </object>
                         </child>

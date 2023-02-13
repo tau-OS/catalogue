@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/co.tauos.Catalogue-daemon
+ExecStart=/usr/bin/com.fyralabs.Catalogue-daemon
 Restart=on-failure
 RestartSec=42s
 

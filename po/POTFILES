@@ -1,6 +1,6 @@
-data/co.tauos.Catalogue.desktop.in
-data/co.tauos.Catalogue.appdata.xml.in
-data/co.tauos.Catalogue.gschema.xml
+data/com.fyralabs.Catalogue.desktop.in
+data/com.fyralabs.Catalogue.appdata.xml.in
+data/com.fyralabs.Catalogue.gschema.xml
 data/window.ui
 src/main.vala
 src/window.vala

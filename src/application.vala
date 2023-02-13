@@ -112,7 +112,7 @@ namespace Catalogue {
             accent_color.parse("#8c56bf");
             default_accent_color = He.Color.from_gdk_rgba(accent_color);
     
-            resource_base_path = "/co/tauos/Catalogue";
+            resource_base_path = "/com/fyralabs/Catalogue";
     
             base.startup ();
     
@@ -207,19 +207,28 @@ namespace Catalogue {
         }
 
         private void on_about_action () {
-            string[] authors = { "Jamie Murphy" };
-            string[] artists = { "Jamie Murphy", "Lains https://github.com/lainsce" };
-            Gtk.show_about_dialog (this.active_window,
-                                   "program-name", "Catalogue" + Config.NAME_SUFFIX,
-                                   "authors", authors,
-                                   "artists", artists,
-                                   "comments", "A nice way to manage the software on your system.",
-                                   "copyright", "Made with <3 by Fyra Labs",
-                                   "logo-icon-name", Config.APP_ID,
-                                   "website", "https://tauos.co",
-                                   "website-label", "tauOS Website",
-                                   "license-type", Gtk.License.GPL_3_0,
-                                   "version", Config.VERSION);
+            var win = this.active_window;
+            if (win == null) {
+                error ("Cannot find main window");
+            }
+
+            var about = new He.AboutWindow (
+                win,
+                "Catalogue" + Config.NAME_SUFFIX,
+                Config.APP_ID,
+                Config.VERSION,
+                Config.APP_ID,
+                "https://github.com/tau-os/catalogue/tree/main/po",
+                "https://github.com/tau-os/catalogue/issues/new",
+                "https://github.com/tau-os/catalogue",
+                // TRANSLATORS: 'Name <email@domain.com>' or 'Name https://website.example'
+                {},
+                {"Fyra Labs", "Jamie Murphy"},
+                2023,
+                He.AboutWindow.Licenses.GPLv3,
+                He.Colors.INDIGO
+            );
+            about.present ();
         }
 
         private void on_preferences_action () {

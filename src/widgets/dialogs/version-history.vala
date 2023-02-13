@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/Dialogs/version-history.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/version-history.ui")]
     public class VersionHistoryDialog : Gtk.Dialog {
         [GtkChild]
         private unowned Gtk.ListBox list_box_version_history;

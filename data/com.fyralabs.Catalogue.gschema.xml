@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="catalogue">
-	<schema id="co.tauos.Catalogue.Settings" path="/co/tauos/Catalogue/Settings/">
+	<schema id="com.fyralabs.Catalogue.Settings" path="/com/fyralabs/Catalogue/Settings/">
     <key type="x" name="last-refresh-time">
       <default>0</default>
       <summary>Unix UTC time of last cache refresh</summary>

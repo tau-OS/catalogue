@@ -1,0 +1,5 @@
+[Shell Search Provider]
+DesktopId=com.fyralabs.Catalogue.desktop
+BusName=@APP_ID@
+ObjectPath=/com/fyralabs/Catalogue/SearchProvider
+Version=2

@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/explore.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/explore.ui")]
     public class WindowExplore : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Stack stack;
@@ -75,7 +75,7 @@ namespace Catalogue {
                 tile.clicked.connect (() => {
                     active_category = entry;
                     stack.set_visible_child_name (name.down ());
-                    Application.main_window.show_back_button ();
+                    Application.main_window.show_main_back_button ();
                 });
                 
                 featured_flowbox.append (tile);
@@ -90,7 +90,7 @@ namespace Catalogue {
                 }
 
                 if (stack.get_visible_child_name () == "featured") {
-                    Application.main_window.hide_back_button ();
+                    Application.main_window.hide_main_back_button ();
                 }
             });
 

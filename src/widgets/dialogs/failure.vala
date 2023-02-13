@@ -17,7 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/Dialogs/failure.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/failure.ui")]
     public class FailureDialog : Gtk.Window {
         [GtkChild]
         private unowned Gtk.Label header;

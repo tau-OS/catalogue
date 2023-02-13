@@ -18,12 +18,14 @@
 
 // TODO automatically handle refreshing updates lol
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/updates.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/updates.ui")]
     public class WindowUpdates : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
         private unowned He.EmptyPage status_page_up_to_date;
+        [GtkChild]
+        private unowned He.EmptyPage refreshing_page;
         [GtkChild]
         private unowned Gtk.ListBox listbox;
         [GtkChild]
@@ -62,13 +64,6 @@ namespace Catalogue {
                     }
                 });
             });
-
-            //  TODO make this work
-            //  var client = Core.Client.get_default ();
-            //  client.installed_apps_changed.connect (() => {
-            //      stack.set_visible_child_name ("refreshing_updates");
-            //      ThreadService.run_in_thread.begin<void> (() => { get_apps.begin (true); });
-            //  });
         }
 
         public async void get_apps (bool force = false) {
@@ -130,10 +125,18 @@ namespace Catalogue {
             });
 
             ThreadService.run_in_thread.begin<void> (() => {
-                // TODO figure out why this is lagging everything to hell
                 client.refresh_updates.begin (force, (obj, res) => {
                     client.refresh_updates.end (res);
                 });
+            });
+
+
+            refreshing_page.action_button.visible = false;
+
+            status_page_up_to_date.action_button.label = (_("Refresh"));
+            status_page_up_to_date.action_button.clicked.connect (() => {
+                reset_apps.begin ();
+                refresh_packages ();
             });
         }
 
@@ -153,6 +156,17 @@ namespace Catalogue {
 
         [GtkCallback]
         public void update_all_packages () {
+            update_all.set_sensitive (false);
+            foreach (var row in rows) {
+                if (row == rows.last ()) {
+                    row.enable_updates.begin (false);
+                } else {
+                    row.enable_updates.begin ();
+                }
+            }
+        }
+
+        public void refresh_packages () {
             update_all.set_sensitive (false);
             foreach (var row in rows) {
                 if (row == rows.last ()) {

@@ -17,7 +17,7 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/co/tauos/Catalogue/details/app-versionhistory-row.ui")]
+    [GtkTemplate (ui = "/com/fyralabs/Catalogue/details/app-versionhistory-row.ui")]
     public class AppVersionHistoryRow : Gtk.ListBoxRow {
         [GtkChild]
         private unowned Gtk.Label version_number_label;
