@@ -2,12 +2,14 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppVersionHistory" parent="HeBin">
+        <property name="hexpand">True</property>
         <child>
             <object class="BisLatch">
                 <property name="maximum-size">860</property>
                 <property name="tightening-threshold">576</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
+                <property name="hexpand">True</property>
                 <child>
                     <object class="GtkListBox" id="list_box_version_history">
                         <property name="selection_mode">none</property>

@@ -55,12 +55,10 @@ namespace Catalogue {
 
         private void get_state (Core.Package app) {
             action_button.set_sensitive (true);
-            action_button.get_style_context ().remove_class ("suggested-action");
             action_button.get_style_context ().remove_class ("destructive-action");
             if (app.state == Core.Package.State.INSTALLED || app.state == Core.Package.State.UPDATE_AVAILABLE) {
                 if (app.state == Core.Package.State.UPDATE_AVAILABLE) {
                     action_button.set_label ("Update");
-                    action_button.get_style_context ().add_class ("suggested-action");
 
                     if (handler_id != 0) {
                         action_button.disconnect (handler_id);
@@ -88,7 +86,6 @@ namespace Catalogue {
                 }
             } else {
                 action_button.set_label ("Install");
-                action_button.get_style_context ().add_class ("suggested-action");
 
                 if (handler_id != 0) {
                     action_button.disconnect (handler_id);
@@ -114,7 +111,6 @@ namespace Catalogue {
         }
 
         private async void install_clicked (Core.Package package) {
-            // TODO this should still be sensetive but should stop the transaction
             action_button.set_sensitive (false);
             progress_spinner.set_visible (true);
             try {
@@ -128,7 +124,6 @@ namespace Catalogue {
         }
 
         private async void remove_clicked (Core.Package package) {
-            // TODO this should still be sensetive but should stop the transaction
             action_button.set_sensitive (false);
             progress_spinner.set_visible (true);
             try {

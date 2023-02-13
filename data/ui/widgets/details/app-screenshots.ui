@@ -5,6 +5,7 @@
         <property name="margin-top">10</property>
         <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
+        <property name="hexpand">True</property>
         <child>
             <object class="GtkStack" id="stack">
                 <child>
@@ -14,7 +15,6 @@
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <property name="spacing">6</property>
-                                <property name="height_request">423</property>
                                 <property name="hexpand">True</property>
                                 <property name="halign">fill</property>
                                 <style>

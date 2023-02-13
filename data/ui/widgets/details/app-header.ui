@@ -2,12 +2,14 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppHeader" parent="HeBin">
+        <property name="hexpand">True</property>
         <child>
             <object class="BisLatch">
                 <property name="maximum-size">860</property>
                 <property name="tightening-threshold">576</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
+                <property name="hexpand">True</property>
                 <child>
                     <object class="GtkBox" id="box_details_header">
                         <property name="orientation">horizontal</property>
@@ -77,38 +79,8 @@
                                                 </child>
                                             </object>
                                         </child>
-                                        <!-- Maybe useful for Catalogue but not here -->
-                                        <!-- <child>
-                                            <object class="GtkBox" id="star_box">
-                                                <property name="valign">start</property>
-                                                <child>
-                                                    <object class="GtkImage" id="star">
-                                                        <property name="halign">start</property>
-                                                        <property name="valign">center</property>
-                                                        <property name="icon-name">starred</property>
-                                                        <child>
-                                                            <object class="GtkGestureClick">
-                                                                <property name="button">1</property>
-                                                            </object>
-                                                        </child>
-                                                    </object>
-                                                </child>
-                                                <child>
-                                                    <object class="GtkLabel" id="label_review_count">
-                                                        <property name="margin_start">5</property>
-                                                        <property name="halign">start</property>
-                                                        <property name="valign">center</property>
-                                                        <property name="label">(5)</property>
-                                                        <style>
-                                                            <class name="dim-label" />
-                                                        </style>
-                                                    </object>
-                                                </child>
-                                            </object>
-                                        </child> -->
                                     </object>
                                 </child>
-
                                 <child>
                                     <object class="GtkBox" id="box_buttons">
                                         <property name="spacing">9</property>
@@ -132,11 +104,11 @@
                                                             </object>
                                                         </child>
                                                         <child>
-                                                            <object class="GtkButton" id="action_button">
+                                                            <object class="HePillButton" id="action_button">
                                                                 <property name="name">logo</property>
                                                                 <property name="width-request">50</property>
                                                                 <property name="height-request">50</property>
-                                                                <property name="icon-name">dialog-information-symbolic</property>
+                                                                <property name="icon">dialog-information-symbolic</property>
                                                                 <style>
                                                                     <class name="list-button" />
                                                                 </style>

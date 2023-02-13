@@ -2,8 +2,10 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueWindowDetails" parent="HeBin">
+        <property name="hexpand">True</property>
         <child>
             <object class="GtkOverlay">
+                <property name="hexpand">True</property>
                 <child type="overlay">
                     <object class="GtkProgressBar" id="progress_bar">
                         <property name="valign">start</property>
@@ -19,11 +21,13 @@
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
                         <property name="vexpand">True</property>
+                        <property name="hexpand">True</property>
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <property name="margin-top">10</property>
                                 <property name="margin-bottom">20</property>
+                                <property name="hexpand">True</property>
                                 <child>
                                     <object class="HeBin" id="app_header_container"></object>
                                 </child>

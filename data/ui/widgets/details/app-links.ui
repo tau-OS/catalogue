@@ -3,12 +3,14 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppLinks" parent="HeBin">
         <property name="margin-top">20</property>
+        <property name="hexpand">True</property>
         <child>
             <object class="BisLatch">
                 <property name="maximum-size">860</property>
                 <property name="tightening-threshold">576</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
+                <property name="hexpand">True</property>
                 <child>
                     <object class="GtkBox" id="box_license">
                         <property name="orientation">vertical</property>
@@ -25,8 +27,12 @@
                                         <property name="visible" bind-source="project_website_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
                                             <object class="GtkListBox">
+                                                <property name="selection-mode">none</property>
+                                                <style>
+                                                    <class name="content-list"/>
+                                                </style>
                                                 <child>
-                                                    <object class="HeContentBlock" id="project_website_row">
+                                                    <object class="HeMiniContentBlock" id="project_website_row">
                                                         <property name="visible">false</property>
                                                         <property name="icon">webpage-symbolic</property>
                                                         <property name="title" translatable="yes">Project Website</property>
@@ -47,8 +53,12 @@
                                         <property name="visible" bind-source="donate_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
                                             <object class="GtkListBox">
+                                                <property name="selection-mode">none</property>
+                                                <style>
+                                                    <class name="content-list"/>
+                                                </style>
                                                 <child>
-                                                    <object class="HeContentBlock" id="donate_row">
+                                                    <object class="HeMiniContentBlock" id="donate_row">
                                                         <property name="visible">false</property>
                                                         <property name="icon">money-symbolic</property>
                                                         <property name="title" translatable="yes">Donate</property>
@@ -69,8 +79,12 @@
                                         <property name="visible" bind-source="translate_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
                                             <object class="GtkListBox">
+                                                <property name="selection-mode">none</property>
+                                                <style>
+                                                    <class name="content-list"/>
+                                                </style>
                                                 <child>
-                                                    <object class="HeContentBlock" id="translate_row">
+                                                    <object class="HeMiniContentBlock" id="translate_row">
                                                         <property name="visible">false</property>
                                                         <property name="icon">flag-outline-thin-symbolic</property>
                                                         <property name="title" translatable="yes">Contribute Translations</property>
@@ -91,8 +105,12 @@
                                         <property name="visible" bind-source="report_an_issue_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
                                             <object class="GtkListBox">
+                                                <property name="selection-mode">none</property>
+                                                <style>
+                                                    <class name="content-list"/>
+                                                </style>
                                                 <child>
-                                                    <object class="HeContentBlock" id="report_an_issue_row">
+                                                    <object class="HeMiniContentBlock" id="report_an_issue_row">
                                                         <property name="visible">false</property>
                                                         <property name="icon">computer-fail-symbolic</property>
                                                         <property name="title" translatable="yes">Report an Issue</property>
@@ -113,8 +131,12 @@
                                         <property name="visible" bind-source="help_row" bind-property="visible" bind-flags="sync-create" />
                                         <child>
                                             <object class="GtkListBox">
+                                                <property name="selection-mode">none</property>
+                                                <style>
+                                                    <class name="content-list"/>
+                                                </style>
                                                 <child>
-                                                    <object class="HeContentBlock" id="help_row">
+                                                    <object class="HeMiniContentBlock" id="help_row">
                                                         <property name="visible">false</property>
                                                         <property name="icon">help-link-symbolic</property>
                                                         <property name="title" translatable="yes">Help</property>
@@ -132,53 +154,6 @@
                                 </child>
                             </object>
                         </child>
-                   <!-- <child>
-                            <object class="GtkBox">
-                                <property name="hexpand-set">True</property>
-                                <style>
-                                    <class name="card" />
-                                </style>
-                                <child>
-                                    <object class="GtkBox">
-                                        <property name="orientation">vertical</property>
-                                        <property name="spacing">8</property>
-                                        <property name="margin-top">14</property>
-                                        <property name="margin-bottom">14</property>
-                                        <property name="margin-start">14</property>
-                                        <property name="margin-end">14</property>
-                                        <property name="valign">center</property>
-                                        <property name="hexpand">True</property>
-                                        <style>
-                                            <class name="dim-label" />
-                                        </style>
-
-                                        <child>
-                                            <object class="GtkImage">
-                                                <property name="icon-name">dialog-question-symbolic</property>
-                                                <property name="pixel-size">96</property>
-                                                <property name="margin-bottom">8</property>
-                                            </object>
-                                        </child>
-                                        <child>
-                                            <object class="GtkLabel">
-                                                <property name="label" translatable="yes">No Metadata</property>
-                                                <attributes>
-                                                    <attribute name="weight" value="bold" />
-                                                </attributes>
-                                            </object>
-                                        </child>
-                                        <child>
-                                            <object class="GtkLabel">
-                                                <property name="justify">center</property>
-                                                <property name="label" translatable="yes">This software doesn’t provide any links to a website, code repository or issue tracker.</property>
-                                                <property name="wrap">True</property>
-                                                <property name="xalign">0.5</property>
-                                            </object>
-                                        </child>
-                                    </object>
-                                </child>
-                            </object>
-                        </child> -->
                     </object>
                 </child>
             </object>

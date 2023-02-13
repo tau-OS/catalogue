@@ -3,37 +3,35 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueVersionHistoryDialog" parent="HeWindow">
         <property name="modal">true</property>
-        <property name="title">Version History</property>
         <property name="default-height">550</property>
-        <property name="default-width">860</property>
+        <property name="default-width">400</property>
+        <style>
+            <class name="dialog-content" />
+        </style>
         <child>
             <object class="GtkBox">
-                <style>
-                    <class name="dialog-content" />
-                </style>
+                <property name="orientation">vertical</property>
+                <child>
+                    <object class="HeAppBar">
+                        <property name="show_back">0</property>
+                    </object>
+                </child>
                 <child>
                     <object class="GtkScrolledWindow">
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <property name="vexpand">True</property>
-                        <style>
-                            <class name="list-page" />
-                        </style>
                         <child>
                             <object class="BisLatch">
-                                <property name="maximum-size">860</property>
-                                <property name="tightening-threshold">576</property>
+                                <property name="maximum-size">600</property>
+                                <property name="tightening-threshold">600</property>
 
                                 <child>
                                     <object class="GtkListBox" id="list_box_version_history">
                                         <property name="selection_mode">none</property>
                                         <property name="halign">fill</property>
                                         <property name="valign">start</property>
-                                        <style>
-                                            <class name="boxed-list" />
-                                        </style>
-
                                         <child>
                                             <object class="GtkListBoxRow">
                                                 <property name="selectable">false</property>

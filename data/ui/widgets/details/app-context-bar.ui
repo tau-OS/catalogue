@@ -3,12 +3,14 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppContextBar" parent="HeBin">
         <property name="margin-bottom">20</property>
-        <child>
+        <property name="hexpand">True</property>
+        <property name="child">
             <object class="BisLatch">
                 <property name="maximum-size">860</property>
                 <property name="tightening-threshold">576</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
+                <property name="hexpand">True</property>
 
                 <child>
                     <object class="GtkBox">
@@ -236,6 +238,6 @@
                     </object>
                 </child>
             </object>
-        </child>
+        </property>
     </template>
 </interface>

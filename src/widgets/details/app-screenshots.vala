@@ -32,7 +32,7 @@
         [GtkChild]
         private unowned Gtk.Revealer button_next_revealer;
             
-        public const int MAX_WIDTH = 800;
+        public const int MAX_WIDTH = 300;
         GenericArray<AppStream.Screenshot> screenshots;
         public signal void screenshot_downloaded ();
 
@@ -181,7 +181,7 @@
             try {
                 var pixbuf = new Gdk.Pixbuf.from_file_at_scale (path, MAX_WIDTH * scale_factor, 600 * scale_factor, true);
                 var image = new Gtk.Picture.for_pixbuf (pixbuf);
-                image.height_request = 423;
+                image.height_request = 300;
                 image.halign = Gtk.Align.CENTER;
                 image.get_style_context ().add_class ("screenshot-image");
                 image.get_style_context ().add_class ("image1");

@@ -47,15 +47,15 @@ namespace Catalogue {
                 }
             });
 
-            this.realize.connect (() => {
-                ThreadService.run_in_thread.begin<void> (() => {
-                    app_header_container.child = (new Catalogue.AppHeader (package));
-                    app_screenshots_container.child = (new Catalogue.AppScreenshots (package));
-                    app_details_container.child = (new Catalogue.AppDetails (package));
-                    app_context_container.child = (new Catalogue.AppContextBar (package));
-                    app_version_history_container.child = (new Catalogue.AppVersionHistory (package));
-                    app_links_container.child = (new Catalogue.AppLinks (package));
-                });
+            Application.main_window.show_back_button ();
+
+            ThreadService.run_in_thread.begin<void> (() => {
+                new Catalogue.AppHeader (package).set_parent(app_header_container);
+                new Catalogue.AppScreenshots (package).set_parent(app_screenshots_container);
+                new Catalogue.AppDetails (package).set_parent(app_details_container);
+                new Catalogue.AppContextBar (package).set_parent(app_context_container);
+                new Catalogue.AppVersionHistory (package).set_parent(app_version_history_container);
+                new Catalogue.AppLinks (package).set_parent(app_links_container);
             });
         }
 
