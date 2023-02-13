@@ -489,7 +489,7 @@ namespace Catalogue.Core {
                         color_primary = component.get_custom_value ("x-appcenter-color-primary");
                     } else {
                         if (component.get_custom_value ("GnomeSoftware::key-colors") != null) {
-                            color_primary = component.get_custom_value ("GnomeSoftware::key-colors").replace ("[(", "rgb(").replace (")]", ");");
+                            color_primary = component.get_custom_value ("GnomeSoftware::key-colors").replace ("[(", "rgb(").replace ("]", ";");
                         } else {
                             color_primary = "#f0f0f0";
                         }

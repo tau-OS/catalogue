@@ -71,7 +71,7 @@ namespace Catalogue {
                     var bg_rgba = Gdk.RGBA ();
                     bg_rgba.parse (primary_color);
 
-                    bg_color = primary_color;
+                    bg_color = He.Color.hexcode (bg_rgba.red * 255, bg_rgba.green * 255, bg_rgba.blue * 255);
                     var rgb = He.Color.from_gdk_rgba (Utils.contrasting_foreground_color (bg_rgba));
                     text_color =  He.Color.hexcode (rgb.r, rgb.g, rgb.b);
 
