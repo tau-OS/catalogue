@@ -167,14 +167,14 @@
     color: @accented_fg_color;
 }
 .banner-app button {
-    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.05), alpha(@accented_fg_color, 0.05));
-    color: @accented_fg_color;
-}
-.banner-app button:hover {
     background: linear-gradient(0deg, alpha(@accented_fg_color, 0.08), alpha(@accented_fg_color, 0.08));
     color: @accented_fg_color;
 }
+.banner-app button:hover {
+    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.11), alpha(@accented_fg_color, 0.11));
+    color: @accented_fg_color;
+}
 .banner-app button:active {
-    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.05), alpha(@accented_fg_color, 0.05));
+    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.08), alpha(@accented_fg_color, 0.08));
     color: @accented_fg_color;
 }
