@@ -163,31 +163,18 @@
 }
 
 .banner-app {
-    background: @banner_bg_color;
-    color: @banner_fg_color;
-    text-shadow: none;
-    -gtk-icon-shadow: none;
+    background: @accented_color;
+    color: @accented_fg_color;
 }
-
 .banner-app button {
-    background: none;
-    border: 1px solid @borders;
-    box-shadow: none;
-    color: @view_fg_color;
-    font-weight: 600;
+    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.05), alpha(@accented_fg_color, 0.05));
+    color: @accented_fg_color;
 }
-
 .banner-app button:hover {
-	background: alpha(@view_fg_color, 0.5);
-	color: @view_bg_color;
+    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.08), alpha(@accented_fg_color, 0.08));
+    color: @accented_fg_color;
 }
-
-.banner-app button:active,
-.banner-app button:checked {
-	background: @view_fg_color;
-	color: @view_bg_color;
-}
-
-.banner-app button:disabled {
-    opacity: 0.38;
+.banner-app button:active {
+    background: linear-gradient(0deg, alpha(@accented_fg_color, 0.05), alpha(@accented_fg_color, 0.05));
+    color: @accented_fg_color;
 }

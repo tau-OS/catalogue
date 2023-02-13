@@ -3,6 +3,7 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueWindowDetails" parent="HeBin">
         <property name="hexpand">True</property>
+        <property name="margin-bottom">18</property>
         <child>
             <object class="GtkOverlay">
                 <property name="hexpand">True</property>

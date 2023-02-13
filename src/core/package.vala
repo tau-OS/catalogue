@@ -488,7 +488,11 @@ namespace Catalogue.Core {
                     if (component.get_custom_value ("x-appcenter-color-primary") != null) {
                         color_primary = component.get_custom_value ("x-appcenter-color-primary");
                     } else {
-                        color_primary = component.get_custom_value ("GnomeSoftware::key-colors").replace ("[", "rgb").replace ("]", "");
+                        if (component.get_custom_value ("GnomeSoftware::key-colors") != null) {
+                            color_primary = component.get_custom_value ("GnomeSoftware::key-colors").replace ("[(", "rgb(").replace (")]", ");");
+                        } else {
+                            color_primary = "#f0f0f0";
+                        }
                     }
                 }
     

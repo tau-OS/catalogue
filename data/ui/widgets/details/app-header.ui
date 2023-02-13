@@ -16,7 +16,7 @@
                 <child>
                     <object class="GtkBox" id="box_details_header">
                         <property name="orientation">horizontal</property>
-                        <property name="spacing">10</property>
+                        <property name="spacing">24</property>
                         <property name="margin-top">20</property>
                         <property name="margin-bottom">20</property>
                         <child>

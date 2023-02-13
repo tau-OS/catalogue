@@ -16,6 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+label {
+    opacity: 0.87;
+}
+
 .stack-remove-sidebar {
     border-right: none;
 }
@@ -134,37 +138,41 @@
 
 /* Category Tile coloring */
 .tile-accessories {
-    background-color: #F8D8E2;
+    background-color: alpha(#F8D8E2, 0.87);
     color: #90183D;
 }
 
 .tile-internet {
-    background-color: #EDF6FE;
+    background-color: alpha(#EDF6FE, 0.87);
     color: #0453A4;
 }
 
 .tile-develop {
-    background-color: #FFF6E1;
+    background-color: alpha(#FFF6E1, 0.87);
     color: #A87801;
 }
 
 .tile-games {
-    background-color: #E5E1FF;
+    background-color: alpha(#E5E1FF, 0.87);
     color: #1B07A2;
 }
 
 .tile-create {
-    background-color: #FFF6EF;
+    background-color: alpha(#FFF6EF, 0.87);
     color: #A24806;
 }
 
 .tile-work {
-    background-color: #EDF8F5;
+    background-color: alpha(#EDF8F5, 0.87);
     color: #2E7A68;
 }
 
 .skeleton {
     border-radius: 12px;
-    background-color: #f0f0f2;
-    color: #f0f0f2;
+    background-color: alpha(#f0f0f2, 0.87);
+    color: alpha(#f0f0f2, 0.87);
+}
+
+.banner-app {
+    filter: opacity(0.87);
 }

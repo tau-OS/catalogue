@@ -68,6 +68,7 @@ deps = [
     dependency('flatpak'),
     dependency('appstream', version: '>=0.12.10'),
     dependency('libxml-2.0'),
+    meson.get_compiler('c').find_library('m'),
     dependency('json-glib-1.0')
 ]
 

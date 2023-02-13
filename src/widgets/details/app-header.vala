@@ -58,9 +58,11 @@ namespace Catalogue {
                 donate_action_button.set_visible (true);
             }
 
+            const string DEFAULT_BANNER_COLOR_PRIMARY = "mix(@accented_color, @view_bg_color, 0.8)";
+            const string DEFAULT_BANNER_COLOR_PRIMARY_TEXT = "mix(@accented_color, @view_fg_color, 0.85)";
             accent_provider = new Gtk.CssProvider ();
-            string bg_color = "#f0f0f0";
-            string text_color = "#2d2d2d";
+            string bg_color = DEFAULT_BANNER_COLOR_PRIMARY;
+            string text_color = DEFAULT_BANNER_COLOR_PRIMARY_TEXT;
             string accent_css = "";
             if (app != null) {
                 string? primary_color = app.get_color_primary ();
@@ -70,17 +72,20 @@ namespace Catalogue {
                     bg_rgba.parse (primary_color);
 
                     bg_color = primary_color;
-                    text_color = "#000";
+                    var rgb = He.Color.from_gdk_rgba (Utils.contrasting_foreground_color (bg_rgba));
+                    text_color =  He.Color.hexcode (rgb.r, rgb.g, rgb.b);
 
-                    accent_css = "@define-color accent_color %s;".printf (primary_color);
+                    accent_css = "@define-color accented_color %s;@define-color accented_fg_color %s;".printf (bg_color, text_color);
                     accent_provider.load_from_data ((uint8[])accent_css);
-                    this.get_style_context().add_provider(accent_provider, 1);
+                    this.get_style_context ().add_provider (accent_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
                 }
             }
-            string colored_css = "@define-color banner_bg_color %s; @define-color banner_fg_color %s;".printf (bg_color, text_color);
-            colored_css += accent_css;
-            accent_provider.load_from_data ((uint8[])colored_css);
-            this.get_style_context ().add_provider (accent_provider, 1);
+
+            unowned var action_button_context = action_button.get_style_context ();
+            action_button_context.add_provider (accent_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            unowned var donate_action_button_context = donate_action_button.get_style_context ();
+            donate_action_button_context.add_provider (accent_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             get_state (app);
         }
