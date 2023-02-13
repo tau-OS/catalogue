@@ -33,6 +33,7 @@ namespace Catalogue {
         private unowned Gtk.Spinner progress_spinner;
 
         public ulong handler_id;
+        private Gtk.CssProvider accent_provider;
             
         public AppHeader (Core.Package app) {
             Object ();
@@ -56,6 +57,30 @@ namespace Catalogue {
             if (donate_url != null) {
                 donate_action_button.set_visible (true);
             }
+
+            accent_provider = new Gtk.CssProvider ();
+            string bg_color = "#f0f0f0";
+            string text_color = "#2d2d2d";
+            string accent_css = "";
+            if (app != null) {
+                string? primary_color = app.get_color_primary ();
+
+                if (primary_color != null) {
+                    var bg_rgba = Gdk.RGBA ();
+                    bg_rgba.parse (primary_color);
+
+                    bg_color = primary_color;
+                    text_color = "#000";
+
+                    accent_css = "@define-color accent_color %s;".printf (primary_color);
+                    accent_provider.load_from_data ((uint8[])accent_css);
+                    this.get_style_context().add_provider(accent_provider, 1);
+                }
+            }
+            string colored_css = "@define-color banner_bg_color %s; @define-color banner_fg_color %s;".printf (bg_color, text_color);
+            colored_css += accent_css;
+            accent_provider.load_from_data ((uint8[])colored_css);
+            this.get_style_context ().add_provider (accent_provider, 1);
 
             get_state (app);
         }

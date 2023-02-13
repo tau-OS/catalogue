@@ -2,8 +2,6 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppScreenshots" parent="GtkBox">
-        <property name="margin-top">10</property>
-        <property name="margin-bottom">10</property>
         <property name="orientation">vertical</property>
         <property name="hexpand">True</property>
         <child>

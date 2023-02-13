@@ -44,6 +44,8 @@ namespace Catalogue.Core {
         public GLib.Cancellable action_cancellable { public get; private set; }
         public State state { public get; private set; default = State.NOT_INSTALLED; }
 
+        private string? color_primary = null;
+
         public double progress {
             get {
                 return change_information.progress;
@@ -211,7 +213,6 @@ namespace Catalogue.Core {
                     string title = !is_grouped ? "Package %s Updated".printf (this.get_name ()) : "Packages Updated";
                     var application = GLib.Application.get_default ();
                     var notification = new Notification (title);
-                    // TODO this is a dumb AF icon to use
                     notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
                     application.send_notification ("catalogue.successful_install", notification);
@@ -235,7 +236,6 @@ namespace Catalogue.Core {
                 string title = "Package %s Installed".printf (this.get_name ());
                 var application = GLib.Application.get_default ();
                 var notification = new Notification (title);
-                // TODO this is a dumb AF icon to use
                 notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
                 application.send_notification ("catalogue.successful_install", notification);
@@ -258,7 +258,6 @@ namespace Catalogue.Core {
                 string title = "Package %s Removed".printf (this.get_name ());
                 var application = GLib.Application.get_default ();
                 var notification = new Notification (title);
-                // TODO this is a dumb AF icon to use
                 notification.set_icon (new ThemedIcon ("emblem-ok-symbolic"));
 
                 application.send_notification ("catalogue.successful_install", notification);
@@ -266,8 +265,6 @@ namespace Catalogue.Core {
             }
 
             return success;
-
-            //  TODO add better error handling bitches
         }
 
         private async bool perform_operation (State performing, State after_success, State after_fail) throws GLib.Error {
@@ -360,7 +357,6 @@ namespace Catalogue.Core {
                 }
     
                 try {
-                    // Condense double spaces
                     var space_regex = new Regex ("\\s+");
                     description = space_regex.replace (description, description.length, 0, " ");
                 } catch (Error e) {
@@ -477,6 +473,27 @@ namespace Catalogue.Core {
             }
     
             return returned;
+        }
+
+        public string? get_color_primary () {
+            if (color_primary != null) {
+                return color_primary;
+            } else {
+                var branding = component.get_branding ();
+                if (branding != null) {
+                    color_primary = branding.get_color (AppStream.ColorKind.PRIMARY, AppStream.ColorSchemeKind.UNKNOWN);
+                }
+    
+                if (color_primary == null) {
+                    if (component.get_custom_value ("x-appcenter-color-primary") != null) {
+                        color_primary = component.get_custom_value ("x-appcenter-color-primary");
+                    } else {
+                        color_primary = component.get_custom_value ("GnomeSoftware::key-colors").replace ("[", "rgb").replace ("]", "");
+                    }
+                }
+    
+                return color_primary;
+            }
         }
 
         public Gee.ArrayList<AppStream.Release> get_newest_releases (int min_releases, int max_releases) {
