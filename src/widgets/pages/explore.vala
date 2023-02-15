@@ -26,8 +26,6 @@ namespace Catalogue {
         [GtkChild]
         private unowned Catalogue.FeaturedRow new_updated;
         [GtkChild]
-        private unowned Catalogue.FeaturedRow editors_choice;
-        [GtkChild]
         private unowned Gtk.Box accessories_box;
         [GtkChild]
         private unowned Gtk.Box internet_box;
@@ -100,10 +98,10 @@ namespace Catalogue {
             //  featured_box.append (featured_row_test);
 
             var client = Core.Client.get_default ();
-            new_updated.add_widgets (client.get_new_updated_packages (6));
+            new_updated.add_widgets (client.get_new_updated_packages (8));
 
-            GLib.File data = File.new_for_uri (@"$(Config.API_URL)/client/editors_choice");
-            editors_choice.add_widgets (new CatalogueClient ().get_packages (data));
+            //  GLib.File data = File.new_for_uri (@"$(Config.API_URL)/client/editors_choice");
+            //  editors_choice.add_widgets (new CatalogueClient ().get_packages (data));
 
             var accessories_row = new Catalogue.CategoryRow (categories.accessories);
             var internet_row = new Catalogue.CategoryRow (categories.internet);

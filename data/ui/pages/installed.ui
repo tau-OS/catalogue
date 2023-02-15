@@ -26,7 +26,7 @@
                         <property name="child">
                             <object class="HeEmptyPage" id="no_installed_page">
                                 <property name="title">No Installed Apps</property>
-                                <property name="description">It's pretty lonely over here...</property>
+                                <property name="description">It's pretty lonely over here…</property>
                                 <property name="resource">/com/fyralabs/Catalogue/no-installed-apps.svg</property>
                             </object>
                         </property>
@@ -60,13 +60,15 @@
                                                     <object class="GtkBox">
                                                         <property name="orientation">vertical</property>
                                                         <property name="spacing">12</property>
-                                                        <property name="margin-top">24</property>
                                                         <property name="margin-bottom">20</property>
                                                         <child>
                                                             <object class="HeContentList" id="apps">
                                                                 <property name="title" translatable="yes">Applications</property>
                                                                 <child>
                                                                     <object class="GtkListBox" id="apps_listbox">
+                                                                        <style>
+                                                                            <class name="content-list" />
+                                                                        </style>
                                                                     </object>
                                                                 </child>
                                                             </object>

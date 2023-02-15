@@ -3,13 +3,12 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueInstalledRow" parent="HeBin">
         <child>
-            <object class="HeContentBlock" id="lbrow">
+            <object class="HeMiniContentBlock" id="lbrow">
                 <property name="valign">center</property>
                 <property name="hexpand">1</property>
                 <child>
                     <object class="GtkBox">
-                        <property name="orientation">vertical</property>
-                        <property name="valign">end</property>
+                        <property name="valign">center</property>
                         <property name="margin-bottom">18</property>
                         <property name="margin-top">18</property>
                         <property name="margin-start">18</property>
@@ -17,12 +16,8 @@
                         <child>
                             <object class="GtkBox">
                                 <property name="spacing">12</property>
-                                <property name="valign">start</property>
                                 <child>
                                     <object class="GtkSpinner" id="progress_spinner">
-                                        <property name="width-request">48</property>
-                                        <property name="height-request">48</property>
-                                        <property name="margin-bottom">18</property>
                                         <property name="spinning">true</property>
                                         <property name="visible">false</property>
                                     </object>
@@ -32,12 +27,10 @@
                         <child>
                             <object class="GtkBox">
                                 <property name="spacing">12</property>
-                                <property name="valign">end</property>
                                 <child>
                                     <object class="GtkButton" id="info_button">
-                                        <property name="name">logo</property>
-                                        <property name="width-request">50</property>
-                                        <property name="height-request">50</property>
+                                        <property name="width-request">56</property>
+                                        <property name="height-request">56</property>
                                         <property name="icon-name">dialog-information-symbolic</property>
                                         <style>
                                             <class name="circular" />
@@ -48,9 +41,8 @@
                                 <child>
                                     <object class="GtkButton" id="delete_button">
                                         <property name="visible">0</property>
-                                        <property name="name">logo</property>
-                                        <property name="width-request">50</property>
-                                        <property name="height-request">50</property>
+                                        <property name="width-request">56</property>
+                                        <property name="height-request">56</property>
                                         <property name="icon-name">user-trash-symbolic</property>
                                         <style>
                                             <class name="destructive-action" />
@@ -62,10 +54,9 @@
                                 <child>
                                     <object class="GtkButton" id="update_button">
                                         <property name="visible">0</property>
-                                        <property name="name">logo</property>
                                         <property name="icon-name">go-up</property>
-                                        <property name="width-request">50</property>
-                                        <property name="height-request">50</property>
+                                        <property name="width-request">56</property>
+                                        <property name="height-request">56</property>
                                         <style>
                                             <class name="suggested-action" />
                                             <class name="circular" />

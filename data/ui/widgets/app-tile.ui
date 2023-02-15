@@ -7,7 +7,6 @@
         <property name="hexpand">false</property>
         <style>
             <class name="featured-tile" />
-            <class name="card" />
         </style>
         <property name="title">App Name</property>
         <property name="subtitle">App Desc</property>

@@ -6,8 +6,8 @@
         <property name="hexpand">True</property>
         <child>
             <object class="BisLatch">
-                <property name="maximum-size">860</property>
-                <property name="tightening-threshold">576</property>
+                <property name="maximum-size">600</property>
+                <property name="tightening-threshold">600</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
                 <property name="hexpand">True</property>
@@ -19,8 +19,8 @@
                             <object class="GtkFlowBox">
                                 <property name="halign">fill</property>
                                 <property name="valign">start</property>
-                                <property name="hexpand">true</property>
-                                <property name="homogeneous">true</property>
+                                <property name="hexpand">1</property>
+                                <property name="homogeneous">1</property>
                                 <property name="orientation">horizontal</property>
                                 <child>
                                     <object class="GtkFlowBoxChild">
@@ -38,8 +38,8 @@
                                                         <property name="title" translatable="yes">Project Website</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="GtkImage">
-                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            <object class="HeDisclosureButton" id="project_website_button">
+                                                                <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
                                                     </object>
@@ -64,8 +64,8 @@
                                                         <property name="title" translatable="yes">Contribute Translations</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="GtkImage">
-                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            <object class="HeDisclosureButton" id="translate_button">
+                                                                <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
                                                     </object>
@@ -90,8 +90,8 @@
                                                         <property name="title" translatable="yes">Report an Issue</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="GtkImage">
-                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            <object class="HeDisclosureButton" id="report_an_issue_button">
+                                                                <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
                                                     </object>
@@ -116,8 +116,8 @@
                                                         <property name="title" translatable="yes">Help</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="GtkImage">
-                                                                <property name="icon-name">external-link-symbolic</property>
+                                                            <object class="HeDisclosureButton" id="help_button">
+                                                                <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
                                                     </object>

@@ -18,7 +18,7 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/search.ui")]
-    public class WindowSearch : He.Bin {
+    public class WindowSearch : Gtk.Box {
         [GtkChild]
         public unowned Gtk.ListBox apps_listbox;
 
@@ -28,7 +28,6 @@ namespace Catalogue {
             Object ();
 
             apps_listbox.set_sort_func ((row1, row2) => {
-                // damn listboxrows
                 var p1 = ((SearchRow) row1.get_first_child ());
                 var p2 = ((SearchRow) row2.get_first_child ());
                 int sp1 = search_priority (p1.get_app_name ());
@@ -67,7 +66,6 @@ namespace Catalogue {
             }
 
             current_search_term = query;
-            // why the fuck is this not added into Gtk anymore
             reset ();
 
             unowned Core.Client client = Core.Client.get_default ();

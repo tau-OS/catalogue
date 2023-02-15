@@ -2,14 +2,15 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppDetails" parent="HeBin">
-        <property name="hexpand">True</property>
+        <property name="hexpand">1</property>
         <child>
             <object class="BisLatch">
-                <property name="maximum-size">860</property>
-                <property name="tightening-threshold">576</property>
+                <property name="maximum-size">600</property>
+                <property name="tightening-threshold">600</property>
+                <property name="margin-top">24</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
-                <property name="hexpand">True</property>
+                <property name="hexpand">1</property>
                 <child>
                     <object class="GtkBox" id="application_details">
                         <property name="orientation">vertical</property>
@@ -18,25 +19,25 @@
                             <object class="GtkLabel" id="application_details_summary">
                                 <property name="halign">fill</property>
                                 <property name="valign">start</property>
-                                <property name="hexpand">True</property>
+                                <property name="hexpand">1</property>
                                 <property name="xalign">0</property>
-                                <property name="wrap">True</property>
+                                <property name="wrap">1</property>
                                 <property name="max-width-chars">60</property>
                                 <property name="label">This is an example header</property>
                                 <style>
-                                    <class name="title-2" />
+                                    <class name="view-subtitle" />
                                 </style>
                             </object>
                         </child>
                         <child>
                             <object class="GtkLabel" id="application_details_description">
                                 <property name="halign">start</property>
-                                <property name="hexpand">True</property>
+                                <property name="hexpand">1</property>
                                 <property name="valign">start</property>
                                 <property name="vexpand">False</property>
-                                <property name="wrap">True</property>
+                                <property name="wrap">1</property>
                                 <property name="max-width-chars">40</property>
-                                <property name="margin_bottom">14</property>
+                                <property name="margin_bottom">24</property>
                                 <property name="label">Ut modi totam iste facere qui sequi. Fuga rem blanditiis reprehenderit expedita. Id illo quod amet. Earum nesciunt optio voluptatum molestias aut facilis similique iusto.</property>
                             </object>
                         </child>

@@ -27,10 +27,6 @@
 	margin-right: 6px;
 }
 
-.featured-tile {
-    background: @view_bg_color;
-}
-
 .context-tile {
 	border: 1px solid @borders;
 	background-color: transparent;
@@ -118,33 +114,32 @@
 
 /* Category Tile coloring */
 .tile-accessories {
-    background-color: #F8D8E2;
+    background: #F8D8E2;
 	color: #90183D;
 }
 .tile-internet {
-    background-color: #EDF6FE;
+    background: #EDF6FE;
 	color: #0453A4;
 }
 .tile-develop {
-    background-color: #FFF6E1;
+    background: #FFF6E1;
 	color: #A87801;
 }
 .tile-games {
-    background-color: #E5E1FF;
+    background: #E5E1FF;
 	color: #1B07A2;
 }
 .tile-create {
-    background-color: #FFF6EF;
+    background: #FFF6EF;
 	color: #A24806;
 }
 .tile-work {
-    background-color: #EDF8F5;
+    background: #EDF8F5;
 	color: #2E7A68;
 }
 
 .skeleton {
-    border-radius: 12px;
-    background-color: #f0f0f2;
+    background: #f0f0f2;
     color: #f0f0f2;
 }
 

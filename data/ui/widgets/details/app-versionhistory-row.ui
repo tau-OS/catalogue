@@ -5,16 +5,15 @@
     <property name="selectable">False</property>
     <property name="activatable">False</property>
     <property name="focusable">False</property>
-    <property name="hexpand">True</property>
+    <property name="hexpand">1</property>
     <child>
       <object class="GtkBox">
-        <property name="margin_start">15</property>
-        <property name="margin_top">15</property>
-        <property name="margin_bottom">15</property>
-        <property name="margin_end">15</property>
         <property name="orientation">vertical</property>
         <property name="valign">start</property>
-        <property name="hexpand">True</property>
+        <property name="hexpand">1</property>
+        <style>
+          <class name="mini-content-block" />
+        </style>
         <child>
           <object class="GtkBox">
             <property name="margin_top">3</property>
@@ -22,7 +21,7 @@
             <property name="orientation">horizontal</property>
             <child>
               <object class="GtkLabel" id="version_number_label">
-                <property name="hexpand">True</property>
+                <property name="hexpand">1</property>
                 <property name="xalign">0</property>
                 <property name="yalign">0.5</property>
                 <property name="label">New in Version 1.0</property>
@@ -46,11 +45,11 @@
         <child>
           <object class="GtkLabel" id="version_description_label">
             <property name="margin_top">6</property>
-            <property name="wrap">True</property>
+            <property name="wrap">1</property>
             <property name="xalign">0</property>
             <property name="yalign">0.5</property>
-            <property name="vexpand">True</property>
-            <property name="use-markup">True</property>
+            <property name="vexpand">1</property>
+            <property name="use-markup">1</property>
             <property name="label">Ut modi totam iste facere qui sequi. Fuga rem blanditiis reprehenderit expedita. Id illo quod amet. Earum nesciunt optio voluptatum molestias aut facilis similique iusto.</property>
           </object>
         </child>

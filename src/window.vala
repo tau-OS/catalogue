@@ -40,7 +40,7 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.ToggleButton search_button;
         [GtkChild]
-        private unowned He.Bin search_page;
+        private unowned Gtk.Box search_page;
         [GtkChild]
         private unowned He.EmptyPage refresh_page;
 
@@ -104,7 +104,7 @@ namespace Catalogue {
         public Window (He.Application app) {
             Object (application: app);
 
-            search_page.child = (search_view);
+            search_page.append (search_view);
             refresh_page.action_button.visible = false;
 
             header_bar.back_button.clicked.connect (() => {
@@ -153,7 +153,7 @@ namespace Catalogue {
                 }
             });
 
-            set_default_size (910, 640);
+            set_default_size (910, 720);
             this.show ();
         }
 

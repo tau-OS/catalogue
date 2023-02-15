@@ -27,6 +27,14 @@
         private unowned He.MiniContentBlock report_an_issue_row;
         [GtkChild]
         private unowned He.MiniContentBlock help_row;
+        [GtkChild]
+        private unowned He.DisclosureButton project_website_button;
+        [GtkChild]
+        private unowned He.DisclosureButton translate_button;
+        [GtkChild]
+        private unowned He.DisclosureButton report_an_issue_button;
+        [GtkChild]
+        private unowned He.DisclosureButton help_button;
 
         public AppLinks (Core.Package package) {
             Object ();
@@ -36,6 +44,10 @@
                 project_website_row.set_name (homepage_url);
                 project_website_row.subtitle = (new Utils ().get_uri_hostname (homepage_url));
                 project_website_row.set_visible (true);
+
+                project_website_button.clicked.connect (() => {
+                    show_uri (homepage_url);
+                });
             }
 
             var translate_url = package.component.get_url (AppStream.UrlKind.TRANSLATE);
@@ -43,6 +55,10 @@
                 translate_row.set_name (translate_url);
                 translate_row.subtitle = (new Utils ().get_uri_hostname (translate_url));
                 translate_row.set_visible (true);
+
+                translate_button.clicked.connect (() => {
+                    show_uri (translate_url);
+                });
             }
 
             var issue_url = package.component.get_url (AppStream.UrlKind.BUGTRACKER);
@@ -50,6 +66,10 @@
                 report_an_issue_row.set_name (issue_url);
                 report_an_issue_row.subtitle = (new Utils ().get_uri_hostname (issue_url));
                 report_an_issue_row.set_visible (true);
+
+                report_an_issue_button.clicked.connect (() => {
+                    show_uri (issue_url);
+                });
             }
 
             var help_url = package.component.get_url (AppStream.UrlKind.HELP);
@@ -57,7 +77,16 @@
                 help_row.set_name (help_url);
                 help_row.subtitle = (new Utils ().get_uri_hostname (help_url));
                 help_row.set_visible (true);
+
+                help_button.clicked.connect (() => {
+                    show_uri (help_url);
+                });
             }
+        }
+
+        private void show_uri (string uri) {
+            var main_window = He.Misc.find_ancestor_of_type<He.ApplicationWindow> (this);
+            Gtk.show_uri (main_window, uri, Gdk.CURRENT_TIME);
         }
     }
 }

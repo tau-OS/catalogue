@@ -18,15 +18,11 @@
 
 namespace Catalogue {
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/search-row.ui")]
-    public class SearchRow : He.Bin {
-        [GtkChild]
-        private unowned Gtk.Label app_name;
-        [GtkChild]
-        private unowned Gtk.Label app_description;
-        [GtkChild]
-        private unowned Gtk.Image image;
+    public class SearchRow : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Button info_button;
+        [GtkChild]
+        private unowned He.MiniContentBlock lbrow;
 
         private Core.Package app;
 
@@ -35,18 +31,13 @@ namespace Catalogue {
 
             app = package;
 
-            app_name.set_label (package.get_name ());
-            app_description.set_label (package.get_summary ());
+            lbrow.title = (package.get_name ());
+            lbrow.subtitle = (package.get_summary ());
 
-            image.set_from_gicon (package.get_icon (64, 64));
+            lbrow.gicon = (package.get_icon (64, 64));
 
             info_button.clicked.connect (() => {
                 Application.main_window.view_package_details (package);
-            });
-
-            this.realize.connect (() => {
-                // Set the parent element to be unselectable lol
-                ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
             });
         }
 

@@ -3,13 +3,8 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueCategoryRow" parent="HeBin">
         <property name="halign">center</property>
-        <property name="hexpand">True</property>
-        <property name="margin-top">24</property>
-        <property name="margin-bottom">36</property>
-        <property name="margin-start">12</property>
-        <property name="margin-end">12</property>
+        <property name="hexpand">1</property>
         <property name="valign">start</property>
-
         <child>
             <object class="GtkStack" id="stack">
                 <child>
@@ -18,14 +13,13 @@
                         <property name="child">
                             <object class="GtkFlowBox" id="loading_row_box">
                                 <property name="min-children-per-line">2</property>
-                                <property name="homogeneous">True</property>
-                                <property name="column-spacing">14</property>
-                                <property name="row-spacing">14</property>
+                                <property name="homogeneous">1</property>
+                                <property name="column-spacing">12</property>
+                                <property name="row-spacing">12</property>
                                 <property name="valign">start</property>
-                                <property name="hexpand">True</property>
+                                <property name="hexpand">1</property>
                                 <property name="selection-mode">none</property>
                             </object>
-
                         </property>
                     </object>
                 </child>
@@ -35,11 +29,11 @@
                         <property name="child">
                             <object class="GtkFlowBox" id="row_box">
                                 <property name="min-children-per-line">2</property>
-                                <property name="homogeneous">True</property>
-                                <property name="column-spacing">14</property>
-                                <property name="row-spacing">14</property>
+                                <property name="homogeneous">1</property>
+                                <property name="column-spacing">12</property>
+                                <property name="row-spacing">12</property>
                                 <property name="valign">start</property>
-                                <property name="hexpand">True</property>
+                                <property name="hexpand">1</property>
                                 <property name="selection-mode">none</property>
                             </object>
                         </property>

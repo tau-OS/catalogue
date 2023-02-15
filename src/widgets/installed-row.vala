@@ -20,7 +20,7 @@
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/installed-row.ui")]
     public class InstalledRow : He.Bin {
         [GtkChild]
-        private unowned He.ContentBlock lbrow;
+        private unowned He.MiniContentBlock lbrow;
         [GtkChild]
         private unowned Gtk.Button info_button;
         [GtkChild]

@@ -7,12 +7,12 @@
                 <property name="title">Category Title</property>
                 <child>
                     <object class="GtkFlowBox" id="row_box">
-                        <property name="homogeneous">True</property>
-                        <property name="row-spacing">5</property>
-                        <property name="column-spacing">5</property>
+                        <property name="homogeneous">1</property>
+                        <property name="row-spacing">6</property>
+                        <property name="column-spacing">6</property>
                         <property name="selection-mode">none</property>
                         <property name="valign">start</property>
-                        <property name="hexpand">True</property>
+                        <property name="hexpand">1</property>
                         <property name="min-children-per-line">2</property>
                     </object>
                 </child>

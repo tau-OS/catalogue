@@ -21,19 +21,15 @@ namespace Catalogue {
     public class AppVersionHistory : He.Bin {
         [GtkChild]
         private unowned Gtk.ListBox list_box_version_history;
-        [GtkChild]
-        private unowned Gtk.ListBoxRow version_history_button;
 
         private Core.Package app;
 
         [GtkCallback]
-        private void open_history_dialog (Gtk.ListBoxRow row) {
-            if (row == version_history_button) {
-                var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
-                var dialog = new Catalogue.VersionHistoryDialog (app);
-                dialog.set_transient_for (win);
-                dialog.present ();
-            }
+        private void open_history_dialog (Gtk.Button row) {
+            var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+            var dialog = new Catalogue.VersionHistoryDialog (app);
+            dialog.set_transient_for (win);
+            dialog.present ();
         }
             
         public AppVersionHistory (Core.Package package) {
