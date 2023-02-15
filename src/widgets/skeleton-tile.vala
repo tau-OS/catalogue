@@ -20,23 +20,17 @@ namespace Catalogue {
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/skeleton-tile.ui")]
     public class SkeletonTile : He.MiniContentBlock {
         [GtkChild]
-        private unowned Gtk.Label title_label;
-        [GtkChild]
-        private unowned Gtk.Label description_label;
-        [GtkChild]
         private unowned Gtk.Label price_label;
         
         public SkeletonTile () {
             Object ();
 
-            title_label.get_style_context ().add_class ("skeleton");
-            title_label.set_label ("Loading…");
-            description_label.get_style_context ().add_class ("skeleton");
-            description_label.set_label ("Loading…");
-            price_label.get_style_context ().add_class ("skeleton");
-            price_label.set_label ("Loading…");
+            title = ("████████████");
+            subtitle = ("████████████");
+            price_label.set_label ("████");
 
             this.sensitive = false;
+            this.get_style_context ().add_class ("skeleton");
         }
     }
 }

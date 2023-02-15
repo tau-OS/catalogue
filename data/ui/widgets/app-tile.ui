@@ -11,8 +11,7 @@
         <property name="title">App Name</property>
         <property name="subtitle">App Desc</property>
         <property name="primary_button">
-            <object class="HePillButton" id="price">
-                <property name="color">green</property>
+            <object class="HeFillButton" id="price">
             </object>
         </property>
     </template>

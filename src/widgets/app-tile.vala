@@ -20,17 +20,16 @@
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/app-tile.ui")]
     public class AppTile : He.MiniContentBlock {
         [GtkChild]
-        private unowned He.PillButton price;
+        private unowned He.FillButton price;
 
         public AppTile (Core.Package package) {
             Object ();
 
             this.title = package.get_name ();
             this.subtitle = package.get_summary ();
-
-            price.set_label ("Free");
             this.gicon = package.get_icon (64, 64);
 
+            price.set_label ("Install…");
             price.clicked.connect (() => {
                 Application.main_window.view_package_details (package);
             });
