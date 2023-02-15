@@ -73,7 +73,13 @@
                                             <object class="HeAppBar" id="header_bar">
                                                 <property name="show-back">0</property>
                                                 <property name="viewtitle-widget">
-                                                    <object class="GtkFixed"></object>
+                                                    <object class="GtkLabel" id="title_label">
+                                                        <property name="valign">center</property>
+                                                        <property name="halign">start</property>
+                                                        <style>
+                                                            <class name="view-title" />
+                                                        </style>
+                                                    </object>
                                                 </property>
                                                 <child>
                                                     <object class="GtkMenuButton">

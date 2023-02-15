@@ -43,6 +43,8 @@ namespace Catalogue {
         private unowned Gtk.Box search_page;
         [GtkChild]
         private unowned He.EmptyPage refresh_page;
+        [GtkChild]
+        private unowned Gtk.Label title_label;
 
         public void view_package_details (Core.Package package) {
             album_stack.set_visible_child_name ("album_contents");
@@ -142,13 +144,30 @@ namespace Catalogue {
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
             default_theme.add_resource_path ("/com/fyralabs/Catalogue");
 
-            // Handle Rows
+            if (header_stack.get_visible_child_name () == "explore") {
+                hide_back_button ();
+                title_label.label = (_("Explore"));
+            } else if (header_stack.get_visible_child_name () == "installed") {
+                title_label.label = (_("Installed"));
+            } else if (header_stack.get_visible_child_name () == "updates") {
+                title_label.label = (_("Updates"));
+            } else {
+                title_label.label = (_(""));
+                show_back_button ();
+            }
+
             header_stack.notify["visible-child"].connect (() => {
                 // Disable search
                 search_button.set_active (false);
                 if (header_stack.get_visible_child_name () == "explore") {
                     hide_back_button ();
+                    title_label.label = (_("Explore"));
+                } else if (header_stack.get_visible_child_name () == "installed") {
+                    title_label.label = (_("Installed"));
+                } else if (header_stack.get_visible_child_name () == "updates") {
+                    title_label.label = (_("Updates"));
                 } else {
+                    title_label.label = (_(""));
                     show_back_button ();
                 }
             });
