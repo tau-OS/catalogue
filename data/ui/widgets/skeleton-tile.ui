@@ -8,14 +8,13 @@
         <property name="vexpand">True</property>
         <style>
             <class name="featured-tile" />
-            <class name="card" />
-            <class name="content-block" />
-            <class name="grid-content-block " />
         </style>
         <child type="prefix">
             <object class="GtkBox">
                 <property name="orientation">horizontal</property>
                 <property name="spacing">6</property>
+                <property name="halign">start</property>
+                <property name="hexpand">True</property>
                 <child>
                     <object class="GtkImage" id="image">
                         <property name="resource">/com/fyralabs/Catalogue/test-icon.png</property>
@@ -77,9 +76,6 @@
                         </style>
                     </object>
                 </child>
-                <style>
-                    <class name="card" />
-                </style>
             </object>
         </child>
     </template>

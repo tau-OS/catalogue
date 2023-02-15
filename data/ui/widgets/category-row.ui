@@ -12,10 +12,10 @@
                         <property name="name">loading</property>
                         <property name="child">
                             <object class="GtkFlowBox" id="loading_row_box">
+                                <property name="max-children-per-line">3</property>
                                 <property name="min-children-per-line">2</property>
                                 <property name="homogeneous">1</property>
-                                <property name="column-spacing">12</property>
-                                <property name="row-spacing">12</property>
+                                <property name="column-spacing">6</property>
                                 <property name="valign">start</property>
                                 <property name="hexpand">1</property>
                                 <property name="selection-mode">none</property>
@@ -28,10 +28,10 @@
                         <property name="name">content</property>
                         <property name="child">
                             <object class="GtkFlowBox" id="row_box">
+                                <property name="max-children-per-line">3</property>
                                 <property name="min-children-per-line">2</property>
                                 <property name="homogeneous">1</property>
-                                <property name="column-spacing">12</property>
-                                <property name="row-spacing">12</property>
+                                <property name="column-spacing">6</property>
                                 <property name="valign">start</property>
                                 <property name="hexpand">1</property>
                                 <property name="selection-mode">none</property>

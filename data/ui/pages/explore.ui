@@ -30,7 +30,8 @@
                                                 <property name="valign">start</property>
                                                 <child>
                                                     <object class="GtkFlowBox" id="featured_flowbox">
-                                                        <property name="max-children-per-line">3</property>
+                                                        <property name="max-children-per-line">2</property>
+                                                        <property name="min-children-per-line">1</property>
                                                         <property name="column-spacing">6</property>
                                                         <property name="selection-mode">none</property>
                                                     </object>
@@ -61,16 +62,13 @@
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
                                             <object class="HeContentList">
-                                                <property name="margin-top">12</property>
                                                 <property name="title" translatable="yes">Accessories</property>
                                                 <child>
                                                     <object class="GtkBox" id="accessories_box">
                                                         <property name="halign">center</property>
                                                         <property name="hexpand">False</property>
                                                         <property name="orientation">vertical</property>
-                                                        <property name="margin-bottom">36</property>
-                                                        <property name="margin-start">12</property>
-                                                        <property name="margin-end">12</property>
+                                                        <property name="margin-bottom">24</property>
                                                         <property name="valign">start</property>
                                                     </object>
                                                 </child>
@@ -95,16 +93,13 @@
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
                                             <object class="HeContentList">
-                                                <property name="margin-top">12</property>
                                                 <property name="title" translatable="yes">Internet</property>
                                                 <child>
                                                     <object class="GtkBox" id="internet_box">
                                                         <property name="halign">center</property>
                                                         <property name="hexpand">False</property>
                                                         <property name="orientation">vertical</property>
-                                                        <property name="margin-bottom">36</property>
-                                                        <property name="margin-start">12</property>
-                                                        <property name="margin-end">12</property>
+                                                        <property name="margin-bottom">24</property>
                                                         <property name="valign">start</property>
                                                     </object>
                                                 </child>
@@ -129,16 +124,13 @@
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
                                             <object class="HeContentList">
-                                                <property name="margin-top">12</property>
                                                 <property name="title" translatable="yes">Develop</property>
                                                 <child>
                                                     <object class="GtkBox" id="develop_box">
                                                         <property name="halign">center</property>
                                                         <property name="hexpand">False</property>
                                                         <property name="orientation">vertical</property>
-                                                        <property name="margin-bottom">36</property>
-                                                        <property name="margin-start">12</property>
-                                                        <property name="margin-end">12</property>
+                                                        <property name="margin-bottom">24</property>
                                                         <property name="valign">start</property>
                                                     </object>
                                                 </child>
@@ -163,16 +155,13 @@
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
                                             <object class="HeContentList">
-                                                <property name="margin-top">12</property>
                                                 <property name="title" translatable="yes">Games</property>
                                                 <child>
                                                     <object class="GtkBox" id="games_box">
                                                         <property name="halign">center</property>
                                                         <property name="hexpand">False</property>
                                                         <property name="orientation">vertical</property>
-                                                        <property name="margin-bottom">36</property>
-                                                        <property name="margin-start">12</property>
-                                                        <property name="margin-end">12</property>
+                                                        <property name="margin-bottom">24</property>
                                                         <property name="valign">start</property>
                                                     </object>
                                                 </child>
@@ -197,16 +186,13 @@
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
                                             <object class="HeContentList">
-                                                <property name="margin-top">12</property>
                                                 <property name="title" translatable="yes">Create</property>
                                                 <child>
                                                     <object class="GtkBox" id="create_box">
                                                         <property name="halign">center</property>
                                                         <property name="hexpand">False</property>
                                                         <property name="orientation">vertical</property>
-                                                        <property name="margin-bottom">36</property>
-                                                        <property name="margin-start">12</property>
-                                                        <property name="margin-end">12</property>
+                                                        <property name="margin-bottom">24</property>
                                                         <property name="valign">start</property>
                                                     </object>
                                                 </child>
@@ -231,16 +217,13 @@
                                         <property name="tightening-threshold">600</property>
                                         <property name="child">
                                             <object class="HeContentList">
-                                                <property name="margin-top">12</property>
                                                 <property name="title" translatable="yes">Work</property>
                                                 <child>
                                                     <object class="GtkBox" id="work_box">
                                                         <property name="halign">center</property>
                                                         <property name="hexpand">False</property>
                                                         <property name="orientation">vertical</property>
-                                                        <property name="margin-bottom">36</property>
-                                                        <property name="margin-start">12</property>
-                                                        <property name="margin-end">12</property>
+                                                        <property name="margin-bottom">24</property>
                                                         <property name="valign">start</property>
                                                     </object>
                                                 </child>
