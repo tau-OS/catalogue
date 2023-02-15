@@ -54,7 +54,7 @@ namespace Catalogue {
             foreach (var widget in widget_list) {
                 album_contents.remove (widget);
             }
-            
+
             album_contents.append (new Catalogue.WindowDetails (package));
         }
 
@@ -94,7 +94,7 @@ namespace Catalogue {
         private void trigger_search () {
             unowned string query = entry_search.text;
             bool query_valid = query.length >= VALID_QUERY_LENGTH;
-        
+
             if (query_valid) {
                 var explore = (Catalogue.WindowExplore) header_stack.get_child_by_name ("explore");
                 search_view.search (query, explore.get_active_category ());
@@ -131,14 +131,14 @@ namespace Catalogue {
                     search_button.set_active (!search_button.active);
                     return true;
                 }
-    
+
                 return false;
             });
 
             entry_search.add_controller (key_press_event);
 
             entry_search.search_changed.connect (() => trigger_search ());
-            
+
             weak Gtk.IconTheme default_theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
             default_theme.add_resource_path ("/com/fyralabs/Catalogue");
 
