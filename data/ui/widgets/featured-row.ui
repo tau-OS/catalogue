@@ -8,7 +8,6 @@
                 <child>
                     <object class="GtkFlowBox" id="row_box">
                         <property name="homogeneous">1</property>
-                        <property name="row-spacing">6</property>
                         <property name="column-spacing">6</property>
                         <property name="selection-mode">none</property>
                         <property name="valign">start</property>
