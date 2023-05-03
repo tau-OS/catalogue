@@ -223,9 +223,9 @@ namespace Catalogue {
                 "https://github.com/tau-os/catalogue",
                 // TRANSLATORS: 'Name <email@domain.com>' or 'Name https://website.example'
                 {},
-                {"Fyra Labs", "Jamie Murphy"},
+                {"Fyra Labs"},
                 2023,
-                He.AboutWindow.Licenses.GPLv3,
+                He.AboutWindow.Licenses.GPLV3,
                 He.Colors.INDIGO
             );
             about.present ();
