@@ -23,10 +23,10 @@ namespace Catalogue {
         private Core.Client client;
 
         private const GLib.OptionEntry[] options = {
-            { "details", '\0', 0, OptionArg.STRING, out details_id, 
+            { "details", '\0', 0, OptionArg.STRING, out details_id,
               "Show application details (using application ID)", "ID" },
-            { "filename", 'f', 0, OptionArg.FILENAME, out filename, 
-              "Open a local package file", "FILENAME" }, 
+            { "filename", 'f', 0, OptionArg.FILENAME, out filename,
+              "Open a local package file", "FILENAME" },
             { null }
         };
 
@@ -50,7 +50,7 @@ namespace Catalogue {
             Intl.textdomain (Config.GETTEXT_PACKAGE);
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
             Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
-            
+
             add_action_entries (app_entries, this);
             add_main_option_entries (options);
             set_accels_for_action ("app.quit", {"<primary>q"});
@@ -111,11 +111,11 @@ namespace Catalogue {
             Gdk.RGBA accent_color = { 0 };
             accent_color.parse("#8c56bf");
             default_accent_color = He.Color.from_gdk_rgba(accent_color);
-    
+
             resource_base_path = "/com/fyralabs/Catalogue";
-    
+
             base.startup ();
-    
+
             Bis.init ();
 
             main_window = new Catalogue.Window (this);
@@ -225,7 +225,7 @@ namespace Catalogue {
                 {},
                 {"Fyra Labs", "Jamie Murphy"},
                 2023,
-                He.AboutWindow.Licenses.GPLv3,
+                He.AboutWindow.Licenses.GPLV3,
                 He.Colors.INDIGO
             );
             about.present ();

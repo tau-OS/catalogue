@@ -82,10 +82,10 @@ namespace Catalogue.Core {
                     default:
                         assert_not_reached ();
                 }
-    
+
                 working = false;
             }
-    
+
             return true;
         }
 
@@ -95,10 +95,10 @@ namespace Catalogue.Core {
             package_list = new Gee.HashMap<string, Package> ();
 
             user_appstream_pool = new AppStream.Pool ();
-            user_appstream_pool.set_flags (AppStream.PoolFlags.LOAD_OS_COLLECTION);
+            user_appstream_pool.set_flags (AppStream.PoolFlags.LOAD_OS_CATALOG);
 
             system_appstream_pool = new AppStream.Pool ();
-            system_appstream_pool.set_flags (AppStream.PoolFlags.LOAD_OS_COLLECTION);
+            system_appstream_pool.set_flags (AppStream.PoolFlags.LOAD_OS_CATALOG);
 
             // Monitor the FlatpakInstallation for changes (e.g. adding/removing remotes)
             if (user_installation != null) {
@@ -155,21 +155,21 @@ namespace Catalogue.Core {
             } else {
                 warning ("Couldn't create system Installation File Monitor due to no installation");
             }
-            
+
             user_metadata_path = Path.build_filename (
                 Environment.get_user_cache_dir (),
                 Config.APP_ID,
                 "flatpak-metadata",
                 "user"
             );
-    
+
             system_metadata_path = Path.build_filename (
                 Environment.get_user_cache_dir (),
                 Config.APP_ID,
                 "flatpak-metadata",
                 "system"
             );
-    
+
             reload_appstream_pool ();
         }
 
@@ -179,7 +179,7 @@ namespace Catalogue.Core {
             } catch (Error e) {
                 warning ("Unable to refresh cache after external change: %s", e.message);
             }
-    
+
             yield get_updates (null);
         }
 
@@ -189,7 +189,7 @@ namespace Catalogue.Core {
             } catch (Error e) {
                 critical ("Unable to get flatpak user installation : %s", e.message);
             }
-    
+
             try {
                 system_installation = new Flatpak.Installation.system ();
             } catch (Error e) {
@@ -218,12 +218,12 @@ namespace Catalogue.Core {
 
         public async Gee.Collection<Package> get_installed_applications (Cancellable? cancellable = null) {
             var installed_apps = new Gee.HashSet<Package> ();
-    
+
             if (user_installation == null && system_installation == null) {
                 critical ("Couldn't get installed apps due to no flatpak installation");
                 return installed_apps;
             }
-    
+
             GLib.GenericArray<weak Flatpak.InstalledRef> installed_refs;
             try {
                 installed_refs = user_installation.list_installed_refs ();
@@ -232,7 +232,7 @@ namespace Catalogue.Core {
                 critical ("Unable to get installed flatpaks: %s", e.message);
                 return installed_apps;
             }
-    
+
             try {
                 installed_refs = system_installation.list_installed_refs ();
                 installed_apps.add_all (get_installed_apps_from_refs (true, installed_refs, cancellable));
@@ -240,21 +240,21 @@ namespace Catalogue.Core {
                 critical ("Unable to get installed flatpaks: %s", e.message);
                 return installed_apps;
             }
-            
-    
+
+
             return installed_apps;
         }
 
         private Gee.Collection<Package> get_installed_apps_from_refs (bool system, GLib.GenericArray<weak Flatpak.InstalledRef> installed_refs, Cancellable? cancellable) {
             var installed_apps = new Gee.HashSet<Package> ();
-    
+
             for (int i = 0; i < installed_refs.length; i++) {
                 if (cancellable.is_cancelled ()) {
                     break;
                 }
-    
+
                 unowned Flatpak.InstalledRef installed_ref = installed_refs[i];
-    
+
                 var bundle_id = generate_package_list_key (system, installed_ref.origin, installed_ref.format_ref ());
                 var package = package_list[bundle_id];
                 if (package != null) {
@@ -263,7 +263,7 @@ namespace Catalogue.Core {
                     installed_apps.add (package);
                 }
             }
-    
+
             return installed_apps;
         }
 
@@ -309,27 +309,59 @@ namespace Catalogue.Core {
             if (components.length != 0) {
                 components.remove_range (0, components.length);
             }
-    
+
             var category_array = new GLib.GenericArray<AppStream.Category> ();
             category_array.add (category);
             AppStream.utils_sort_components_into_categories (user_appstream_pool.get_components (), category_array, false);
             AppStream.utils_sort_components_into_categories (system_appstream_pool.get_components (), category_array, false);
             components = category.get_components ();
-    
+
             var apps = new Gee.TreeSet<Package> ();
             components.foreach ((comp) => {
                 var packages = get_packages_for_component_id (comp.get_id ());
                 apps.add_all (packages);
             });
-    
+
             return apps;
         }
 
         public Gee.Collection<Package> search_applications (string query, AppStream.Category? category) {
-            var apps = new Gee.TreeSet<Package> ();
+            var apps = new Gee.TreeSet<Core.Package> ();
+            var comps = user_appstream_pool.search (query);
+            if (category == null) {
+                comps.foreach ((comp) => {
+                    var packages = get_packages_for_component_id (comp.get_id ());
+                    apps.add_all (packages);
+                });
+            } else {
+                var cat_packages = get_applications_for_category (category);
+                comps.foreach ((comp) => {
+                    var packages = get_packages_for_component_id (comp.get_id ());
+                    foreach (var package in packages) {
+                        if (package in cat_packages) {
+                            apps.add (package);
+                        }
+                    }
+                });
+            }
 
-            apps.add_all (search_applications_internal (user_appstream_pool.search (query), category));
-            apps.add_all (search_applications_internal (system_appstream_pool.search (query), category));
+            comps = system_appstream_pool.search (query);
+            if (category == null) {
+                comps.foreach ((comp) => {
+                    var packages = get_packages_for_component_id (comp.get_id ());
+                    apps.add_all (packages);
+                });
+            } else {
+                var cat_packages = get_applications_for_category (category);
+                comps.foreach ((comp) => {
+                    var packages = get_packages_for_component_id (comp.get_id ());
+                    foreach (var package in packages) {
+                        if (package in cat_packages) {
+                            apps.add (package);
+                        }
+                    }
+                });
+            }
 
             return apps;
         }
@@ -368,8 +400,8 @@ namespace Catalogue.Core {
                         return package;
                     }
                 }
-            }            
-    
+            }
+
             return null;
         }
 
@@ -383,13 +415,13 @@ namespace Catalogue.Core {
                     packages.add (package);
                 }
             }
-    
+
             return packages;
         }
 
         private void reload_appstream_pool () {
             user_appstream_pool.reset_extra_data_locations ();
-            user_appstream_pool.add_extra_data_location (user_metadata_path, AppStream.FormatStyle.COLLECTION);
+            user_appstream_pool.add_extra_data_location (user_metadata_path, AppStream.FormatStyle.CATALOG);
 
             try {
                 debug ("Loading Flatpak user pool");
@@ -414,7 +446,7 @@ namespace Catalogue.Core {
             }
 
             system_appstream_pool.reset_extra_data_locations ();
-            system_appstream_pool.add_extra_data_location (system_metadata_path, AppStream.FormatStyle.COLLECTION);
+            system_appstream_pool.add_extra_data_location (system_metadata_path, AppStream.FormatStyle.CATALOG);
 
             try {
                 debug ("Loading Flatpak system pool");
@@ -441,7 +473,7 @@ namespace Catalogue.Core {
 
         public void preprocess_metadata (bool system, GLib.GenericArray<weak Flatpak.Remote> remotes, Cancellable? cancellable) {
             unowned Flatpak.Installation installation;
-    
+
             unowned string dest_path;
             if (system) {
                 dest_path = system_metadata_path;
@@ -450,11 +482,11 @@ namespace Catalogue.Core {
                 dest_path = user_metadata_path;
                 installation = user_installation;
             }
-    
+
             if (installation == null) {
                 return;
             }
-    
+
             var dest_folder = File.new_for_path (dest_path);
             if (!dest_folder.query_exists ()) {
                 try {
@@ -464,22 +496,22 @@ namespace Catalogue.Core {
                     return;
                 }
             }
-    
+
             delete_folder_contents (dest_folder);
-    
+
             for (int i = 0; i < remotes.length; i++) {
                 unowned Flatpak.Remote remote = remotes[i];
-    
+
                 bool cache_refresh_needed = false;
-    
+
                 unowned string origin_name = remote.get_name ();
                 debug ("Found remote: %s", origin_name);
-    
+
                 if (remote.get_disabled ()) {
                     debug ("%s is disabled, skipping.", origin_name);
                     continue;
                 }
-    
+
                 var timestamp_file = remote.get_appstream_timestamp (null);
                 if (!timestamp_file.query_exists ()) {
                     cache_refresh_needed = true;
@@ -490,7 +522,7 @@ namespace Catalogue.Core {
                         cache_refresh_needed = true;
                     }
                 }
-    
+
                 if (cache_refresh_needed) {
                     debug ("Updating remote");
                     bool success = false;
@@ -500,7 +532,7 @@ namespace Catalogue.Core {
                         warning ("Unable to update remote: %s", e.message);
                     }
                     debug ("Remote updated: %s", success.to_string ());
-    
+
                     debug ("Updating appstream data");
                     success = false;
                     try {
@@ -508,21 +540,21 @@ namespace Catalogue.Core {
                     } catch (Error e) {
                         warning ("Unable to update appstream: %s", e.message);
                     }
-    
+
                     debug ("Appstream updated: %s", success.to_string ());
                 }
-    
+
                 var metadata_location = remote.get_appstream_dir (null).get_path ();
                 var metadata_folder_file = File.new_for_path (metadata_location);
-    
+
                 var metadata_path = Path.build_filename (metadata_location, "appstream.xml.gz");
                 var metadata_file = File.new_for_path (metadata_path);
-    
+
                 if (metadata_file.query_exists ()) {
                     var dest_file = dest_folder.get_child (origin_name + ".xml.gz");
-    
+
                     perform_xml_fixups (origin_name, metadata_file, dest_file);
-    
+
                     var local_icons_path = dest_folder.get_child ("icons");
                     if (!local_icons_path.query_exists ()) {
                         try {
@@ -532,12 +564,12 @@ namespace Catalogue.Core {
                             continue;
                         }
                     }
-    
+
                     var remote_icons_folder = metadata_folder_file.get_child ("icons");
                     if (!remote_icons_folder.query_exists ()) {
                         continue;
                     }
-    
+
                     if (remote_icons_folder.get_child (origin_name).query_exists ()) {
                         local_icons_path = local_icons_path.get_child (origin_name);
                         try {
@@ -575,7 +607,7 @@ namespace Catalogue.Core {
             bool system = fp_package.installation == system_installation;
 
             var id = generate_package_list_key (system, package.component.get_origin (), bundle.get_id ());
-            
+
             string origin, bundle_id;
             var split_success = get_package_list_key_parts (id, out system, out origin, out bundle_id);
             if (!split_success) {
@@ -608,18 +640,18 @@ namespace Catalogue.Core {
             if (bundle == null) {
                 return 0;
             }
-    
+
             unowned var fp_package = package as FlatpakPackage;
             if (fp_package == null) {
                 return 0;
             }
-    
+
             bool system = fp_package.installation == system_installation;
-    
+
             var id = generate_package_list_key (system, package.component.get_origin (), bundle.get_id ());
             return yield get_download_size_by_id (id, cancellable, is_update, package);
         }
-    
+
         public async uint64 get_download_size_by_id (string id, Cancellable? cancellable, bool is_update = false, Package? package = null) throws GLib.Error {
             bool system;
             string origin, bundle_id;
@@ -627,22 +659,22 @@ namespace Catalogue.Core {
             if (!split_success) {
                 return 0;
             }
-    
+
             unowned Flatpak.Installation? installation = null;
             if (system) {
                 installation = system_installation;
             } else {
                 installation = user_installation;
             }
-    
+
             if (installation == null) {
                 return 0;
             }
-    
+
             uint64 download_size = 0;
-    
+
             var added_remotes = new Gee.ArrayList<string> ();
-    
+
             try {
                 var transaction = new Flatpak.Transaction.for_installation (installation, cancellable);
                 transaction.add_default_dependency_sources ();
@@ -651,29 +683,29 @@ namespace Catalogue.Core {
                 } else {
                     transaction.add_install (origin, bundle_id, null);
                 }
-    
+
                 transaction.add_new_remote.connect ((reason, from_id, remote_name, url) => {
                     if (reason == Flatpak.TransactionRemoteReason.RUNTIME_DEPS) {
                         added_remotes.add (url);
                         return true;
                     }
-    
+
                     return false;
                 });
-    
+
                 transaction.ready.connect (() => {
                     var operations = transaction.get_operations ();
                     operations.foreach ((entry) => {
-    
+
                         download_size += entry.get_download_size ();
                     });
-    
+
                     // Do not allow the install to start, this is a dry run
                     return false;
                 });
-    
+
                 transaction.run (cancellable);
-    
+
                 // Cleanup any remotes we had to add while testing the transaction
                 installation.list_remotes ().foreach ((remote) => {
                     if (remote.get_url () in added_remotes) {
@@ -689,7 +721,7 @@ namespace Catalogue.Core {
                     throw e;
                 }
             }
-    
+
             return download_size;
         }
 
@@ -698,26 +730,26 @@ namespace Catalogue.Core {
             details.name = package.component.get_name ();
             details.description = package.component.get_description ();
             details.summary = package.component.get_summary ();
-    
+
             var newest_version = package.get_newest_release ();
             if (newest_version != null) {
                 details.version = newest_version.get_version ();
             }
-    
+
             return details;
         }
 
         private void refresh_cache_internal (Job job) {
             unowned var args = (RefreshCacheArgs)job.args;
             unowned var cancellable = args.cancellable;
-    
+
             if (user_installation == null && system_installation == null) {
                 critical ("Error refreshing flatpak cache due to no installation");
                 return;
             }
-    
+
             GLib.GenericArray<weak Flatpak.Remote> remotes = null;
-    
+
             if (user_installation != null) {
                 try {
                     user_installation.drop_caches ();
@@ -727,7 +759,7 @@ namespace Catalogue.Core {
                     critical ("Error getting user flatpak remotes: %s", e.message);
                 }
             }
-    
+
             if (system_installation != null) {
                 try {
                     system_installation.drop_caches ();
@@ -737,11 +769,11 @@ namespace Catalogue.Core {
                     warning ("Error getting system flatpak remotes: %s", e.message);
                 }
             }
-    
+
             reload_appstream_pool ();
             //  TODO cache flush
             //  BackendAggregator.get_default ().cache_flush_needed ();
-    
+
             job.result = Value (typeof (bool));
             job.result.set_boolean (true);
             job.results_ready ();
@@ -857,7 +889,7 @@ namespace Catalogue.Core {
                 job.results_ready ();
                 return;
             }
-            
+
             try {
                 transaction.add_install (package.component.get_origin (), bundle.get_id (), null);
             } catch (Error e) {
@@ -879,12 +911,12 @@ namespace Catalogue.Core {
 
             transaction.new_operation.connect ((operation, progress) => {
                 current_operation++;
-    
+
                 progress.changed.connect (() => {
                     if (cancellable.is_cancelled ()) {
                         return;
                     }
-    
+
                     // Calculate the progress contribution of the previous operations not including the current, hence -1
                     double existing_progress = (double)(current_operation - 1) / (double)total_operations;
                     double this_op_progress = (double)progress.get_progress () / 100.0f / (double)total_operations;
@@ -987,7 +1019,7 @@ namespace Catalogue.Core {
                 job.results_ready ();
                 return;
             }
-            
+
             try {
                 transaction.add_uninstall (bundle.get_id ());
             } catch (Error e) {
@@ -1003,12 +1035,12 @@ namespace Catalogue.Core {
 
             transaction.new_operation.connect ((operation, progress) => {
                 current_operation++;
-    
+
                 progress.changed.connect (() => {
                     if (cancellable.is_cancelled ()) {
                         return;
                     }
-    
+
                     // Calculate the progress contribution of the previous operations not including the current, hence -1
                     double existing_progress = (double)(current_operation - 1) / (double)total_operations;
                     double this_op_progress = (double)progress.get_progress () / 100.0f / (double)total_operations;
@@ -1098,12 +1130,12 @@ namespace Catalogue.Core {
 
             transaction.new_operation.connect ((operation, progress) => {
                 current_operation++;
-    
+
                 progress.changed.connect (() => {
                     if (cancellable.is_cancelled ()) {
                         return;
                     }
-    
+
                     // Calculate the progress contribution of the previous operations not including the current, hence -1
                     double existing_progress = (double)(current_operation - 1) / (double)total_operations;
                     double this_op_progress = (double)progress.get_progress () / 100.0f / (double)total_operations;
@@ -1142,7 +1174,7 @@ namespace Catalogue.Core {
                     success = false;
                 }
             }
-    
+
             return success;
         }
 
@@ -1155,16 +1187,16 @@ namespace Catalogue.Core {
             system = null;
             origin = null;
             bundle_id = null;
-    
+
             string[] parts = key.split ("/", 3);
             if (parts.length != 3) {
                 return false;
             }
-    
+
             system = parts[0] == "system";
             origin = parts[1];
             bundle_id = parts[2];
-    
+
             return true;
         }
 
@@ -1212,14 +1244,14 @@ namespace Catalogue.Core {
 
         public async Gee.ArrayList<string> get_updates (Cancellable? cancellable = null) {
             var updatable_ids = new Gee.ArrayList<string> ();
-    
+
             if (user_installation == null && system_installation == null) {
                 critical ("Unable to get flatpak installation when checking for updates");
                 return updatable_ids;
             }
-    
+
             GLib.GenericArray<weak Flatpak.InstalledRef> update_refs;
-    
+
             if (user_installation != null) {
                 try {
                     update_refs = user_installation.list_installed_refs_for_update (cancellable);
@@ -1232,11 +1264,11 @@ namespace Catalogue.Core {
                     return updatable_ids;
                 }
             }
-    
+
             if (system_installation != null) {
                 try {
                     update_refs = system_installation.list_installed_refs_for_update (cancellable);
-    
+
                     for (int i = 0; i < update_refs.length; i++) {
                         unowned Flatpak.InstalledRef updatable_ref = update_refs[i];
                         updatable_ids.add (generate_package_list_key (true, updatable_ref.origin, updatable_ref.format_ref ()));
@@ -1246,7 +1278,7 @@ namespace Catalogue.Core {
                     return updatable_ids;
                 }
             }
-    
+
             return updatable_ids;
         }
 
@@ -1368,7 +1400,7 @@ namespace Catalogue.Core {
             warning ("Remote URL not found in installation");
             return false;
         }
-    
+
         private static GLib.Once<FlatpakBackend> instance;
         public static unowned FlatpakBackend get_default () {
             return instance.once (() => { return new FlatpakBackend (); });

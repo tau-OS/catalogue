@@ -27,7 +27,7 @@
 
             modal = true;
             has_title = true;
-                
+
             var system_repos = Core.Client.get_default ().get_remotes (true);
             var user_repos = Core.Client.get_default ().get_remotes (false);
 

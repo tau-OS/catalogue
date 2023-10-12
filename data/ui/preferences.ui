@@ -3,6 +3,9 @@
     <requires lib="gtk" version="4.0" />
     <requires lib="libadwaita" version="1.0" />
     <template class="CataloguePreferences" parent="HeWindow">
+        <property name="default-width">440</property>
+        <property name="default-height">440</property>
+        <property name="resizable">0</property>
         <child>
             <object class="HeSettingsPage">
                 <property name="title">Preferences</property>
@@ -23,8 +26,15 @@
                             </object>
                         </child>
                         <child>
-                            <object class="HeSettingsList" id="repositories_listbox">
-                                <property name="title" translatable="yes">Software Repositories</property>
+                            <object class="GtkScrolledWindow">
+                                <property name="vexpand">1</property>
+                                <property name="hscrollbar_policy">never</property>
+                                <child>
+                                    <object class="HeSettingsList" id="repositories_listbox">
+                                        <property name="vexpand">1</property>
+                                        <property name="title" translatable="yes">Software Repositories</property>
+                                    </object>
+                                </child>
                             </object>
                         </child>
                     </object>

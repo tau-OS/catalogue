@@ -30,6 +30,8 @@ namespace Catalogue {
         [GtkChild]
         public unowned He.AppBar header_bar2;
         [GtkChild]
+        public unowned He.AppBar header_bar3;
+        [GtkChild]
         unowned Bis.Album album;
         [GtkChild]
         private unowned Gtk.Box album_contents;
@@ -177,7 +179,7 @@ namespace Catalogue {
         }
 
         public void hide_main_back_button () {
-            header_bar.show_back = (false);
+            header_bar3.show_back = (false);
         }
 
         public void hide_back_button () {
@@ -185,7 +187,7 @@ namespace Catalogue {
         }
 
         public void show_main_back_button () {
-            header_bar.show_back = (true);
+            header_bar3.show_back = (true);
         }
 
         public void show_back_button () {
