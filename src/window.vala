@@ -51,7 +51,7 @@ namespace Catalogue {
         public void view_package_details (Core.Package package) {
             album_stack.set_visible_child_name ("album_contents");
             album.navigate (Bis.NavigationDirection.BACK);
-            header_bar.show_back = (true);
+            header_bar3.show_back = (true);
             // Add details page to album
             var widget_list = new Utils ().get_all_widgets_in_child (album_contents);
 
@@ -111,7 +111,7 @@ namespace Catalogue {
             search_page.append (search_view);
             refresh_page.action_button.visible = false;
 
-            header_bar.back_button.clicked.connect (() => {
+            header_bar3.back_button.clicked.connect (() => {
                 main_back_clicked_cb ();
             });
             header_bar2.back_button.clicked.connect (() => {
