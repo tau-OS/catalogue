@@ -59,7 +59,7 @@ systemd = dependency('systemd', required: false)
 if systemd.found()
     install_data(
         meson.project_name() + '.service',
-        install_dir: join_paths(systemd.get_pkgconfig_variable('systemdsystemunitdir'), 'multi-user.target.wants')
+        install_dir: join_paths(systemd.get_variable(pkgconfig: 'systemdsystemunitdir'), 'multi-user.target.wants')
     )
 endif
 

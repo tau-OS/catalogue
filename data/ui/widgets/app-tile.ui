@@ -11,7 +11,7 @@
         <property name="title">App Name</property>
         <property name="subtitle">App Desc</property>
         <property name="primary_button">
-            <object class="HeFillButton" id="price">
+            <object class="GtkButton" id="price">
             </object>
         </property>
     </template>

@@ -63,10 +63,6 @@ namespace Catalogue {
 
             client = Core.Client.get_default ();
             client.cache_update_finished.connect (() => {
-                //  if (error) {
-                //      print ("TODO add error dialog");
-                //  }
-
                 main_window.album_forward ();
             });
         }
@@ -98,19 +94,15 @@ namespace Catalogue {
             } else {
                 info (_("Specified link '%s' could not be found").printf (link));
                 return;
-                //  string? search_term = Uri.unescape_string (link);
-                //  if (search_term != null) {
-                //      main_window.search (search_term);
-                //  }
             }
         }
 
         public signal void open_dialog ();
 
         protected override void startup () {
-            Gdk.RGBA accent_color = { 0 };
+            Gdk.RGBA accent_color = {};
             accent_color.parse("#8c56bf");
-            default_accent_color = He.Color.from_gdk_rgba(accent_color);
+            default_accent_color = He.from_gdk_rgba(accent_color);
 
             resource_base_path = "/com/fyralabs/Catalogue";
 
@@ -201,7 +193,7 @@ namespace Catalogue {
                         warning (e.message);
                     }
                 } else {
-                    print ("i have no idea wtf this is");
+                    warning ("Unknown file type, cannot process");
                 }
             }
         }

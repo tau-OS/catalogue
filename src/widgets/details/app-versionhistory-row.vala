@@ -40,7 +40,7 @@ namespace Catalogue {
                 //  print (version_description);
                 version_number_label.set_label (@"New in Version $(version_number)");
                 try {
-                    version_description_label.set_label (AppStream.markup_convert_simple (version_description));
+                    version_description_label.set_label (AppStream.markup_convert (version_description, AppStream.MarkupKind.TEXT));
                 } catch (Error e) {
                     version_description_label.set_label ("Error parsing description");
                     warning (e.message);

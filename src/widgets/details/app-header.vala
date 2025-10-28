@@ -26,9 +26,9 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.Label developer_name_label;
         [GtkChild]
-        private unowned He.PillButton action_button;
+        private unowned Gtk.Button action_button;
         [GtkChild]
-        private unowned He.PillButton donate_action_button;
+        private unowned Gtk.Button donate_action_button;
         [GtkChild]
         private unowned Gtk.Spinner progress_spinner;
 
@@ -68,12 +68,12 @@ namespace Catalogue {
                 string? primary_color = app.get_color_primary ();
 
                 if (primary_color != null) {
-                    var bg_rgba = Gdk.RGBA ();
+                    Gdk.RGBA bg_rgba = {};
                     bg_rgba.parse (primary_color);
 
-                    bg_color = He.Color.hexcode (bg_rgba.red * 255, bg_rgba.green * 255, bg_rgba.blue * 255);
-                    var rgb = He.Color.from_gdk_rgba (Utils.contrasting_foreground_color (bg_rgba));
-                    text_color =  He.Color.hexcode (rgb.r, rgb.g, rgb.b);
+                    bg_color = "#%02x%02x%02x".printf ((int)(bg_rgba.red * 255), (int)(bg_rgba.green * 255), (int)(bg_rgba.blue * 255));
+                    var fg_rgba = Utils.contrasting_foreground_color (bg_rgba);
+                    text_color = "#%02x%02x%02x".printf ((int)(fg_rgba.red * 255), (int)(fg_rgba.green * 255), (int)(fg_rgba.blue * 255));
 
                     accent_css = "@define-color accented_color %s;@define-color accented_fg_color %s;".printf (bg_color, text_color);
                     accent_provider.load_from_data ((uint8[])accent_css);

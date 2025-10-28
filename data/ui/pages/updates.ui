@@ -71,7 +71,7 @@
                                                             <object class="HeContentList">
                                                                 <property name="title" translatable="yes">Available Updates</property>
                                                                 <child>
-                                                                    <object class="HePillButton" id="update_all">
+                                                                    <object class="GtkButton" id="update_all">
                                                                         <property name="label">Update All</property>
                                                                         <signal name="clicked" handler="update_all_packages" />
                                                                     </object>

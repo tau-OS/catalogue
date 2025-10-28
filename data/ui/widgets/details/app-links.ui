@@ -38,7 +38,7 @@
                                                         <property name="title" translatable="yes">Project Website</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="HeDisclosureButton" id="project_website_button">
+                                                            <object class="GtkButton" id="project_website_button">
                                                                 <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
@@ -64,7 +64,7 @@
                                                         <property name="title" translatable="yes">Contribute Translations</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="HeDisclosureButton" id="translate_button">
+                                                            <object class="GtkButton" id="translate_button">
                                                                 <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
@@ -90,7 +90,7 @@
                                                         <property name="title" translatable="yes">Report an Issue</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="HeDisclosureButton" id="report_an_issue_button">
+                                                            <object class="GtkButton" id="report_an_issue_button">
                                                                 <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>
@@ -116,7 +116,7 @@
                                                         <property name="title" translatable="yes">Help</property>
                                                         <property name="subtitle">tauos.co</property>
                                                         <child>
-                                                            <object class="HeDisclosureButton" id="help_button">
+                                                            <object class="GtkButton" id="help_button">
                                                                 <property name="icon">external-link-symbolic</property>
                                                             </object>
                                                         </child>

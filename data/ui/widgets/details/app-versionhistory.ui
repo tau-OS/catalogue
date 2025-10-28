@@ -21,7 +21,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="HePillButton" id="version_history_button">
+                            <object class="GtkButton" id="version_history_button">
                                 <property name="valign">center</property>
                                 <property name="halign">center</property>
                                 <property name="label" translatable="yes">Version History</property>

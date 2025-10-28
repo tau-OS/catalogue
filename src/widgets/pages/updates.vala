@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// TODO automatically handle refreshing updates lol
+// TODO: Implement automatic refresh of available updates
 namespace Catalogue {
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/updates.ui")]
     public class WindowUpdates : Gtk.Box {

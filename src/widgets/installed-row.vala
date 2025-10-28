@@ -32,7 +32,7 @@
 
         private Core.Package app;
 
-        //  used to remove elements from rows lol :)
+        // Signal emitted when an action (install/update/uninstall) completes
         public signal void action_complete (InstalledRow source, bool was_successful);
 
         public InstalledRow (Core.Package package) {
@@ -93,7 +93,7 @@
             });
 
             this.realize.connect (() => {
-                // Set the parent element to be unselectable lol
+                // Make the parent ListBoxRow unselectable to prevent accidental selection
                 ((Gtk.ListBoxRow) this.get_parent ()).selectable = false;
             });
         }

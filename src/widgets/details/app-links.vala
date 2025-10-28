@@ -28,13 +28,13 @@
         [GtkChild]
         private unowned He.MiniContentBlock help_row;
         [GtkChild]
-        private unowned He.DisclosureButton project_website_button;
+        private unowned Gtk.Button project_website_button;
         [GtkChild]
-        private unowned He.DisclosureButton translate_button;
+        private unowned Gtk.Button translate_button;
         [GtkChild]
-        private unowned He.DisclosureButton report_an_issue_button;
+        private unowned Gtk.Button report_an_issue_button;
         [GtkChild]
-        private unowned He.DisclosureButton help_button;
+        private unowned Gtk.Button help_button;
 
         public AppLinks (Core.Package package) {
             Object ();

@@ -25,10 +25,10 @@
         public VersionHistoryDialog (Core.Package package) {
             Object ();
 
-            var releases = package.component.get_releases ();
+            var releases = package.component.get_releases_plain ().get_entries ();
 
-            foreach (var release in releases) {
-                list_box_version_history.prepend (new Catalogue.AppVersionHistoryRow (release));
+            for (uint i = 0; i < releases.length; i++) {
+                list_box_version_history.prepend (new Catalogue.AppVersionHistoryRow (releases[i]));
             }
         }
     }

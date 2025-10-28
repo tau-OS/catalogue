@@ -304,63 +304,70 @@ namespace Catalogue.Core {
         }
 
         public Gee.Collection<Package> get_applications_for_category (AppStream.Category category) {
-            unowned GLib.GenericArray<AppStream.Component> components = category.get_components ();
-            // Clear out any cached components that could be from other backends
-            if (components.length != 0) {
-                components.remove_range (0, components.length);
-            }
-
-            var category_array = new GLib.GenericArray<AppStream.Category> ();
-            category_array.add (category);
-            AppStream.utils_sort_components_into_categories (user_appstream_pool.get_components (), category_array, false);
-            AppStream.utils_sort_components_into_categories (system_appstream_pool.get_components (), category_array, false);
-            components = category.get_components ();
-
             var apps = new Gee.TreeSet<Package> ();
-            components.foreach ((comp) => {
-                var packages = get_packages_for_component_id (comp.get_id ());
-                apps.add_all (packages);
-            });
+            
+            // Search both pools for components in this category
+            var user_components = user_appstream_pool.get_components ().as_array ();
+            for (uint i = 0; i < user_components.length; i++) {
+                var comp = user_components[i];
+                if (comp.is_member_of_category (category)) {
+                    var packages = get_packages_for_component_id (comp.get_id ());
+                    apps.add_all (packages);
+                }
+            }
+            
+            var system_components = system_appstream_pool.get_components ().as_array ();
+            for (uint i = 0; i < system_components.length; i++) {
+                var comp = system_components[i];
+                if (comp.is_member_of_category (category)) {
+                    var packages = get_packages_for_component_id (comp.get_id ());
+                    apps.add_all (packages);
+                }
+            }
 
             return apps;
         }
 
         public Gee.Collection<Package> search_applications (string query, AppStream.Category? category) {
             var apps = new Gee.TreeSet<Core.Package> ();
-            var comps = user_appstream_pool.search (query);
+            var comps = user_appstream_pool.search (query).as_array ();
             if (category == null) {
-                comps.foreach ((comp) => {
+                for (uint i = 0; i < comps.length; i++) {
+                    var comp = comps[i];
                     var packages = get_packages_for_component_id (comp.get_id ());
                     apps.add_all (packages);
-                });
+                }
             } else {
                 var cat_packages = get_applications_for_category (category);
-                comps.foreach ((comp) => {
+                for (uint i = 0; i < comps.length; i++) {
+                    var comp = comps[i];
                     var packages = get_packages_for_component_id (comp.get_id ());
                     foreach (var package in packages) {
                         if (package in cat_packages) {
                             apps.add (package);
                         }
                     }
-                });
+                }
             }
 
-            comps = system_appstream_pool.search (query);
+            comps = system_appstream_pool.search (query).as_array ();
             if (category == null) {
-                comps.foreach ((comp) => {
+                for (uint i = 0; i < comps.length; i++) {
+                    var comp = comps[i];
                     var packages = get_packages_for_component_id (comp.get_id ());
                     apps.add_all (packages);
-                });
+                }
             } else {
                 var cat_packages = get_applications_for_category (category);
-                comps.foreach ((comp) => {
+                for (uint i = 0; i < comps.length; i++) {
+                    var comp = comps[i];
                     var packages = get_packages_for_component_id (comp.get_id ());
                     foreach (var package in packages) {
                         if (package in cat_packages) {
                             apps.add (package);
                         }
                     }
-                });
+                }
             }
 
             return apps;
@@ -429,7 +436,9 @@ namespace Catalogue.Core {
             } catch (Error e) {
                 warning ("Errors found in flatpak appdata, some components may be incomplete/missing: %s", e.message);
             } finally {
-                user_appstream_pool.get_components ().foreach ((comp) => {
+                var components = user_appstream_pool.get_components ().as_array ();
+                for (uint i = 0; i < components.length; i++) {
+                    var comp = components[i];
                     var bundle = comp.get_bundle (AppStream.BundleKind.FLATPAK);
                     if (bundle != null) {
                         var key = generate_package_list_key (false, comp.get_origin (), bundle.get_id ());
@@ -442,7 +451,7 @@ namespace Catalogue.Core {
 
                         package_list[key] = package;
                     }
-                });
+                }
             }
 
             system_appstream_pool.reset_extra_data_locations ();
@@ -454,7 +463,9 @@ namespace Catalogue.Core {
             } catch (Error e) {
                 warning ("Errors found in flatpak appdata, some components may be incomplete/missing: %s", e.message);
             } finally {
-                system_appstream_pool.get_components ().foreach ((comp) => {
+                var components = system_appstream_pool.get_components ().as_array ();
+                for (uint i = 0; i < components.length; i++) {
+                    var comp = components[i];
                     var bundle = comp.get_bundle (AppStream.BundleKind.FLATPAK);
                     if (bundle != null) {
                         var key = generate_package_list_key (true, comp.get_origin (), bundle.get_id ());
@@ -467,7 +478,7 @@ namespace Catalogue.Core {
 
                         package_list[key] = package;
                     }
-                });
+                }
             }
         }
 

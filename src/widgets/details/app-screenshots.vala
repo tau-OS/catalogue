@@ -76,7 +76,7 @@
         public AppScreenshots (Core.Package package) {
             Object ();
 
-            screenshots = package.component.get_screenshots ();
+            screenshots = package.component.get_screenshots_all ();
 
             carousel.page_changed.connect (() => {
                 update_buttons ();

@@ -94,7 +94,10 @@ namespace Catalogue.Core {
                     return _author;
                 }
 
-                _author = component.developer_name;
+                var developer = component.get_developer ();
+                if (developer != null) {
+                    _author = developer.get_name ();
+                }
 
                 if (_author == null) {
                     var project_group = component.project_group;
@@ -364,7 +367,7 @@ namespace Catalogue.Core {
                 }
     
                 try {
-                    description = AppStream.markup_convert_simple (description);
+                    description = AppStream.markup_convert (description, AppStream.MarkupKind.TEXT);
                 } catch (Error e) {
                     warning ("Failed to convert description to markup: %s", e.message);
                 }
@@ -503,26 +506,25 @@ namespace Catalogue.Core {
         public Gee.ArrayList<AppStream.Release> get_newest_releases (int min_releases, int max_releases) {
             var list = new Gee.ArrayList<AppStream.Release> ();
     
-            var releases = component.get_releases ();
-            uint index = 0;
-            while (index < releases.length) {
-                if (releases[index].get_version () == null) {
-                    releases.remove_index (index);
-                    if (index >= releases.length) {
-                        break;
-                    }
-    
-                    continue;
+            var releases_list = component.get_releases_plain ();
+            if (releases_list == null || releases_list.is_empty ()) {
+                return list;
+            }
+            
+            var releases_array = releases_list.get_entries ();
+            var releases = new Gee.ArrayList<AppStream.Release> ();
+            for (uint i = 0; i < releases_array.length; i++) {
+                var release = releases_array[i];
+                if (release.get_version () != null) {
+                    releases.add (release);
                 }
-    
-                index++;
             }
     
-            if (releases.length < min_releases) {
+            if (releases.size < min_releases) {
                 return list;
             }
     
-            releases.sort_with_data ((a, b) => {
+            releases.sort ((a, b) => {
                 return b.vercmp (a);
             });
     
@@ -532,14 +534,14 @@ namespace Catalogue.Core {
             int end_index = min_releases;
     
             if (installed) {
-                for (int i = 0; i < releases.length; i++) {
-                    var release = releases.@get (i);
+                for (int i = 0; i < releases.size; i++) {
+                    var release = releases[i];
                     unowned string release_version = release.get_version ();
                     if (release_version == null) {
                         continue;
                     }
     
-                    if (AppStream.utils_compare_versions (release_version, installed_version) == 0) {
+                    if (AppStream.vercmp_simple (release_version, installed_version) == 0) {
                         end_index = i.clamp (min_releases, max_releases);
                         break;
                     }
@@ -547,15 +549,25 @@ namespace Catalogue.Core {
             }
     
             for (int j = start_index; j < end_index; j++) {
-                list.add (releases.get (j));
+                list.add (releases[j]);
             }
     
             return list;
         }
 
         public AppStream.Release? get_newest_release () {
-            var releases = component.get_releases ();
-            releases.sort_with_data ((a, b) => {
+            var releases_list = component.get_releases_plain ();
+            if (releases_list == null || releases_list.is_empty ()) {
+                return null;
+            }
+            
+            var releases_array = releases_list.get_entries ();
+            var releases = new Gee.ArrayList<AppStream.Release> ();
+            for (uint i = 0; i < releases_array.length; i++) {
+                releases.add (releases_array[i]);
+            }
+            
+            releases.sort ((a, b) => {
                 if (a.get_version () == null || b.get_version () == null) {
                     if (a.get_version () != null) {
                         return -1;
@@ -569,7 +581,7 @@ namespace Catalogue.Core {
                 return b.vercmp (a);
             });
     
-            if (releases.length > 0) {
+            if (releases.size > 0) {
                 return releases[0];
             }
     
