@@ -119,20 +119,16 @@ namespace Catalogue.Core {
                 }
             }
 
-            var nm = NetworkMonitor.get_default ();
-
             /* One cache update a day, keeps the doctor away! */
             var seconds_since_last_refresh = new DateTime.now_utc ().difference (last_refresh_update) / GLib.TimeSpan.SECOND;
             bool last_update_is_old = seconds_since_last_refresh >= SECONDS_BETWEEN_REFRESHES;
 
             if (force || last_update_is_old) {
-                if (nm.get_network_available ()) {
-
-                    refresh_in_progress = true;
-                    try {
-                        bool was_empty = updates_number == 0U;
-                        ThreadService.run_in_thread.begin<void> (() => {
-                            UpdateManager.get_default ().get_updates.begin (null, (obj, res) => {
+                refresh_in_progress = true;
+                try {
+                    bool was_empty = updates_number == 0U;
+                    ThreadService.run_in_thread.begin<void> (() => {
+                        UpdateManager.get_default ().get_updates.begin (null, (obj, res) => {
                                 updates_number = UpdateManager.get_default ().get_updates.end (res);
 
                                 var application = GLib.Application.get_default ();
@@ -150,21 +146,15 @@ namespace Catalogue.Core {
                                 }
                                 seconds_since_last_refresh = 0;
                                 installed_apps_changed ();
-                            });
                         });
-                    } finally {
-                        refresh_in_progress = false;
-                    }
-                } else {
-                    critical ("No Network Available");
-                    installed_apps_changed ();
+                    });
+                } finally {
+                    refresh_in_progress = false;
                 }
             } else {
                 debug ("Too soon to refresh and not forced");
                 installed_apps_changed ();
-            }
-
-            var next_refresh = SECONDS_BETWEEN_REFRESHES - (uint)seconds_since_last_refresh;
+            }            var next_refresh = SECONDS_BETWEEN_REFRESHES - (uint)seconds_since_last_refresh;
             debug ("Setting a timeout for a refresh in %f minutes", next_refresh / 60.0f);
             last_refresh_update = new DateTime.now_utc ();
             settings.set_int64 ("last-update-check-time", last_refresh_update.to_unix ());
@@ -201,36 +191,29 @@ namespace Catalogue.Core {
                 }
             }
 
-            var nm = NetworkMonitor.get_default ();
-
             /* One cache update a day, keeps the doctor away! */
             var seconds_since_last_refresh = new DateTime.now_utc ().difference (last_cache_update) / GLib.TimeSpan.SECOND;
             bool last_cache_update_is_old = seconds_since_last_refresh >= SECONDS_BETWEEN_REFRESHES;
 
             if (force || last_cache_update_is_old) {
-                if (nm.get_network_available ()) {
-
-                    refresh_in_progress = true;
-                    try {
-                        success = yield FlatpakBackend.get_default ().refresh_cache (cancellable);
-                        if (success) {
-                            last_cache_update = new DateTime.now_utc ();
-                            settings.set_int64 ("last-refresh-time", last_cache_update.to_unix ());
-                            print ("Cache updated successfully");
-                            cache_update_finished ();
-                        }
-
-                        seconds_since_last_refresh = 0;
-                    } catch (Error e) {
-                        if (!(e is GLib.IOError.CANCELLED)) {
-                            critical ("Update_cache: Refesh cache async failed - %s", e.message);
-                            cache_update_finished ();
-                        }
-                    } finally {
-                        refresh_in_progress = false;
+                refresh_in_progress = true;
+                try {
+                    success = yield FlatpakBackend.get_default ().refresh_cache (cancellable);
+                    if (success) {
+                        last_cache_update = new DateTime.now_utc ();
+                        settings.set_int64 ("last-refresh-time", last_cache_update.to_unix ());
+                        print ("Cache updated successfully");
+                        cache_update_finished ();
                     }
-                } else {
-                    critical ("No Network Available");
+
+                    seconds_since_last_refresh = 0;
+                } catch (Error e) {
+                    if (!(e is GLib.IOError.CANCELLED)) {
+                        critical ("Update_cache: Refesh cache async failed - %s", e.message);
+                        cache_update_finished ();
+                    }
+                } finally {
+                    refresh_in_progress = false;
                 }
             } else {
                 debug ("Too soon to refresh and not forced");

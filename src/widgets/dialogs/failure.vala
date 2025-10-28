@@ -17,18 +17,7 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/failure.ui")]
-    public class FailureDialog : Gtk.Window {
-        [GtkChild]
-        private unowned Gtk.Label header;
-        [GtkChild]
-        private unowned Gtk.Label description;
-
-        [GtkCallback]
-        public void on_close () {
-            this.close ();
-        }
-
+    public class FailureDialog : He.Dialog {
         public enum FailType {
             INSTALL,
             UNINSTALL,
@@ -36,35 +25,42 @@
             CACHE
         }
 
-        public FailureDialog (FailType type, Core.Package? package) {
-            Object ();
+        public FailureDialog (Gtk.Window parent, FailType type, Core.Package? package) {
+            string title_text;
+            string info_text;
 
             if (type == FailType.UNINSTALL && package != null) {
-                header.set_label ("Failed to uninstall %s".printf (package.get_name ()));
-                description.set_label ("This may have been caused by external or manually compiled software.");
+                title_text = _("Failed to uninstall %s").printf (package.get_name ());
+                info_text = _("This may have been caused by external or manually compiled software.");
             } else if (type == FailType.UNINSTALL && package == null) {
-                header.set_label ("Failed to uninstall app");
-                description.set_label ("This may have been caused by external or manually compiled software.");
+                title_text = _("Failed to uninstall app");
+                info_text = _("This may have been caused by external or manually compiled software.");
             } else if (type == FailType.CACHE) {
-                header.set_label ("Failed to fetch cache");
-                description.set_label ("This may have been caused by external, manually added software repositories or a corrupted sources file.");
-                // TODO add Try Again button
+                title_text = _("Failed to fetch cache");
+                info_text = _("This may have been caused by external, manually added software repositories or a corrupted sources file.");
             } else if (type == FailType.UPDATE && package != null) {
-                header.set_label ("Failed to update %s".printf (package.get_name ()));
-                description.set_label ("This may have been caused by external or manually compiled software.");
+                title_text = _("Failed to update %s").printf (package.get_name ());
+                info_text = _("This may have been caused by external or manually compiled software.");
             } else if (type == FailType.UPDATE && package == null) {
-                header.set_label ("Failed to update app");
-                description.set_label ("This may have been caused by external or manually compiled software.");
+                title_text = _("Failed to update app");
+                info_text = _("This may have been caused by external or manually compiled software.");
             } else if (type == FailType.INSTALL && package != null) {
-                header.set_label ("Failed to install %s".printf (package.get_name ()));
-                description.set_label ("This may be a temporary issue or has been caused by external or manually compiled software.");
+                title_text = _("Failed to install %s").printf (package.get_name ());
+                info_text = _("This may be a temporary issue or has been caused by external or manually compiled software.");
             } else if (type == FailType.INSTALL && package == null) {
-                header.set_label ("Failed to install app");
-                description.set_label ("This may be a temporary issue or has been caused by external or manually compiled software.");
+                title_text = _("Failed to install app");
+                info_text = _("This may be a temporary issue or has been caused by external or manually compiled software.");
             } else {
-                header.set_label ("An unknown error occurred");
-                description.set_label ("View the logs for more information");
+                title_text = _("An unknown error occurred");
+                info_text = _("View the logs for more information");
             }
+
+            base (
+                parent,
+                title_text,
+                info_text,
+                "dialog-error-symbolic"
+            );
         }
     }
 }

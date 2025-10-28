@@ -20,7 +20,7 @@ namespace Catalogue {
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/search-row.ui")]
     public class SearchRow : Gtk.Box {
         [GtkChild]
-        private unowned Gtk.Button info_button;
+        private unowned He.Button info_button;
         [GtkChild]
         private unowned He.MiniContentBlock lbrow;
 

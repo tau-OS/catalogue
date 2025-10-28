@@ -28,6 +28,10 @@ gnome = import('gnome')
 i18n = import('i18n')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
+add_project_arguments(
+	'-w',
+	language: 'c'
+)
 
 vapi_dir = join_paths(meson.project_source_root(), 'vapi')
 add_project_arguments(

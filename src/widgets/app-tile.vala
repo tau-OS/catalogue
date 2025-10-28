@@ -20,7 +20,7 @@
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/app-tile.ui")]
     public class AppTile : He.MiniContentBlock {
         [GtkChild]
-        private unowned Gtk.Button price;
+        private unowned He.Button price;
 
         public AppTile (Core.Package package) {
             Object ();

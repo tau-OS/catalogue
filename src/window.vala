@@ -20,21 +20,13 @@ namespace Catalogue {
     [GtkTemplate (ui = "/com/fyralabs/Catalogue/window.ui")]
     public class Window : He.ApplicationWindow {
         [GtkChild]
-        public unowned Gtk.Stack album_stack;
-        [GtkChild]
         public unowned Gtk.Stack main_stack;
         [GtkChild]
         private unowned Gtk.Stack header_stack;
         [GtkChild]
         public unowned He.AppBar header_bar;
         [GtkChild]
-        public unowned He.AppBar header_bar2;
-        [GtkChild]
         public unowned He.AppBar header_bar3;
-        [GtkChild]
-        unowned Bis.Album album;
-        [GtkChild]
-        private unowned Gtk.Box album_contents;
         [GtkChild]
         private unowned Gtk.SearchBar search_bar;
         [GtkChild]
@@ -47,19 +39,23 @@ namespace Catalogue {
         private unowned He.EmptyPage refresh_page;
         [GtkChild]
         private unowned Gtk.Label title_label;
+        [GtkChild]
+        private unowned Gtk.Box details_container;
 
         public void view_package_details (Core.Package package) {
-            album_stack.set_visible_child_name ("album_contents");
-            album.navigate (Bis.NavigationDirection.BACK);
-            header_bar3.show_back = (true);
-            // Add details page to album
-            var widget_list = new Utils ().get_all_widgets_in_child (album_contents);
-
+            // Clear previous details
+            var widget_list = new Utils ().get_all_widgets_in_child (details_container);
             foreach (var widget in widget_list) {
-                album_contents.remove (widget);
+                details_container.remove (widget);
             }
 
-            album_contents.append (new Catalogue.WindowDetails (package));
+            // Add new details page
+            details_container.append (new Catalogue.WindowDetails (package));
+            
+            // Navigate to details page
+            main_stack.set_visible_child_name ("details_page");
+            header_bar.show_back = true;
+            title_label.label = "";
         }
 
         private Catalogue.WindowSearch search_view { get; set; default = new Catalogue.WindowSearch (); }
@@ -67,10 +63,20 @@ namespace Catalogue {
         private const int VALID_QUERY_LENGTH = 3;
 
         public void back_clicked_cb () {
-            album.set_transition_type (Bis.AlbumTransitionType.OVER);
-            album.navigate (Bis.NavigationDirection.FORWARD);
+            // Go back to main shell
+            main_stack.set_visible_child_name ("main_shell");
+            header_bar.show_back = false;
+            
+            // Update title based on current page
+            if (header_stack.get_visible_child_name () == "explore") {
+                title_label.label = _("Explore");
+            } else if (header_stack.get_visible_child_name () == "installed") {
+                title_label.label = _("Installed");
+            } else if (header_stack.get_visible_child_name () == "updates") {
+                title_label.label = _("Updates");
+            }
+            
             Signals.get_default ().window_do_back_button_clicked (true);
-            album.set_transition_type (Bis.AlbumTransitionType.UNDER);
         }
 
         public void main_back_clicked_cb () {
@@ -91,10 +97,6 @@ namespace Catalogue {
             }
         }
 
-        public void album_forward () {
-            album.navigate (Bis.NavigationDirection.FORWARD);
-        }
-
         private void trigger_search () {
             unowned string query = entry_search.text;
             bool query_valid = query.length >= VALID_QUERY_LENGTH;
@@ -111,12 +113,15 @@ namespace Catalogue {
             search_page.append (search_view);
             refresh_page.action_button.visible = false;
 
-            header_bar3.back_button.clicked.connect (() => {
-                main_back_clicked_cb ();
-            });
-            header_bar2.back_button.clicked.connect (() => {
-                back_clicked_cb ();
-                hide_back_button ();
+            header_bar.back_button.clicked.connect (() => {
+                var explore_page = (Catalogue.WindowExplore) header_stack.get_child_by_name ("explore");
+                if (explore_page != null && header_stack.get_visible_child_name () == "explore" && main_stack.get_visible_child_name () == "main_shell") {
+                    // If we're in explore and showing categories, go back to featured
+                    explore_page.reset_to_featured ();
+                } else {
+                    // Otherwise go back to main view
+                    back_clicked_cb ();
+                }
             });
 
             // i hate accelerators
@@ -148,10 +153,13 @@ namespace Catalogue {
 
             if (header_stack.get_visible_child_name () == "explore") {
                 hide_back_button ();
+                hide_main_back_button ();
                 title_label.label = (_("Explore"));
             } else if (header_stack.get_visible_child_name () == "installed") {
+                hide_main_back_button ();
                 title_label.label = (_("Installed"));
             } else if (header_stack.get_visible_child_name () == "updates") {
+                hide_main_back_button ();
                 title_label.label = (_("Updates"));
             } else {
                 title_label.label = (_(""));
@@ -161,16 +169,30 @@ namespace Catalogue {
             header_stack.notify["visible-child"].connect (() => {
                 // Disable search
                 search_button.set_active (false);
+                
+                // Get the explore page reference
+                var explore_page = (Catalogue.WindowExplore) header_stack.get_child_by_name ("explore");
+                
                 if (header_stack.get_visible_child_name () == "explore") {
                     hide_back_button ();
+                    hide_main_back_button ();
                     title_label.label = (_("Explore"));
-                } else if (header_stack.get_visible_child_name () == "installed") {
-                    title_label.label = (_("Installed"));
-                } else if (header_stack.get_visible_child_name () == "updates") {
-                    title_label.label = (_("Updates"));
                 } else {
-                    title_label.label = (_(""));
-                    show_back_button ();
+                    // When navigating away from explore, reset it to featured view
+                    if (explore_page != null) {
+                        explore_page.reset_to_featured ();
+                    }
+                    
+                    if (header_stack.get_visible_child_name () == "installed") {
+                        hide_main_back_button ();
+                        title_label.label = (_("Installed"));
+                    } else if (header_stack.get_visible_child_name () == "updates") {
+                        hide_main_back_button ();
+                        title_label.label = (_("Updates"));
+                    } else {
+                        title_label.label = (_(""));
+                        show_back_button ();
+                    }
                 }
             });
 
@@ -179,19 +201,19 @@ namespace Catalogue {
         }
 
         public void hide_main_back_button () {
-            header_bar3.show_back = (false);
+            header_bar.show_back = (false);
         }
 
         public void hide_back_button () {
-            header_bar2.show_back = (false);
+            header_bar.show_back = (false);
         }
 
         public void show_main_back_button () {
-            header_bar3.show_back = (true);
+            header_bar.show_back = (true);
         }
 
         public void show_back_button () {
-            header_bar2.show_back = (true);
+            header_bar.show_back = (true);
         }
     }
 }

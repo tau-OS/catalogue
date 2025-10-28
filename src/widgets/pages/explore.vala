@@ -48,6 +48,18 @@ namespace Catalogue {
             }
         }
 
+        public Gtk.Stack get_stack () {
+            return stack;
+        }
+
+        public void reset_to_featured () {
+            if (stack.get_visible_child_name () != "featured") {
+                active_category = null;
+                stack.set_visible_child_name ("featured");
+                Application.main_window.hide_main_back_button ();
+            }
+        }
+
         public WindowExplore () {
             Object ();
         }
@@ -63,6 +75,23 @@ namespace Catalogue {
             categories_list += categories.create;
             categories_list += categories.work;
 
+            // Create category rows but don't load them yet
+            var accessories_row = new Catalogue.CategoryRow (categories.accessories);
+            var internet_row = new Catalogue.CategoryRow (categories.internet);
+            var develop_row = new Catalogue.CategoryRow (categories.develop);
+            var games_row = new Catalogue.CategoryRow (categories.games);
+            var create_row = new Catalogue.CategoryRow (categories.create);
+            var work_row = new Catalogue.CategoryRow (categories.work);
+
+            // Map category names to their rows for lazy loading
+            var category_rows = new Gee.HashMap<string, Catalogue.CategoryRow> ();
+            category_rows["accessories"] = accessories_row;
+            category_rows["internet"] = internet_row;
+            category_rows["develop"] = develop_row;
+            category_rows["games"] = games_row;
+            category_rows["create"] = create_row;
+            category_rows["work"] = work_row;
+
             foreach (var entry in categories_list) {
                 var name = entry.get_name ();
 
@@ -72,23 +101,38 @@ namespace Catalogue {
 
                 tile.clicked.connect (() => {
                     active_category = entry;
-                    stack.set_visible_child_name (name.down ());
+                    var page_name = name.down ();
+                    stack.set_visible_child_name (page_name);
                     Application.main_window.show_main_back_button ();
+                    
+                    // Lazy load the category when it's clicked
+                    var row = category_rows[page_name];
+                    if (row != null) {
+                        row.load_if_needed ();
+                    }
                 });
                 
                 featured_flowbox.append (tile);
             }
 
             Signals.get_default ().window_do_back_button_clicked.connect ((is_album) => {
+                // Only respond to main navigation back button (not album back button)
                 if (!is_album) {
                     active_category = null;
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_RIGHT);
                     stack.set_visible_child_name ("featured");
                     stack.set_transition_type (Gtk.StackTransitionType.SLIDE_LEFT);
-                }
-
-                if (stack.get_visible_child_name () == "featured") {
                     Application.main_window.hide_main_back_button ();
+                }
+            });
+
+            // Listen to stack page changes to update back button visibility
+            stack.notify["visible-child-name"].connect (() => {
+                if (stack.get_visible_child_name () == "featured") {
+                    active_category = null;
+                    Application.main_window.hide_main_back_button ();
+                } else {
+                    Application.main_window.show_main_back_button ();
                 }
             });
 
@@ -98,17 +142,25 @@ namespace Catalogue {
             //  featured_box.append (featured_row_test);
 
             var client = Core.Client.get_default ();
-            new_updated.add_widgets (client.get_new_updated_packages (8));
+            
+            // Don't load "New & Updated" immediately - wait for realize
+            var new_updated_loaded = false;
+            this.realize.connect (() => {
+                if (!new_updated_loaded) {
+                    new_updated.add_widgets (client.get_new_updated_packages (8));
+                    new_updated_loaded = true;
+                }
+            });
+            
+            client.cache_update_finished.connect (() => {
+                if (new_updated_loaded) {
+                    new_updated.reset ();
+                    new_updated.add_widgets (client.get_new_updated_packages (8));
+                }
+            });
 
             //  GLib.File data = File.new_for_uri (@"$(Config.API_URL)/client/editors_choice");
             //  editors_choice.add_widgets (new CatalogueClient ().get_packages (data));
-
-            var accessories_row = new Catalogue.CategoryRow (categories.accessories);
-            var internet_row = new Catalogue.CategoryRow (categories.internet);
-            var develop_row = new Catalogue.CategoryRow (categories.develop);
-            var games_row = new Catalogue.CategoryRow (categories.games);
-            var create_row = new Catalogue.CategoryRow (categories.create);
-            var work_row = new Catalogue.CategoryRow (categories.work);
 
             accessories_box.append (accessories_row);
             internet_box.append (internet_row);

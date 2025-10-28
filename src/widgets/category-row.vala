@@ -26,6 +26,9 @@
         [GtkChild]
         private unowned Gtk.FlowBox row_box;
 
+        private AppStream.Category? category;
+        private bool has_loaded = false;
+
         private void reset () {
             var widget_list = new Utils ().get_all_widgets_in_child (row_box);
 
@@ -34,7 +37,11 @@
             }
         }
 
-        private async void fill_row (AppStream.Category category) {
+        private async void fill_row () {
+            if (category == null) {
+                return;
+            }
+
             unowned var client = Core.Client.get_default ();
             Gee.Collection<Catalogue.AppTile> pkgs = new Gee.ArrayList<Catalogue.AppTile> ();
 
@@ -52,13 +59,25 @@
                 }
 
                 stack.set_visible_child_name ("content");
+            } else {
+                stack.set_visible_child_name ("loading");
             }
 
+            has_loaded = true;
             return;
+        }
+
+        public void load_if_needed () {
+            if (!has_loaded) {
+                stack.set_visible_child_name ("loading");
+                ThreadService.run_in_thread.begin<void> (() => { fill_row.begin (); });
+            }
         }
 
         public CategoryRow (AppStream.Category? category) {
             Object ();
+
+            this.category = category;
 
             for (var i = 0; i < 6; i++){
                 loading_row_box.append (new Catalogue.SkeletonTile ());
@@ -66,9 +85,11 @@
 
             stack.set_visible_child_name ("loading");
 
-            this.realize.connect (() => {
-                if (category != null) {
-                    ThreadService.run_in_thread.begin<void> (() => { fill_row.begin (category); });
+            unowned var client = Core.Client.get_default ();
+            
+            client.cache_update_finished.connect (() => {
+                if (has_loaded && category != null) {
+                    ThreadService.run_in_thread.begin<void> (() => { fill_row.begin (); });
                 }
             });
             

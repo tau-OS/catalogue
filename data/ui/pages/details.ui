@@ -3,10 +3,11 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueWindowDetails" parent="HeBin">
         <property name="hexpand">True</property>
-        <property name="margin-bottom">18</property>
+        <property name="vexpand">1</property>
         <child>
             <object class="GtkOverlay">
                 <property name="hexpand">True</property>
+                <property name="vexpand">1</property>
                 <child type="overlay">
                     <object class="GtkProgressBar" id="progress_bar">
                         <property name="valign">start</property>

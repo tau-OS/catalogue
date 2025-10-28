@@ -31,7 +31,7 @@ namespace Catalogue {
         [GtkChild]
         private unowned Gtk.ProgressBar progress_bar;
         [GtkChild]
-        private unowned Gtk.Button update_all;
+        private unowned He.Button update_all;
 
         private Cancellable refresh_cancellable;
 

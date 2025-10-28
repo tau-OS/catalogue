@@ -43,6 +43,14 @@
             });
         }
 
+        public void reset () {
+            var widget_list = new Utils ().get_all_widgets_in_child (row_box);
+
+            foreach (var widget in widget_list) {
+                row_box.remove (widget);
+            }
+        }
+
         public void add_widgets (Gee.Collection<Catalogue.Core.Package> packages) {
             foreach (var package in packages) {
                 var app_tile = new Catalogue.AppTile (package);

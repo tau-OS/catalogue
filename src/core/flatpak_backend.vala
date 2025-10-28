@@ -427,6 +427,7 @@ namespace Catalogue.Core {
         }
 
         private void reload_appstream_pool () {
+            user_appstream_pool.clear ();
             user_appstream_pool.reset_extra_data_locations ();
             user_appstream_pool.add_extra_data_location (user_metadata_path, AppStream.FormatStyle.CATALOG);
 
@@ -454,6 +455,7 @@ namespace Catalogue.Core {
                 }
             }
 
+            system_appstream_pool.clear ();
             system_appstream_pool.reset_extra_data_locations ();
             system_appstream_pool.add_extra_data_location (system_metadata_path, AppStream.FormatStyle.CATALOG);
 

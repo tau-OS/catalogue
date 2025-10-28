@@ -63,7 +63,7 @@ namespace Catalogue {
 
             client = Core.Client.get_default ();
             client.cache_update_finished.connect (() => {
-                main_window.album_forward ();
+                main_window.main_stack.set_visible_child_name ("main_shell");
             });
         }
 
@@ -147,23 +147,22 @@ namespace Catalogue {
                                 return;
                             }
                         } else {
-                            var dialog = new Catalogue.AddRepositoryDialog ();
                             ThreadService.run_in_thread.begin<void> (() => {
                                 try {
                                     var uri = File.new_for_uri (flatpak_helper.parse_flatpak_ref (file, "RuntimeRepo"));
                                     var bytes = uri.load_bytes (null, null);
                                     var remote = new Flatpak.Remote.from_file (flatpak_helper.parse_flatpak_repo<Bytes> (bytes, "Title", true), bytes);
-                                    dialog.add_remote (remote);
-                                    open_dialog ();
+                                    
+                                    Idle.add (() => {
+                                        var dialog = new Catalogue.AddRepositoryDialog (main_window, remote);
+                                        dialog.present ();
+                                        return false;
+                                    });
                                 } catch (KeyFileError e) {
                                     warning (e.message);
                                 } catch (Error e) {
                                     warning (e.message);
                                 }
-                            });
-
-                            open_dialog.connect (() => {
-                                dialog.present ();
                             });
                         }
                     } catch (KeyFileError e) {
@@ -180,9 +179,7 @@ namespace Catalogue {
                             if (win == null) {
                                 error ("Cannot find main window");
                             }
-                            var dialog = new Catalogue.AddRepositoryDialog ();
-                            dialog.add_remote (remote);
-                            dialog.set_transient_for (win);
+                            var dialog = new Catalogue.AddRepositoryDialog (win, remote);
                             dialog.present ();
                         } else {
                             warning ("Remote %s already exists".printf (flatpak_helper.parse_flatpak_repo<File> (file, "Title")));

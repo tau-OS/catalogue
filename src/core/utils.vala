@@ -84,7 +84,33 @@ namespace Catalogue.Core {
 
     public static void perform_xml_fixups (string origin_name, File src_file, File dest_file) {
         var path = src_file.get_path ();
-        Xml.Doc* doc = Xml.Parser.parse_file (path);
+        
+        // Handle gzipped files
+        Xml.Doc* doc = null;
+        if (path.has_suffix (".gz")) {
+            try {
+                var converter = new ZlibDecompressor (ZlibCompressorFormat.GZIP);
+                var input_stream = src_file.read ();
+                var decompressed_stream = new ConverterInputStream (input_stream, converter);
+                
+                var data_stream = new DataInputStream (decompressed_stream);
+                var builder = new StringBuilder ();
+                string line = null;
+                
+                while ((line = data_stream.read_line ()) != null) {
+                    builder.append (line);
+                    builder.append_c ('\n');
+                }
+                
+                doc = Xml.Parser.parse_doc (builder.str);
+            } catch (Error e) {
+                warning ("Error decompressing gzipped AppStream file %s: %s", path, e.message);
+                return;
+            }
+        } else {
+            doc = Xml.Parser.parse_file (path);
+        }
+        
         if (doc == null) {
             warning ("Appstream XML file %s not found or permissions missing", path);
             return;

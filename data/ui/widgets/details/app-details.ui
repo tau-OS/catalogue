@@ -3,6 +3,7 @@
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueAppDetails" parent="HeBin">
         <property name="hexpand">1</property>
+        <property name="vexpand">1</property>
         <child>
             <object class="BisLatch">
                 <property name="maximum-size">600</property>

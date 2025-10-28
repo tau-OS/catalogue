@@ -17,38 +17,27 @@
  */
 
  namespace Catalogue {
-    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/add-repository.ui")]
-    public class AddRepositoryDialog : Gtk.Window {
-        [GtkChild]
-        private unowned Gtk.Label title_label;
-        [GtkChild]
-        private unowned Gtk.Label description_label;
+    public class AddRepositoryDialog : He.Dialog {
+        private Flatpak.Remote remote;
 
-        public Flatpak.Remote global_remote;
+        public AddRepositoryDialog (Gtk.Window parent, Flatpak.Remote remote) {
+            this.remote = remote;
 
-        [GtkCallback]
-        public void on_close () {
-            this.close ();
-        }
+            var add_button = new He.Button (null, _("Add Repository"));
 
-        [GtkCallback]
-        public void on_add () {
-            var client = Core.Client.get_default ();
-            client.create_remote (global_remote);
-            this.close ();
-        }
+            base (
+                parent,
+                "%s - %s".printf(remote.get_title (), remote.get_url ()),
+                remote.get_description (),
+                "folder-remote-symbolic",
+                add_button
+            );
 
-        public AddRepositoryDialog () {
-            Object ();
-        }
-
-        public void add_remote (Flatpak.Remote remote) {
-            global_remote = remote;
-
-            title = "%s - %s".printf(remote.get_title (), remote.get_url ());
-
-            title_label.set_label (title);
-            description_label.set_label (remote.get_description ());
+            add_button.clicked.connect (() => {
+                var client = Core.Client.get_default ();
+                client.create_remote (remote);
+                hide_dialog ();
+            });
         }
     }
 }

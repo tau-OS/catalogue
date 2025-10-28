@@ -17,7 +17,6 @@
                         <property name="homogeneous">True</property>
                         <property name="spacing">0</property>
                         <style>
-                            <class name="card" />
                             <class name="context-bar" />
                         </style>
 
@@ -29,8 +28,7 @@
                                     <object class="GtkButton" id="storage_tile">
                                         <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
                                         <style>
-                                            <class name="context-tile" />
-                                            <class name="flat" />
+                                            <class name="mini-content-block" />
                                         </style>
                                         <child>
                                             <object class="GtkBox">
@@ -40,7 +38,7 @@
                                                     <object class="GtkBox" id="storage_tile_lozenge">
                                                         <property name="halign">center</property>
                                                         <style>
-                                                            <class name="context-tile-lozenge" />
+                                                            <class name="mini-content-block-lozenge" />
                                                             <class name="grey" />
                                                         </style>
                                                         <child>
@@ -88,8 +86,7 @@
                                     <object class="GtkButton" id="age_rating_tile">
                                         <signal name="clicked" handler="open_oars_dialog" />
                                         <style>
-                                            <class name="context-tile" />
-                                            <class name="flat" />
+                                            <class name="mini-content-block" />
                                         </style>
                                         <child>
                                             <object class="GtkBox">
@@ -99,7 +96,7 @@
                                                     <object class="GtkBox" id="age_rating_tile_lozenge">
                                                         <property name="halign">center</property>
                                                         <style>
-                                                            <class name="context-tile-lozenge" />
+                                                            <class name="mini-content-block-lozenge" />
                                                         </style>
                                                         <child>
                                                             <object class="GtkLabel" id="age_rating_tile_lozenge_content">
@@ -146,8 +143,7 @@
                                     <object class="GtkButton" id="license_tile">
                                         <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
                                         <style>
-                                            <class name="context-tile" />
-                                            <class name="flat" />
+                                            <class name="mini-content-block" />
                                         </style>
                                         <child>
                                             <object class="GtkBox">
@@ -163,7 +159,7 @@
                                                             <object class="GtkBox" id="lozenge0">
                                                                 <property name="halign">center</property>
                                                                 <style>
-                                                                    <class name="context-tile-lozenge" />
+                                                                    <class name="mini-content-block-lozenge" />
                                                                 </style>
                                                                 <child>
                                                                     <object class="GtkImage" id="lozenge0_image">
@@ -178,7 +174,7 @@
                                                             <object class="GtkBox" id="lozenge1">
                                                                 <property name="halign">center</property>
                                                                 <style>
-                                                                    <class name="context-tile-lozenge" />
+                                                                    <class name="mini-content-block-lozenge" />
                                                                 </style>
                                                                 <child>
                                                                     <object class="GtkImage" id="lozenge1_image">
@@ -193,7 +189,7 @@
                                                             <object class="GtkBox" id="lozenge2">
                                                                 <property name="halign">center</property>
                                                                 <style>
-                                                                    <class name="context-tile-lozenge" />
+                                                                    <class name="mini-content-block-lozenge" />
                                                                 </style>
                                                                 <child>
                                                                     <object class="GtkImage" id="lozenge2_image">

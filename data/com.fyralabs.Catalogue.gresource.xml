@@ -4,10 +4,7 @@
     <file alias="window.ui">ui/window.ui</file>
     <file alias="preferences.ui">ui/preferences.ui</file>
 
-    <file alias="Dialogs/add-repository.ui">ui/dialogs/add-repository.ui</file>
     <file alias="Dialogs/version-history.ui">ui/dialogs/version-history.ui</file>
-    <file alias="Dialogs/uninstall-warning.ui">ui/dialogs/uninstall-warning.ui</file>
-    <file alias="Dialogs/failure.ui">ui/dialogs/failure.ui</file>
 
     <file alias="explore.ui">ui/pages/explore.ui</file>
     <file alias="installed.ui">ui/pages/installed.ui</file>

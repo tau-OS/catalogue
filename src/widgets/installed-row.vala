@@ -22,11 +22,11 @@
         [GtkChild]
         private unowned He.MiniContentBlock lbrow;
         [GtkChild]
-        private unowned Gtk.Button info_button;
+        private unowned He.Button info_button;
         [GtkChild]
-        private unowned Gtk.Button delete_button;
+        private unowned He.Button delete_button;
         [GtkChild]
-        private unowned Gtk.Button update_button;
+        private unowned He.Button update_button;
         [GtkChild]
         private unowned Gtk.Spinner progress_spinner;
 
@@ -60,8 +60,7 @@
 
             delete_button.clicked.connect (() => {
                 var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
-                var dialog = new Catalogue.UninstallWarningDialog (package);
-                dialog.set_transient_for (win);
+                var dialog = new Catalogue.UninstallWarningDialog (win, package);
                 dialog.present ();
 
                 dialog.do_uninstall.connect (() => {
@@ -130,7 +129,8 @@
                 }
             } catch (Error e) {
                 if (!(e is GLib.IOError.CANCELLED)) {
-                    new FailureDialog (FailureDialog.FailType.UNINSTALL, package).present ();
+                    var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+                    new FailureDialog (win, FailureDialog.FailType.UNINSTALL, package).present ();
                     critical (e.message);
                 }
             }

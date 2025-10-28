@@ -28,39 +28,34 @@
                             <object class="GtkBox">
                                 <property name="spacing">12</property>
                                 <child>
-                                    <object class="GtkButton" id="info_button">
+                                    <object class="HeButton" id="info_button">
                                         <property name="width-request">56</property>
                                         <property name="height-request">56</property>
                                         <property name="icon-name">dialog-information-symbolic</property>
-                                        <style>
-                                            <class name="circular" />
-                                            <class name="circular-action" />
-                                        </style>
+                                        <property name="is_disclosure">true</property>
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkButton" id="delete_button">
+                                    <object class="HeButton" id="delete_button">
                                         <property name="visible">0</property>
                                         <property name="width-request">56</property>
                                         <property name="height-request">56</property>
                                         <property name="icon-name">user-trash-symbolic</property>
+                                        <property name="is_disclosure">true</property>
                                         <style>
                                             <class name="destructive-action" />
-                                            <class name="circular" />
-                                            <class name="circular-action" />
                                         </style>
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkButton" id="update_button">
+                                    <object class="HeButton" id="update_button">
                                         <property name="visible">0</property>
                                         <property name="icon-name">go-up</property>
                                         <property name="width-request">56</property>
                                         <property name="height-request">56</property>
+                                        <property name="is_disclosure">true</property>
                                         <style>
                                             <class name="suggested-action" />
-                                            <class name="circular" />
-                                            <class name="circular-action" />
                                         </style>
                                     </object>
                                 </child>

@@ -66,6 +66,8 @@ namespace Catalogue {
             string accent_css = "";
             if (app != null) {
                 string? primary_color = app.get_color_primary ();
+                
+                warning ("App: %s, Primary color: %s", app.get_name (), primary_color ?? "null");
 
                 if (primary_color != null) {
                     Gdk.RGBA bg_rgba = {};
@@ -75,17 +77,41 @@ namespace Catalogue {
                     var fg_rgba = Utils.contrasting_foreground_color (bg_rgba);
                     text_color = "#%02x%02x%02x".printf ((int)(fg_rgba.red * 255), (int)(fg_rgba.green * 255), (int)(fg_rgba.blue * 255));
 
-                    accent_css = "@define-color accented_color %s;@define-color accented_fg_color %s;".printf (bg_color, text_color);
+                    warning ("Computed bg_color: %s, text_color: %s", bg_color, text_color);
+
+                    accent_css = """
+                        @define-color accented_color %s;
+                        @define-color accented_fg_color %s;
+                        .app-header {
+                            background-color: %s;
+                            color: %s;
+                        }
+                        .app-header button {
+                            background-color: alpha(%s, 0.1);
+                            color: %s;
+                        }
+                        .app-header button:hover {
+                            background-color: alpha(%s, 0.2);
+                        }
+                        .app-header button:active {
+                            background-color: alpha(%s, 0.3);
+                        }
+                    """.printf (bg_color, text_color, bg_color, text_color, text_color, text_color, text_color, text_color);
+                    
+                    warning ("CSS to be loaded:\n%s", accent_css);
+                    
                     accent_provider.load_from_data ((uint8[])accent_css);
-                    this.get_style_context ().add_provider (accent_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                    
+                    Gtk.StyleContext.add_provider_for_display (
+                        Gdk.Display.get_default (),
+                        accent_provider,
+                        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION + 67 // Tee-hee
+                    );
+                    
+                    this.add_css_class ("app-header");
+                    warning ("Added app-header CSS class");
                 }
             }
-
-            unowned var action_button_context = action_button.get_style_context ();
-            action_button_context.add_provider (accent_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-
-            unowned var donate_action_button_context = donate_action_button.get_style_context ();
-            donate_action_button_context.add_provider (accent_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             get_state (app);
         }
@@ -112,8 +138,7 @@ namespace Catalogue {
                     }
                     handler_id = action_button.clicked.connect (() => {
                         var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
-                        var dialog = new Catalogue.UninstallWarningDialog (app);
-                        dialog.set_transient_for (win);
+                        var dialog = new Catalogue.UninstallWarningDialog (win, app);
                         dialog.present ();
 
                         dialog.do_uninstall.connect (() => {

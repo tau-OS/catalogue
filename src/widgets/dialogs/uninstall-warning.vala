@@ -17,29 +17,25 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/com/fyralabs/Catalogue/Dialogs/uninstall-warning.ui")]
-    public class UninstallWarningDialog : Gtk.Window {
-        [GtkChild]
-        private unowned Gtk.Label header;
-
+    public class UninstallWarningDialog : He.Dialog {
         public signal void do_uninstall ();
 
-        [GtkCallback]
-        public void on_close () {
-            this.close ();
-        }
+        public UninstallWarningDialog (Gtk.Window parent, Core.Package package) {
+            var uninstall_button = new He.Button (null, _("Uninstall"));
+            uninstall_button.add_css_class ("destructive-action");
 
-        [GtkCallback]
-        public void on_uninstall () {
-            do_uninstall ();
-        }
+            base (
+                parent,
+                _("Uninstall \"%s\"?").printf (package.get_name ()),
+                _("Are you sure you want to delete this app?"),
+                "emblem-important-symbolic",
+                uninstall_button
+            );
 
-        public UninstallWarningDialog (Core.Package package) {
-            Object ();
-
-            if (package != null) {
-                header.set_label ("Uninstall “%s”?".printf (package.get_name ()));
-            }
+            uninstall_button.clicked.connect (() => {
+                do_uninstall ();
+                hide_dialog ();
+            });
         }
     }
 }

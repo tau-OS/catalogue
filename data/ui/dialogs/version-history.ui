@@ -13,14 +13,16 @@
                 <property name="orientation">vertical</property>
                 <child>
                     <object class="HeAppBar">
-                        <property name="show_back">0</property>
+                        <property name="show-back">false</property>
+                        <property name="show-left-title-buttons">false</property>
+                        <property name="show-right-title-buttons">false</property>
                     </object>
                 </child>
                 <child>
                     <object class="GtkScrolledWindow">
-                        <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">never</property>
-                        <property name="vscrollbar_policy">automatic</property>
+                        <property name="can-focus">True</property>
+                        <property name="hscrollbar-policy">never</property>
+                        <property name="vscrollbar-policy">automatic</property>
                         <property name="vexpand">True</property>
                         <child>
                             <object class="BisLatch">
@@ -29,7 +31,7 @@
 
                                 <child>
                                     <object class="GtkListBox" id="list_box_version_history">
-                                        <property name="selection_mode">none</property>
+                                        <property name="selection-mode">none</property>
                                         <property name="halign">fill</property>
                                         <property name="valign">start</property>
                                         <child>
@@ -45,7 +47,7 @@
                                                         <child>
                                                             <object class="GtkImage">
                                                                 <property name="resource">/com/fyralabs/Catalogue/ghost.svg</property>
-                                                                <property name="margin_end">6</property>
+                                                                <property name="margin-end">6</property>
                                                             </object>
                                                         </child>
                                                         <child>

@@ -12,11 +12,12 @@
                         <property name="halign">start</property>
                         <property name="valign">end</property>
                         <child>
-                            <object class="GtkButton" id="info_button">
+                            <object class="HeButton" id="info_button">
                                 <property name="name">logo</property>
                                 <property name="width-request">50</property>
                                 <property name="height-request">50</property>
                                 <property name="icon-name">dialog-information-symbolic</property>
+                                <property name="is_disclosure">true</property>
                                 <style>
                                     <class name="circular" />
                                     <class name="circular-action" />
