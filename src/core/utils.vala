@@ -87,7 +87,7 @@ namespace Catalogue.Core {
         
         // Handle gzipped files
         Xml.Doc* doc = null;
-        if (path.has_suffix (".gz")) {
+        if (path != null && path.has_suffix (".gz")) {
             try {
                 var converter = new ZlibDecompressor (ZlibCompressorFormat.GZIP);
                 var input_stream = src_file.read ();
@@ -170,15 +170,15 @@ namespace Catalogue.Core {
                 if (iter->name == "bundle") {
                     string bundle_id = iter->get_content ();
                     // If it's not an app, we don't care about sorting it
-                    if (!bundle_id.has_prefix ("app/")) {
+                    if (bundle_id != null && !bundle_id.has_prefix ("app/")) {
                         break;
                     }
 
                     // If it's a stable branch of an app, put it on top of the array
-                    if (bundle_id.has_suffix ("/stable")) {
+                    if (bundle_id != null && bundle_id.has_suffix ("/stable")) {
                         sorted_components.insert (0, component);
                     // Otherwise add it to the end
-                    } else {
+                    } else if (bundle_id != null) {
                         sorted_components.add (component);
                     }
 

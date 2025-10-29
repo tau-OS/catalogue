@@ -17,30 +17,12 @@
  */
 
 namespace Catalogue {
-    [GtkTemplate (ui = "/com/fyralabs/Catalogue/carousel.ui")]
-    public class Carousel : Gtk.Box {
-        [GtkChild]
-        private unowned Bis.Carousel carousel;
-        [GtkChild]
-        private unowned Gtk.Button previous_button;
-        [GtkChild]
-        private unowned Gtk.Button next_button;
-
-        private void move_relative_page (int page_delta) {
-            var current_page = carousel.get_position ();
-            var pages = carousel.get_n_pages ();
-            var new_page = (((int) current_page) + page_delta + pages) % pages;
-
-            var page_widget = carousel.get_nth_page (new_page);
-
-            carousel.scroll_to (page_widget, true);
-        }
-
+    public class Carousel : He.SnapScrollBox {
         private void fill_carousel () {
             GLib.File data = File.new_for_uri (@"$(Config.API_URL)/client/carousel");
             foreach (var package in new CatalogueClient ().get_packages (data)) {
                 var tile = new Catalogue.CarouselTile (package);
-                carousel.append (tile);
+                add_item (tile);
             }
         }
 
@@ -49,13 +31,7 @@ namespace Catalogue {
         }
 
         construct {
-            next_button.clicked.connect(() => {
-                move_relative_page(1);
-            });
-
-            previous_button.clicked.connect(() => {
-                move_relative_page(-1);
-            });
+            show_button = false;
 
             ThreadService.run_in_thread.begin<void> (() => {
                fill_carousel ();

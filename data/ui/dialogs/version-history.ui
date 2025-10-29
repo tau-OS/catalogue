@@ -2,7 +2,6 @@
 <interface>
     <requires lib="gtk" version="4.0" />
     <template class="CatalogueVersionHistoryDialog" parent="HeWindow">
-        <property name="modal">true</property>
         <property name="default-height">550</property>
         <property name="default-width">400</property>
         <style>
@@ -25,7 +24,7 @@
                         <property name="vscrollbar-policy">automatic</property>
                         <property name="vexpand">True</property>
                         <child>
-                            <object class="BisLatch">
+                            <object class="GtkBox">
                                 <property name="maximum-size">600</property>
                                 <property name="tightening-threshold">600</property>
 

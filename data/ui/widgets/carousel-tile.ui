@@ -7,27 +7,8 @@
         <style>
             <class name="featured-tile" />
         </style>
-
         <child>
             <object class="GtkStack" id="stack">
-
-                <!-- <child>
-          <object class="GtkStackPage">
-            <property name="name">waiting</property>
-            <property name="child">
-              <object class="GtkImage" id="waiting">
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="pixel-size">16</property>
-                <property name="icon-name">content-loading-symbolic</property>
-                <style>
-                  <class name="dim-label"/>
-                </style>
-              </object>
-            </property>
-          </object>
-        </child> -->
-
                 <child>
                     <object class="GtkStackPage">
                         <property name="name">content</property>

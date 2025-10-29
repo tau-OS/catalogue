@@ -22,77 +22,24 @@
         [GtkChild]
         private unowned Gtk.Stack stack;
         [GtkChild]
-        private unowned Bis.Carousel carousel;
-        [GtkChild]
-        private unowned Gtk.Button button_next;
-        [GtkChild]
-        private unowned Gtk.Button button_previous;
-        [GtkChild]
-        private unowned Gtk.Revealer button_previous_revealer;
-        [GtkChild]
-        private unowned Gtk.Revealer button_next_revealer;
+        private unowned Gtk.Box carousel_box;
+
+        private He.SnapScrollBox carousel;
             
         public const int MAX_WIDTH = 300;
         GenericArray<AppStream.Screenshot> screenshots;
         public signal void screenshot_downloaded ();
-
-        private void navigate (Bis.NavigationDirection direction) {
-            var current_page = carousel.get_position ();
-            var pages = carousel.get_n_pages ();
-            int page_delta;
-
-            if (direction == Bis.NavigationDirection.BACK) {
-                page_delta = -1;
-            } else {
-                page_delta = 1;
-            }
-
-            var new_page = (((int) current_page) + page_delta + pages) % pages;
-
-            var page_widget = carousel.get_nth_page (new_page);
-
-            carousel.scroll_to (page_widget, true);
-        }
-
-        private void update_buttons () {
-            var position = carousel.get_position ();
-            var n_pages = carousel.get_n_pages ();
-
-            if (n_pages == 1) {
-                button_previous_revealer.set_reveal_child (false);
-                button_next_revealer.set_reveal_child (false);
-            } else if (position == 0) {
-                button_previous_revealer.set_reveal_child (false);
-                button_next_revealer.set_reveal_child (true);
-            } else if (position == (n_pages - 1)) {
-                button_next_revealer.set_reveal_child (false);
-                button_previous_revealer.set_reveal_child (true);
-            } else {
-                button_next_revealer.set_reveal_child (true);
-                button_previous_revealer.set_reveal_child (true);
-            }
-        }
 
         public AppScreenshots (Core.Package package) {
             Object ();
 
             screenshots = package.component.get_screenshots_all ();
 
-            carousel.page_changed.connect (() => {
-                update_buttons ();
-            });
+            carousel = new He.SnapScrollBox ();
+            carousel.height_request = 300;
+            carousel.vexpand = true;
 
-            carousel.realize.connect (() => {
-                update_buttons ();
-            });
-
-            button_previous.clicked.connect (() => {
-                navigate (Bis.NavigationDirection.BACK);
-            });
-
-            button_next.clicked.connect (() => {
-                navigate (Bis.NavigationDirection.FORWARD);
-            });
+            carousel_box.append (carousel);
 
             load_screenshots ();
         }
@@ -101,7 +48,6 @@
             var cache = Core.Client.get_default ().screenshot_cache;
 
             if (screenshots.length == 0) {
-                // TODO "no screenshots"
                 return;
             }
 
@@ -157,15 +103,15 @@
             screenshot_downloaded.connect (() => {
                 // Load screenshots that were successfully obtained.
                 if (urls.length () == completed) {
+                    bool has_screenshots = false;
                     for (int i = 0; i < urls.length (); i++) {
                         if (results[i] == true) {
                             load_screenshot (screenshot_files[i]);
+                            has_screenshots = true;
                         }
                     }
 
-                    var number_of_screenshots = carousel.get_n_pages ();
-
-                    if (number_of_screenshots > 0) {
+                    if (has_screenshots) {
                         stack.set_visible_child_name ("carousel");
                     }
                 } else {
@@ -177,21 +123,20 @@
 
         // We need to first download the screenshot locally so that it doesn't freeze the interface.
         private void load_screenshot (string path) {
-            var scale_factor = carousel.get_scale_factor ();
             try {
-                var pixbuf = new Gdk.Pixbuf.from_file_at_scale (path, MAX_WIDTH * scale_factor, 600 * scale_factor, true);
-                var image = new Gtk.Picture.for_pixbuf (pixbuf);
+                var image = new Gtk.Picture.for_filename (path);
                 image.height_request = 300;
                 image.halign = Gtk.Align.CENTER;
-                image.get_style_context ().add_class ("screenshot-image");
-                image.get_style_context ().add_class ("image1");
+                image.content_fit = Gtk.ContentFit.CONTAIN;
+                image.can_shrink = true;
+                image.add_css_class ("screenshot-image");
+                image.add_css_class ("image1");
 
                 image.show ();
-                carousel.append (image);
+                carousel.add_item (image);
             } catch (Error e) {
                 critical (e.message);
             }
         }
     }
 }
- 

@@ -97,7 +97,7 @@ namespace Catalogue {
 
                 // + "-symbolic" needed because the icons shouldn't be full-color here.
                 var tile = new Catalogue.CategoryTile (name, entry.get_icon ()+"-symbolic");
-                tile.get_style_context ().add_class ("tile-%s".printf(name.down ()));
+                tile.add_css_class ("tile-%s".printf(name.down ()));
 
                 tile.clicked.connect (() => {
                     active_category = entry;

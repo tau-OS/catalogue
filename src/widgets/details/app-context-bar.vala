@@ -71,17 +71,18 @@
                 age_rating_tile_lozenge_content.set_label (age_text);
                 age_rating_tile_description.set_label (new ContentRatingHelper ().format_rating_description (css_class));
                 if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_0) {
-                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-0");
+
+                    age_rating_tile_lozenge.add_css_class ("details-rating-0");
                 } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_5) {
-                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-5");
+                    age_rating_tile_lozenge.add_css_class ("details-rating-5");
                 } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_12) {
-                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-12");
+                    age_rating_tile_lozenge.add_css_class ("details-rating-12");
                 } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_15) {
-                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-15");
+                    age_rating_tile_lozenge.add_css_class ("details-rating-15");
                 } else if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_18) {
-                    age_rating_tile_lozenge.get_style_context ().add_class ("details-rating-18");
+                    age_rating_tile_lozenge.add_css_class ("details-rating-18");
                 } else {
-                    age_rating_tile_lozenge.get_style_context ().add_class ("grey");
+                    age_rating_tile_lozenge.add_css_class ("grey");
                 }
             });
         }
@@ -95,18 +96,18 @@
                 lozenge1_image.set_from_icon_name ("community-symbolic");
                 lozenge2_image.set_from_icon_name ("sign-language-symbolic");
                 license_tile_description.set_label ("This software is developed in the open by a community of volunteers, and released under the %s license.\n\nYou can contribute and help make it even better.".printf (app_license));
-                lozenge0.get_style_context ().add_class ("green");
-                lozenge1.get_style_context ().add_class ("green");
-                lozenge2.get_style_context ().add_class ("green");
+                lozenge0.add_css_class ("green");
+                lozenge1.add_css_class ("green");
+                lozenge2.add_css_class ("green");
             } else {
                 license_tile_title.set_label ("Proprietary");
                 lozenge0_image.set_from_icon_name ("warning-symbolic");
                 lozenge1_image.set_from_icon_name ("face-sad-symbolic");
                 lozenge2_image.set_from_icon_name ("padlock-open-symbolic");
                 license_tile_description.set_label ("This software is not developed in the open. It may be harder to tell if this software is insecure.\n\nYou may not be able to contribute or influence development.");
-                lozenge0.get_style_context ().add_class ("red");
-                lozenge1.get_style_context ().add_class ("red");
-                lozenge2.get_style_context ().add_class ("red");
+                lozenge0.add_css_class ("red");
+                lozenge1.add_css_class ("red");
+                lozenge2.add_css_class ("red");
             }
         }
 

@@ -4,9 +4,7 @@
     <template class="CatalogueAppVersionHistory" parent="HeBin">
         <property name="hexpand">True</property>
         <child>
-            <object class="BisLatch">
-                <property name="maximum-size">600</property>
-                <property name="tightening-threshold">600</property>
+            <object class="GtkBox">
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
                 <property name="hexpand">True</property>

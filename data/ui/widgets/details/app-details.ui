@@ -5,9 +5,7 @@
         <property name="hexpand">1</property>
         <property name="vexpand">1</property>
         <child>
-            <object class="BisLatch">
-                <property name="maximum-size">600</property>
-                <property name="tightening-threshold">600</property>
+            <object class="GtkBox">
                 <property name="margin-top">24</property>
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>

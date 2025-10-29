@@ -30,7 +30,7 @@ namespace Catalogue {
             price_label.set_label ("████");
 
             this.sensitive = false;
-            this.get_style_context ().add_class ("skeleton");
+            this.add_css_class ("skeleton");
         }
     }
 }

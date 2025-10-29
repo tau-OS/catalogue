@@ -118,7 +118,7 @@ namespace Catalogue {
 
         private void get_state (Core.Package app) {
             action_button.set_sensitive (true);
-            action_button.get_style_context ().remove_class ("destructive-action");
+            action_button.remove_css_class ("destructive-action");
             if (app.state == Core.Package.State.INSTALLED || app.state == Core.Package.State.UPDATE_AVAILABLE) {
                 if (app.state == Core.Package.State.UPDATE_AVAILABLE) {
                     action_button.set_label ("Update");
@@ -131,7 +131,7 @@ namespace Catalogue {
                     });
                 } else {
                     action_button.set_label ("Remove");
-                    action_button.get_style_context ().add_class ("destructive-action");
+                    action_button.add_css_class ("destructive-action");
 
                     if (handler_id != 0) {
                         action_button.disconnect (handler_id);

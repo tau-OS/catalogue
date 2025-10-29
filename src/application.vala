@@ -84,7 +84,7 @@ namespace Catalogue {
             }
 
             string link = file.get_uri ().replace ("appstream://", "").replace ("catalogue://", "");
-            if (link.has_suffix ("/")) {
+            if (link != null && link.has_suffix ("/")) {
                 link = link.substring (0, link.last_index_of_char ('/'));
             }
 
@@ -107,8 +107,6 @@ namespace Catalogue {
             resource_base_path = "/com/fyralabs/Catalogue";
 
             base.startup ();
-
-            Bis.init ();
 
             main_window = new Catalogue.Window (this);
         }

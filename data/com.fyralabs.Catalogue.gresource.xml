@@ -11,7 +11,6 @@
     <file alias="updates.ui">ui/pages/updates.ui</file>
     <file alias="details.ui">ui/pages/details.ui</file>
     <file alias="search.ui">ui/pages/search.ui</file>
-    <file alias="carousel.ui">ui/widgets/carousel.ui</file>
     <file alias="carousel-tile.ui">ui/widgets/carousel-tile.ui</file>
     <file alias="app-tile.ui">ui/widgets/app-tile.ui</file>
     <file alias="skeleton-tile.ui">ui/widgets/skeleton-tile.ui</file>

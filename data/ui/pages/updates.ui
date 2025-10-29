@@ -54,14 +54,13 @@
                                         <property name="hscrollbar_policy">never</property>
                                         <property name="vscrollbar_policy">automatic</property>
                                         <property name="vexpand">True</property>
+                                        <property name="hexpand">1</property>
                                         <style>
                                             <class name="list-page" />
                                         </style>
                                         <child>
-                                            <object class="BisLatch">
-                                                <property name="maximum-size">600</property>
-                                                <property name="tightening-threshold">600</property>
-                                                <property name="child">
+                                            <object class="GtkBox">
+                                                <child>
                                                     <object class="GtkBox">
                                                         <property name="orientation">vertical</property>
                                                         <property name="spacing">12</property>
@@ -87,7 +86,7 @@
                                                             </object>
                                                         </child>
                                                     </object>
-                                                </property>
+                                                </child>
                                             </object>
                                         </child>
                                     </object>

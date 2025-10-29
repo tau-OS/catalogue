@@ -5,9 +5,7 @@
         <property name="margin-bottom">20</property>
         <property name="hexpand">True</property>
         <property name="child">
-            <object class="BisLatch">
-                <property name="maximum-size">860</property>
-                <property name="tightening-threshold">576</property>
+            <object class="GtkBox">
                 <property name="margin-start">12</property>
                 <property name="margin-end">12</property>
                 <property name="hexpand">True</property>
@@ -15,7 +13,7 @@
                 <child>
                     <object class="GtkBox">
                         <property name="homogeneous">True</property>
-                        <property name="spacing">0</property>
+                        <property name="spacing">12</property>
                         <style>
                             <class name="context-bar" />
                         </style>
@@ -23,10 +21,10 @@
                         <child>
                             <object class="GtkBox">
                                 <property name="homogeneous">True</property>
+                                <property name="spacing">12</property>
 
                                 <child>
                                     <object class="GtkButton" id="storage_tile">
-                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
                                         <style>
                                             <class name="mini-content-block" />
                                         </style>
@@ -141,7 +139,6 @@
 
                                 <child>
                                     <object class="GtkButton" id="license_tile">
-                                        <!-- <signal name="clicked" handler="tile_clicked_cb" /> -->
                                         <style>
                                             <class name="mini-content-block" />
                                         </style>
