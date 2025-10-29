@@ -31,6 +31,7 @@ namespace Catalogue {
 
             this.sensitive = false;
             this.add_css_class ("skeleton");
+            this.set_size_request (374, 101);
         }
     }
 }

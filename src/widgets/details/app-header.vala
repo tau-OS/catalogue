@@ -137,7 +137,7 @@ namespace Catalogue {
                         action_button.disconnect (handler_id);
                     }
                     handler_id = action_button.clicked.connect (() => {
-                        var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+                        var win = He.Misc.find_ancestor_of_type<Window> (this);
                         var dialog = new Catalogue.UninstallWarningDialog (win, app);
                         dialog.present ();
 

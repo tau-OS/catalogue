@@ -41,7 +41,11 @@
 
             carousel_box.append (carousel);
 
-            load_screenshots ();
+            // Load screenshots asynchronously to avoid blocking
+            Idle.add (() => {
+                load_screenshots ();
+                return false;
+            });
         }
 
         private void load_screenshots () {
@@ -106,13 +110,22 @@
                     bool has_screenshots = false;
                     for (int i = 0; i < urls.length (); i++) {
                         if (results[i] == true) {
-                            load_screenshot (screenshot_files[i]);
+                            // Capture the filename in a local variable for the closure
+                            string filename = screenshot_files[i];
+                            // Load screenshots asynchronously to avoid blocking
+                            Idle.add (() => {
+                                load_screenshot (filename);
+                                return false;
+                            });
                             has_screenshots = true;
                         }
                     }
 
                     if (has_screenshots) {
-                        stack.set_visible_child_name ("carousel");
+                        Idle.add (() => {
+                            stack.set_visible_child_name ("carousel");
+                            return false;
+                        });
                     }
                 } else {
                     debug ("Not finished loading all screenshots");

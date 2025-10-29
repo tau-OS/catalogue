@@ -43,28 +43,47 @@
             }
 
             unowned var client = Core.Client.get_default ();
-            Gee.Collection<Catalogue.AppTile> pkgs = new Gee.ArrayList<Catalogue.AppTile> ();
+            
+            // Get packages in background thread
+            var packages = client.get_applications_for_category (category);
 
-            foreach (var package in client.get_applications_for_category (category)) {
-                var package_row = new Catalogue.AppTile (package);
+            // Update UI in main thread with packages
+            Idle.add (() => {
+                reset ();
 
-                pkgs.add (package_row);
-            }
-
-            reset ();
-
-            if (!pkgs.is_empty) {
-                foreach (var package in pkgs) {
-                    row_box.append (package);
+                if (packages != null && !packages.is_empty) {
+                    // Switch to content immediately and add items progressively
+                    stack.set_visible_child_name ("content");
+                    
+                    // Create widgets on main thread but do it incrementally
+                    var pkg_list = new Gee.ArrayList<Core.Package> ();
+                    pkg_list.add_all (packages);
+                    
+                    // Process in chunks to keep UI responsive
+                    int index = 0;
+                    GLib.Idle.add (() => {
+                        if (index >= pkg_list.size) {
+                            has_loaded = true;
+                            return false;
+                        }
+                        
+                        // Add 6 items at a time (the visible amount on no scroll)
+                        int chunk_end = int.min (index + 6, pkg_list.size);
+                        for (int i = index; i < chunk_end; i++) {
+                            var package_row = new Catalogue.AppTile (pkg_list[i]);
+                            row_box.append (package_row);
+                        }
+                        index = chunk_end;
+                        
+                        return true; // Continue until done
+                    }, GLib.Priority.DEFAULT_IDLE);
+                } else {
+                    stack.set_visible_child_name ("loading");
+                    has_loaded = true;
                 }
 
-                stack.set_visible_child_name ("content");
-            } else {
-                stack.set_visible_child_name ("loading");
-            }
-
-            has_loaded = true;
-            return;
+                return false;
+            });
         }
 
         public void load_if_needed () {
@@ -79,11 +98,12 @@
 
             this.category = category;
 
-            for (var i = 0; i < 6; i++){
+            for (var i = 0; i < 12; i++){
                 loading_row_box.append (new Catalogue.SkeletonTile ());
             }
 
-            stack.set_visible_child_name ("loading");
+            // Start with content view (empty), not loading view
+            stack.set_visible_child_name ("content");
 
             unowned var client = Core.Client.get_default ();
             

@@ -340,6 +340,37 @@ namespace Catalogue.Core {
     
             name = Core.unescape_markup (name);
     
+            // Add newlines at word boundaries for long names
+            if (name != null && name.length > 30) {
+                // Split by spaces and rebuild with newlines at appropriate points
+                string[] words = name.split (" ");
+                if (words.length > 1) {
+                    var result = new StringBuilder ();
+                    int line_length = 0;
+                    
+                    for (int i = 0; i < words.length; i++) {
+                        string word = words[i];
+                        
+                        // If adding this word would make the line too long, add newline first
+                        if (line_length > 0 && line_length + word.length + 1 > 29) {
+                            result.append ("\n");
+                            line_length = 0;
+                        }
+                        
+                        // Add space before word (except at start or after newline)
+                        if (line_length > 0) {
+                            result.append (" ");
+                            line_length++;
+                        }
+                        
+                        result.append (word);
+                        line_length += word.length;
+                    }
+                    
+                    name = result.str;
+                }
+            }
+    
             return name;
         }
     
@@ -388,6 +419,11 @@ namespace Catalogue.Core {
                 }
     
                 summary = backend_details.summary;
+            }
+    
+            // Clip to 40 characters with ellipsis
+            if (summary != null && summary.length > 40) {
+                summary = summary.substring(0, 39) + "…";
             }
     
             return summary;

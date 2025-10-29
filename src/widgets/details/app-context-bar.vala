@@ -53,7 +53,7 @@
             var window = new He.Window () {
                 modal = true
             };
-            window.set_transient_for (((Window)new Utils ().find_ancestor_of_type<Window>(this)));
+            window.set_transient_for (He.Misc.find_ancestor_of_type<Window> (this));
             window.present ();
         }
             
@@ -64,12 +64,13 @@
 
             get_app_license (package);
 
+            var rating_helper = new ContentRatingHelper ();
             package.component.get_content_ratings ().foreach ((rating) => {
                 string age_text = "";
                 ContentRatingHelper.RatingLozengeClasses css_class = ContentRatingHelper.RatingLozengeClasses.UNKNOWN;
-                new ContentRatingHelper ().get_rating_lozenge (rating, out age_text, out css_class);
+                rating_helper.get_rating_lozenge (rating, out age_text, out css_class);
                 age_rating_tile_lozenge_content.set_label (age_text);
-                age_rating_tile_description.set_label (new ContentRatingHelper ().format_rating_description (css_class));
+                age_rating_tile_description.set_label (rating_helper.format_rating_description (css_class));
                 if (css_class == ContentRatingHelper.RatingLozengeClasses.RATING_0) {
 
                     age_rating_tile_lozenge.add_css_class ("details-rating-0");

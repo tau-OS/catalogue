@@ -4,6 +4,7 @@
     <template class="CatalogueSkeletonTile" parent="HeMiniContentBlock">
         <property name="hexpand">True</property>
         <property name="icon">image-loading-symbolic</property>
+        <property name="layout">horizontal</property>
         <child>
             <object class="GtkLabel" id="price_label">
             </object>

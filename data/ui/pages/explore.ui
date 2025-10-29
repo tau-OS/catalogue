@@ -33,6 +33,7 @@
                                                         <property name="max-children-per-line">3</property>
                                                         <property name="min-children-per-line">3</property>
                                                         <property name="column-spacing">6</property>
+                                                        <property name="homogeneous">1</property>
                                                         <property name="selection-mode">none</property>
                                                     </object>
                                                 </child>

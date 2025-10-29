@@ -143,19 +143,37 @@ namespace Catalogue {
 
             var client = Core.Client.get_default ();
             
-            // Don't load "New & Updated" immediately - wait for realize
+            // Add skeleton tiles to show loading state
+            for (var i = 0; i < 8; i++) {
+                new_updated.add_widgets_skeleton (new Catalogue.SkeletonTile ());
+            }
+            
+            // Don't load "New & Updated" immediately - wait for realize and use async loading
             var new_updated_loaded = false;
             this.realize.connect (() => {
                 if (!new_updated_loaded) {
-                    new_updated.add_widgets (client.get_new_updated_packages (8));
                     new_updated_loaded = true;
+                    ThreadService.run_in_thread.begin<void> (() => {
+                        var packages = client.get_new_updated_packages (8);
+                        Idle.add (() => {
+                            new_updated.reset ();
+                            new_updated.add_widgets (packages);
+                            return false;
+                        });
+                    });
                 }
             });
             
             client.cache_update_finished.connect (() => {
                 if (new_updated_loaded) {
-                    new_updated.reset ();
-                    new_updated.add_widgets (client.get_new_updated_packages (8));
+                    ThreadService.run_in_thread.begin<void> (() => {
+                        var packages = client.get_new_updated_packages (8);
+                        Idle.add (() => {
+                            new_updated.reset ();
+                            new_updated.add_widgets (packages);
+                            return false;
+                        });
+                    });
                 }
             });
 

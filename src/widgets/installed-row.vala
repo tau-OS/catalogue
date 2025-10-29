@@ -59,7 +59,7 @@
             });
 
             delete_button.clicked.connect (() => {
-                var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+                var win = He.Misc.find_ancestor_of_type<Window> (this);
                 var dialog = new Catalogue.UninstallWarningDialog (win, package);
                 dialog.present ();
 
@@ -129,7 +129,7 @@
                 }
             } catch (Error e) {
                 if (!(e is GLib.IOError.CANCELLED)) {
-                    var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+                    var win = He.Misc.find_ancestor_of_type<Window> (this);
                     new FailureDialog (win, FailureDialog.FailType.UNINSTALL, package).present ();
                     critical (e.message);
                 }

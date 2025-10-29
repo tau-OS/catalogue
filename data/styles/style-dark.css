@@ -42,10 +42,6 @@ label {
     padding: 0px;
 }
 
-.featured-tile {
-    background: @view_bg_color;
-}
-
 .context-tile {
     border: 1px solid @borders;
     background-color: transparent;

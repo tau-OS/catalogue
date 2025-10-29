@@ -26,7 +26,7 @@ namespace Catalogue {
 
         [GtkCallback]
         private void open_history_dialog (Gtk.Button row) {
-            var win = ((Window)new Utils ().find_ancestor_of_type<Window>(this));
+            var win = He.Misc.find_ancestor_of_type<Window> (this);
             var dialog = new Catalogue.VersionHistoryDialog (app);
             dialog.set_transient_for (win);
             dialog.present ();

@@ -51,6 +51,10 @@
             }
         }
 
+        public void add_widgets_skeleton (Gtk.Widget skeleton) {
+            row_box.append (skeleton);
+        }
+
         public void add_widgets (Gee.Collection<Catalogue.Core.Package> packages) {
             foreach (var package in packages) {
                 var app_tile = new Catalogue.AppTile (package);

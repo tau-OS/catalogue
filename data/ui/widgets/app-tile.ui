@@ -5,6 +5,7 @@
         <property name="valign">center</property>
         <property name="halign">fill</property>
         <property name="hexpand">false</property>
+        <property name="layout">vertical</property>
         <style>
             <class name="featured-tile" />
         </style>
