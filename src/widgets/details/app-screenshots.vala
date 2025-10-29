@@ -123,20 +123,16 @@
 
         // We need to first download the screenshot locally so that it doesn't freeze the interface.
         private void load_screenshot (string path) {
-            try {
-                var image = new Gtk.Picture.for_filename (path);
-                image.height_request = 300;
-                image.halign = Gtk.Align.CENTER;
-                image.content_fit = Gtk.ContentFit.CONTAIN;
-                image.can_shrink = true;
-                image.add_css_class ("screenshot-image");
-                image.add_css_class ("image1");
+            var image = new Gtk.Picture.for_filename (path);
+            image.height_request = 300;
+            image.halign = Gtk.Align.CENTER;
+            image.content_fit = Gtk.ContentFit.CONTAIN;
+            image.can_shrink = true;
+            image.add_css_class ("screenshot-image");
+            image.add_css_class ("image1");
 
-                image.show ();
-                carousel.add_item (image);
-            } catch (Error e) {
-                critical (e.message);
-            }
+            image.show ();
+            carousel.add_item (image);
         }
     }
 }

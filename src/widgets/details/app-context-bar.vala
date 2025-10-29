@@ -92,7 +92,7 @@
 
             if (app_license != null && AppStream.license_is_free_license (app_license)) {
                 license_tile_title.set_label ("Community Built");
-                lozenge0_image.set_from_icon_name ("heart-filled-symbolic");
+                lozenge0_image.set_from_icon_name ("emblem-favorite-symbolic");
                 lozenge1_image.set_from_icon_name ("community-symbolic");
                 lozenge2_image.set_from_icon_name ("sign-language-symbolic");
                 license_tile_description.set_label ("This software is developed in the open by a community of volunteers, and released under the %s license.\n\nYou can contribute and help make it even better.".printf (app_license));

@@ -86,7 +86,8 @@
 
         private void show_uri (string uri) {
             var main_window = He.Misc.find_ancestor_of_type<He.ApplicationWindow> (this);
-            Gtk.show_uri (main_window, uri, Gdk.CURRENT_TIME);
+            var launcher = new Gtk.UriLauncher (uri);
+            launcher.launch.begin (main_window, null);
         }
     }
 }
