@@ -1,3 +1,5 @@
+# Catalogue is Deprecated
+
 <img align="left" style="vertical-align: middle" width="120" height="120" src="data/icons/com.fyralabs.Catalogue.svg">
 
 # Catalogue
